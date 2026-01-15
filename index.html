@@ -3,20 +3,400 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Erik – Automation Engineer. Projekte rund um Raspberry Pi, Smart Home, NAS & Software." />
   <title>4don.com – Erik</title>
+
+  <style>
+    :root {
+      --bg: #0b0f19;
+      --card: rgba(255,255,255,0.06);
+      --card2: rgba(255,255,255,0.08);
+      --text: rgba(255,255,255,0.92);
+      --muted: rgba(255,255,255,0.65);
+      --border: rgba(255,255,255,0.14);
+      --shadow: 0 20px 60px rgba(0,0,0,0.35);
+
+      --accent: #8b5cf6; /* violet */
+      --accent2: #22c55e; /* green */
+      --link: #93c5fd;
+    }
+
+    @media (prefers-color-scheme: light) {
+      :root {
+        --bg: #f7f7fb;
+        --card: rgba(0,0,0,0.04);
+        --card2: rgba(0,0,0,0.06);
+        --text: rgba(10,12,18,0.92);
+        --muted: rgba(10,12,18,0.65);
+        --border: rgba(10,12,18,0.14);
+        --shadow: 0 20px 60px rgba(0,0,0,0.10);
+
+        --link: #1d4ed8;
+      }
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Helvetica Neue", Arial, sans-serif;
+      background: radial-gradient(1200px 700px at 15% 10%, rgba(139,92,246,0.25), transparent 60%),
+                  radial-gradient(900px 600px at 85% 20%, rgba(34,197,94,0.18), transparent 55%),
+                  radial-gradient(900px 900px at 50% 120%, rgba(59,130,246,0.14), transparent 60%),
+                  var(--bg);
+      color: var(--text);
+      line-height: 1.55;
+    }
+
+    a { color: var(--link); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .wrap {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 28px 18px 80px;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 10px 2px 24px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo {
+      width: 40px;
+      height: 40px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, rgba(139,92,246,0.95), rgba(34,197,94,0.70));
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+    }
+
+    .brand strong {
+      font-size: 15px;
+      letter-spacing: 0.2px;
+    }
+    .brand span {
+      display: block;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    nav {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.04);
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .hero {
+      border: 1px solid var(--border);
+      background: linear-gradient(180deg, var(--card), transparent);
+      border-radius: 24px;
+      padding: 28px;
+      box-shadow: var(--shadow);
+      margin-bottom: 22px;
+    }
+
+    .hero h1 {
+      margin: 0 0 8px;
+      font-size: clamp(26px, 4vw, 40px);
+      line-height: 1.15;
+    }
+
+    .hero p {
+      margin: 0 0 18px;
+      color: var(--muted);
+      font-size: 16px;
+      max-width: 70ch;
+    }
+
+    .cta {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 10px 14px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.04);
+      color: var(--text);
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .btn.primary {
+      background: linear-gradient(135deg, rgba(139,92,246,0.95), rgba(99,102,241,0.85));
+      border-color: rgba(139,92,246,0.35);
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      transition: 120ms ease;
+      text-decoration: none;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 14px;
+    }
+
+    .card {
+      grid-column: span 6;
+      border: 1px solid var(--border);
+      background: var(--card);
+      border-radius: 20px;
+      padding: 18px;
+      box-shadow: 0 10px 24px rgba(0,0,0,0.18);
+      min-height: 140px;
+    }
+
+    .card h3 {
+      margin: 0 0 6px;
+      font-size: 16px;
+    }
+
+    .card p {
+      margin: 0 0 12px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .meta {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      font-size: 12px;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.03);
+      padding: 6px 10px;
+      border-radius: 999px;
+    }
+
+    .card.big {
+      grid-column: span 12;
+      background: linear-gradient(180deg, var(--card2), var(--card));
+    }
+
+    .section-title {
+      margin: 24px 0 10px;
+      font-size: 14px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 14px;
+      margin-top: 14px;
+    }
+
+    .list {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    footer {
+      margin-top: 28px;
+      color: var(--muted);
+      font-size: 13px;
+      text-align: center;
+      opacity: 0.9;
+    }
+
+    @media (max-width: 860px) {
+      .card { grid-column: span 12; }
+      .split { grid-template-columns: 1fr; }
+      header { flex-direction: column; align-items: flex-start; }
+      nav { justify-content: flex-start; }
+    }
+  </style>
 </head>
-<body style="font-family: system-ui; max-width: 900px; margin: 40px auto; padding: 0 16px;">
-  <h1>Hi, I'm Erik 👋</h1>
-  <p><strong>Automation Engineer</strong> · Raspberry Pi · Smart Home · Projects</p>
 
-  <h2>Projects</h2>
-  <ul>
-    <li>RMV Info Display (Raspberry Pi kiosk)</li>
-    <li>Home Assistant / Smart Home</li>
-    <li>Synology NAS Backup & Homelab</li>
-  </ul>
+<body>
+  <div class="wrap">
 
-  <h2>Contact</h2>
-  <p>GitHub: <a href="https://github.com/e4don">e4don</a></p>
+    <header>
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <div>
+          <strong>Erik · 4don.com</strong>
+          <span>Automation Engineer · Homelab · Raspberry Pi</span>
+        </div>
+      </div>
+
+      <nav>
+        <a class="chip" href="#projects">Projekte</a>
+        <a class="chip" href="#skills">Skills</a>
+        <a class="chip" href="#contact">Kontakt</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <h1>Hi, ich bin Erik 👋</h1>
+      <p>
+        Ich baue gerne praktische, stabile Lösungen – von Automatisierung über Raspberry Pi Displays
+        bis zu Smart-Home & NAS-Setups. Hier sammle ich meine Projekte und Experimente.
+      </p>
+
+      <div class="cta">
+        <a class="btn primary" href="#projects">🚀 Projekte ansehen</a>
+        <a class="btn" href="https://github.com/e4don" target="_blank" rel="noreferrer">GitHub öffnen</a>
+      </div>
+    </section>
+
+    <div class="section-title" id="projects">Projekte</div>
+
+    <section class="grid">
+      <article class="card big">
+        <h3>RMV Info Display (Raspberry Pi Kiosk)</h3>
+        <p>
+          Ein minimalistisches Abfahrts-Display im Kiosk-Modus – optimiert für schnelle Entscheidungen im Alltag.
+        </p>
+        <div class="meta">
+          <span class="tag">Raspberry Pi</span>
+          <span class="tag">Kiosk UI</span>
+          <span class="tag">ÖPNV API</span>
+          <span class="tag">Python / Web</span>
+        </div>
+      </article>
+
+      <article class="card">
+        <h3>Home Assistant Setup (früher)</h3>
+        <p>
+          Smart Home Steuerung mit sicherem Remote-Zugriff (Cloudflare Tunnel) – inzwischen deaktiviert, aber als Blueprint.
+        </p>
+        <div class="meta">
+          <span class="tag">Home Assistant</span>
+          <span class="tag">Cloudflare Tunnel</span>
+          <span class="tag">Security</span>
+        </div>
+      </article>
+
+      <article class="card">
+        <h3>Synology NAS · Backup & Homelab</h3>
+        <p>
+          Backup-Strategien, Sync zwischen Standorten und saubere Struktur für Daten, Docker und VMs.
+        </p>
+        <div class="meta">
+          <span class="tag">Synology</span>
+          <span class="tag">Backup</span>
+          <span class="tag">Homelab</span>
+        </div>
+      </article>
+
+      <article class="card">
+        <h3>Automatisierung & Industrie</h3>
+        <p>
+          Fokus auf stabile Abläufe, Logging, saubere Datenflüsse und „Fehler sichtbar machen“ – statt nur Symptome zu fixen.
+        </p>
+        <div class="meta">
+          <span class="tag">PLC / SPS</span>
+          <span class="tag">SCADA</span>
+          <span class="tag">Debugging</span>
+        </div>
+      </article>
+
+      <article class="card">
+        <h3>Web & Tools</h3>
+        <p>
+          Kleine Tools, Utilities und Seiten – schnell, sauber, wartungsarm. Genau wie dieses Portfolio.
+        </p>
+        <div class="meta">
+          <span class="tag">Cloudflare Pages</span>
+          <span class="tag">GitHub</span>
+          <span class="tag">Static Site</span>
+        </div>
+      </article>
+    </section>
+
+    <div class="section-title" id="skills">Skills</div>
+
+    <section class="split">
+      <div class="card">
+        <h3>Was ich gerne baue</h3>
+        <ul class="list">
+          <li>Automatisierung / Logik sauber strukturieren</li>
+          <li>Raspberry Pi Kiosk Displays</li>
+          <li>Smarthome / Netzwerk / „läuft einfach“-Setups</li>
+          <li>Monitoring & kleine Tools für den Alltag</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Tech Stack (Auszug)</h3>
+        <div class="meta">
+          <span class="tag">Python</span>
+          <span class="tag">Docker</span>
+          <span class="tag">Linux</span>
+          <span class="tag">Git</span>
+          <span class="tag">Cloudflare</span>
+          <span class="tag">Raspberry Pi</span>
+          <span class="tag">Home Assistant</span>
+          <span class="tag">Synology</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-title" id="contact">Kontakt</div>
+
+    <section class="card big">
+      <h3>Kontakt</h3>
+      <p>
+        Am besten erreichst du mich aktuell über GitHub. Eine eigene Domain-Mail (z.B. <strong>erik@4don.com</strong>)
+        kann ich später hinzufügen.
+      </p>
+
+      <div class="cta">
+        <a class="btn primary" href="https://github.com/e4don" target="_blank" rel="noreferrer">GitHub</a>
+        <a class="btn" href="mailto:erik@4don.com">E-Mail (bald)</a>
+      </div>
+    </section>
+
+    <footer>
+      © <span id="y"></span> Erik · 4don.com
+    </footer>
+
+  </div>
+
+  <script>
+    document.getElementById("y").textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
