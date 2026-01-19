@@ -20,7 +20,6 @@
 
 *{box-sizing:border-box}
 html,body{height:100%}
-
 body{
   margin:0;
   font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
@@ -28,7 +27,7 @@ body{
   background:
     radial-gradient(1000px 600px at 15% 15%, rgba(168,85,247,.28), transparent 60%),
     radial-gradient(900px 560px at 80% 20%, rgba(124,58,237,.22), transparent 55%),
-    radial-gradient(900px 700px at 50% 85%, rgba(168,85,247,.12), transparent 60%),
+    radial-gradient(900px 700px at 50% 85%, rgba(34,211,238,.10), transparent 60%),
     linear-gradient(180deg, var(--bg0), var(--bg1));
   background-attachment: fixed;
 }
@@ -36,24 +35,6 @@ body{
 a{color:inherit; text-decoration:none}
 .wrap{max-width:var(--max); margin:0 auto; padding:28px 18px 44px;}
 
-.skip{
-  position:absolute;
-  left:-9999px;
-  top:auto;
-  width:1px;height:1px;
-  overflow:hidden;
-}
-.skip:focus{
-  left:18px; top:14px;
-  width:auto;height:auto;
-  padding:10px 12px;
-  border-radius:12px;
-  background:rgba(0,0,0,.6);
-  border:1px solid var(--stroke);
-  z-index:9999;
-}
-
-/* Topbar */
 .topbar{
   display:flex; align-items:center; justify-content:space-between;
   gap:12px; margin:10px 0 18px;
@@ -61,16 +42,21 @@ a{color:inherit; text-decoration:none}
 
 .brand{
   display:flex; align-items:center; gap:10px;
-  font-weight:750; letter-spacing:.2px;
+  font-weight:700; letter-spacing:.2px;
 }
-.logo{
-  width:28px;
-  height:28px;
-  border-radius:10px;
+
+.brand img{
+  width:22px;
+  height:22px;
   display:block;
-  box-shadow: 0 10px 24px rgba(0,0,0,.35);
+  border-radius:6px;
 }
-.brandname{opacity:.98}
+
+.brand .dot{
+  width:10px; height:10px; border-radius:999px;
+  background:linear-gradient(135deg,var(--p1),var(--p2));
+  box-shadow:0 0 0 6px rgba(168,85,247,.12)
+}
 
 .rightbar{
   display:flex;
@@ -116,7 +102,6 @@ a{color:inherit; text-decoration:none}
   background: linear-gradient(135deg, rgba(168,85,247,.18), rgba(124,58,237,.12));
 }
 
-/* Hero */
 .hero{
   margin-top:14px;
   border:1px solid var(--stroke);
@@ -137,14 +122,8 @@ a{color:inherit; text-decoration:none}
 
 h1{margin:0 0 10px; font-size:38px; line-height:1.1}
 .lead{margin:0 0 16px; color:var(--muted); max-width:72ch}
+
 .cta{display:flex; flex-wrap:wrap; gap:10px; margin-top:10px}
-
-.tip{
-  margin:14px 0 0;
-  color:rgba(255,255,255,.60);
-  font-size:12px;
-}
-
 .btn{
   display:inline-flex; align-items:center; gap:8px;
   padding:10px 12px; border-radius:12px;
@@ -159,7 +138,6 @@ h1{margin:0 0 10px; font-size:38px; line-height:1.1}
   background: linear-gradient(135deg, rgba(168,85,247,.22), rgba(124,58,237,.16));
 }
 
-/* Layout */
 .grid{
   margin-top:18px;
   display:grid; grid-template-columns: 1.6fr 1fr; gap:14px;
@@ -169,7 +147,6 @@ h1{margin:0 0 10px; font-size:38px; line-height:1.1}
   h1{font-size:34px}
 }
 
-/* Cards */
 .card{
   border:1px solid var(--stroke);
   background:rgba(255,255,255,.04);
@@ -177,17 +154,11 @@ h1{margin:0 0 10px; font-size:38px; line-height:1.1}
   padding:16px 16px;
   backdrop-filter: blur(var(--blur));
 }
-
 .card h2{margin:0 0 6px; font-size:16px}
 .card p{margin:0; color:var(--muted); font-size:13px; line-height:1.45}
-
-.section-title{
-  display:flex; align-items:baseline; justify-content:space-between;
-  gap:10px; margin-bottom:10px
-}
+.section-title{display:flex; align-items:baseline; justify-content:space-between; gap:10px; margin-bottom:10px}
 .section-title small{color:var(--muted2)}
 
-/* Projects */
 .projects{
   display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:10px;
 }
@@ -221,6 +192,7 @@ h1{margin:0 0 10px; font-size:38px; line-height:1.1}
   border:1px solid rgba(255,255,255,.10);
   background:rgba(0,0,0,.18);
 }
+
 .proj-actions{display:flex; gap:8px; flex-wrap:wrap}
 .linkbtn{
   font-size:12px; padding:8px 10px; border-radius:12px;
@@ -235,34 +207,11 @@ h1{margin:0 0 10px; font-size:38px; line-height:1.1}
   background: linear-gradient(135deg, rgba(168,85,247,.18), rgba(124,58,237,.12));
 }
 
-/* About */
-.subhead{
-  margin:14px 0 6px;
-  font-size:13px;
-  color:var(--muted);
-}
-.stack{
-  margin:10px 0 0;
-  padding:0;
-  list-style:none;
-  display:flex;
-  flex-wrap:wrap;
-  gap:8px;
-}
-.stack li{
-  font-size:12px;
-  color:var(--muted);
-  border:1px solid var(--stroke);
-  background:rgba(255,255,255,.03);
-  padding:6px 9px;
-  border-radius:999px;
-}
+.about ul{margin:10px 0 0; padding:0; list-style:none; display:flex; flex-wrap:wrap; gap:8px}
+.about li{font-size:12px; color:var(--muted); border:1px solid var(--stroke); background:rgba(255,255,255,.03); padding:6px 9px; border-radius:999px}
 
-/* Contact */
-.contact{margin-top:16px}
 .contactbox{display:flex; flex-direction:column; gap:10px; margin-top:10px}
 .contact-row{display:flex; gap:10px; flex-wrap:wrap}
-
 .pill{
   flex:1;
   min-width: 220px;
@@ -273,11 +222,8 @@ h1{margin:0 0 10px; font-size:38px; line-height:1.1}
   background:rgba(255,255,255,.04);
   color:var(--muted);
 }
-.pill strong{color:var(--text); font-weight:650}
-.pillsub{font-size:12px; color:var(--muted2)}
-.ext{opacity:.85}
-
-.copybtn{
+.pill strong{color:var(--text); font-weight:600}
+.pill button{
   border:1px solid rgba(255,255,255,.12);
   background:rgba(255,255,255,.05);
   color:var(--text);
@@ -285,16 +231,8 @@ h1{margin:0 0 10px; font-size:38px; line-height:1.1}
   border-radius:12px;
   cursor:pointer;
 }
-.copybtn:hover{background:rgba(255,255,255,.08)}
+.pill button:hover{background:rgba(255,255,255,.08)}
 
-.status{display:inline-flex; align-items:center; gap:6px}
-.status i{
-  width:8px; height:8px; border-radius:99px;
-  background:var(--ok);
-  box-shadow:0 0 0 6px rgba(34,197,94,.12)
-}
-
-/* Footer */
 footer{
   margin-top:16px;
   display:flex;
@@ -304,3 +242,5 @@ footer{
   font-size:12px;
   padding:6px 2px;
 }
+.status{display:inline-flex; align-items:center; gap:6px}
+.status i{width:8px; height:8px; border-radius:99px; background:var(--ok); box-shadow:0 0 0 6px rgba(34,197,94,.12)}
