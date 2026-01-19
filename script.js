@@ -1,265 +1,265 @@
-/* 4don.com – simple bilingual content + project rendering */
+/* 4don.com – bilingual content + project rendering + nav active state */
 
-const $ = (sel, el=document) => el.querySelector(sel);
-const $$ = (sel, el=document) => Array.from(el.querySelectorAll(sel));
+const $ = (sel, el = document) => el.querySelector(sel);
+const $$ = (sel, el = document) => Array.from(el.querySelectorAll(sel));
+
+const STORAGE_KEY = "4don_lang";
 
 const content = {
   de: {
-    navProjects: 'Projekte',
-    navAbout: 'Über mich',
-    navContact: 'Kontakt',
-    badgeRole: 'Automation Engineer',
-    badgeTopics: 'Raspberry Pi · Smart Home · Networking · Homelab',
-    heroTitle: 'Hi, ich bin Erik',
-    heroSubtitle:
-      'Ich baue pragmatische Automations- und Tech-Projekte, die im Alltag wirklich funktionieren — minimalistisch, schnell und ohne Buzzword-Overkill.',
-    ctaProjects: 'Projekte ansehen',
-    ctaMail: 'info@4don.com',
-    ctaGitHub: 'GitHub',
+    nav_projects: "Projekte",
+    nav_about: "Über mich",
+    nav_contact: "Kontakt",
 
-    projectsTitle: 'Projekte',
-    projectsDesc: 'Ausgewählte Dinge, die ich gebaut, optimiert oder automatisiert habe.',
+    badge_role: "Automation Engineer",
+    badge_topics: "Raspberry Pi · Smart Home · Networking · Homelab",
 
-    aboutTitle: 'Über mich',
-    aboutText:
-      'Ich mag: „klarer Plan, saubere Umsetzung“. Fokus auf robuste Lösungen, die auch nach Monaten noch laufen — und nicht nur im Screenshot gut aussehen.',
-    stackTitle: 'Stack / Tools',
-    stackText: 'Cloudflare · GitHub · Raspberry Pi · Home Assistant · Synology · Netzwerke · Automatisierung',
+    hero_title: "Hi, ich bin Erik 👋",
+    hero_subtitle:
+      "Ich baue pragmatische Automations- und Tech-Projekte, die im Alltag wirklich funktionieren — minimalistisch, schnell und ohne Buzzword-Overkill.",
+    cta_projects: "🚀 Projekte ansehen",
+    hero_note: "Tipp: Diese Seite ist statisch (Cloudflare Pages) — schnell, günstig, robust.",
 
-    contactTitle: 'Kontakt',
-    contactText: 'Schreib mir gern:',
+    projects_title: "Projekte",
+    projects_desc: "Ausgewählte Dinge, die ich gebaut, optimiert oder automatisiert habe.",
 
-    footerLeft: '© 2026 Erik · 4don.com',
-    footerRight: 'Deployed with Cloudflare Pages',
+    about_title: "Über mich",
+    about_text:
+      "Ich mag: „klarer Plan, saubere Umsetzung“. Fokus auf robuste Lösungen, die auch nach Monaten noch laufen — und nicht nur im Screenshot gut aussehen.",
+    stack_title: "Stack / Tools",
 
-    projButtons: {
-      demo: 'Demo',
-      repo: 'GitHub',
-      docs: 'Docs',
-    }
+    contact_title: "Kontakt",
+    contact_text: "Schreib mir gern:",
+    contact_note: "(Formular optional — kommt später, wenn du willst.)",
+
+    footer_left: "©",
+    footer_right: "Deployed with Cloudflare Pages",
+
+    projButtons: { demo: "Demo", repo: "GitHub", docs: "Docs" }
   },
+
   en: {
-    navProjects: 'Projects',
-    navAbout: 'About',
-    navContact: 'Contact',
-    badgeRole: 'Automation Engineer',
-    badgeTopics: 'Raspberry Pi · Smart Home · Networking · Homelab',
-    heroTitle: 'Hi, I’m Erik',
-    heroSubtitle:
-      'I build pragmatic automation and tech projects that work in everyday life — minimal, fast and without buzzword overload.',
-    ctaProjects: 'View projects',
-    ctaMail: 'info@4don.com',
-    ctaGitHub: 'GitHub',
+    nav_projects: "Projects",
+    nav_about: "About",
+    nav_contact: "Contact",
 
-    projectsTitle: 'Projects',
-    projectsDesc: 'A small selection of things I built, optimized or automated.',
+    badge_role: "Automation Engineer",
+    badge_topics: "Raspberry Pi · Smart Home · Networking · Homelab",
 
-    aboutTitle: 'About',
-    aboutText:
-      'I like: “clear plan, clean execution”. I focus on robust solutions that keep running months later — not just looking good in a screenshot.',
-    stackTitle: 'Stack / Tools',
-    stackText: 'Cloudflare · GitHub · Raspberry Pi · Home Assistant · Synology · Networking · Automation',
+    hero_title: "Hi, I’m Erik 👋",
+    hero_subtitle:
+      "I build pragmatic automation and tech projects that work in everyday life — minimal, fast and without buzzword overload.",
+    cta_projects: "🚀 View projects",
+    hero_note: "Tip: This site is static (Cloudflare Pages) — fast, cheap and robust.",
 
-    contactTitle: 'Contact',
-    contactText: 'Feel free to reach out:',
+    projects_title: "Projects",
+    projects_desc: "A small selection of things I built, optimized or automated.",
 
-    footerLeft: '© 2026 Erik · 4don.com',
-    footerRight: 'Deployed with Cloudflare Pages',
+    about_title: "About",
+    about_text:
+      "I like: “clear plan, clean execution”. I focus on robust solutions that keep running months later — not just looking good in a screenshot.",
+    stack_title: "Stack / Tools",
 
-    projButtons: {
-      demo: 'Demo',
-      repo: 'GitHub',
-      docs: 'Docs',
-    }
+    contact_title: "Contact",
+    contact_text: "Feel free to reach out:",
+    contact_note: "(Optional form — we can add it later.)",
+
+    footer_left: "©",
+    footer_right: "Deployed with Cloudflare Pages",
+
+    projButtons: { demo: "Demo", repo: "GitHub", docs: "Docs" }
   }
 };
 
 // Replace these with real links when you have them.
 const projects = [
   {
-    title: { de: 'RMV Info Display (Raspberry Pi Kiosk)', en: 'RMV Info Display (Raspberry Pi Kiosk)' },
+    title: { de: "RMV Info Display (Raspberry Pi Kiosk)", en: "RMV Info Display (Raspberry Pi Kiosk)" },
     description: {
-      de: 'Live-Verbindungen, Laufwege & ein „Pendler-Mode“ — optimiert für schnelles „Ein Blick reicht“.',
-      en: 'Live connections, walking routes and a “commuter mode” — optimized for quick glances.'
+      de: "Live-Verbindungen, Laufwege & ein „Pendler-Mode“ — optimiert für schnelles „Ein Blick reicht“.",
+      en: "Live connections, walking routes and a “commuter mode” — optimized for quick glances."
     },
-    tags: ['Raspberry Pi', 'API', 'Kiosk UI'],
-    links: {
-      repo: 'https://github.com/e4don',
-      demo: null,
-      docs: null,
-    }
+    tags: ["Raspberry Pi", "API", "Kiosk UI"],
+    links: { repo: "https://github.com/e4don", demo: null, docs: null }
   },
   {
-    title: { de: 'Home Assistant Setup', en: 'Home Assistant Setup' },
+    title: { de: "Home Assistant Setup", en: "Home Assistant Setup" },
     description: {
-      de: 'Automationen, Sensorik & smarter Alltag — ohne Cloud-Zwang.',
-      en: 'Automations, sensors & a smart everyday life — without being forced into the cloud.'
+      de: "Automationen, Sensorik & smarter Alltag — ohne Cloud-Zwang.",
+      en: "Automations, sensors & a smart everyday life — without being forced into the cloud."
     },
-    tags: ['Smart Home', 'Self-Hosted', 'Security'],
+    tags: ["Smart Home", "Self-Hosted", "Security"],
     links: { repo: null, demo: null, docs: null }
   },
   {
-    title: { de: 'Synology Backup & Homelab', en: 'Synology Backup & Homelab' },
+    title: { de: "Synology Backup & Homelab", en: "Synology Backup & Homelab" },
     description: {
-      de: 'Backup-Strategien, Replikation, USV-Integration & saubere Datensicherung.',
-      en: 'Backup strategies, replication, UPS integration and clean data protection.'
+      de: "Backup-Strategien, Replikation, USV-Integration & saubere Datensicherung.",
+      en: "Backup strategies, replication, UPS integration and clean data protection."
     },
-    tags: ['NAS', 'Backup', 'Network'],
+    tags: ["NAS", "Backup", "Network"],
     links: { repo: null, demo: null, docs: null }
   },
   {
-    title: { de: '4don.com (Cloudflare Pages)', en: '4don.com (Cloudflare Pages)' },
+    title: { de: "4don.com (Cloudflare Pages)", en: "4don.com (Cloudflare Pages)" },
     description: {
-      de: 'Minimal-Portfolio, schnell deployed — gebaut für spätere Blog/Wiki-Erweiterung.',
-      en: 'Minimal portfolio, fast deploy — built to grow into blog/wiki later.'
+      de: "Minimal-Portfolio, schnell deployed — gebaut für spätere Blog/Wiki-Erweiterung.",
+      en: "Minimal portfolio, fast deploy — built to grow into blog/wiki later."
     },
-    tags: ['Cloudflare', 'Pages', 'DNS'],
-    links: { repo: 'https://github.com/e4don/4don-portfolio', demo: 'https://4don.com', docs: null }
+    tags: ["Cloudflare", "Pages", "DNS"],
+    links: { repo: "https://github.com/e4don/4don-portfolio", demo: "https://4don.com", docs: null }
   }
 ];
 
-const state = {
-  lang: 'de'
-};
+const state = { lang: "de" };
 
-function setLang(lang){
-  state.lang = lang;
-  document.documentElement.lang = lang;
-  localStorage.setItem('4don_lang', lang);
+function applyI18n() {
+  const t = content[state.lang] || content.de;
 
-  const t = content[lang];
+  // set document lang
+  document.documentElement.lang = state.lang;
 
-  // Text nodes
-  $('[data-i18n="nav.projects"]').textContent = t.navProjects;
-  $('[data-i18n="nav.about"]').textContent = t.navAbout;
-  $('[data-i18n="nav.contact"]').textContent = t.navContact;
-
-  $('[data-i18n="badge.role"]').textContent = t.badgeRole;
-  $('[data-i18n="badge.topics"]').textContent = t.badgeTopics;
-
-  $('[data-i18n="hero.title"]').textContent = t.heroTitle;
-  $('[data-i18n="hero.subtitle"]').textContent = t.heroSubtitle;
-
-  $('[data-i18n="cta.projects"]').textContent = t.ctaProjects;
-  $('[data-i18n="cta.mail"]').textContent = t.ctaMail;
-  $('[data-i18n="cta.github"]').textContent = t.ctaGitHub;
-
-  $('[data-i18n="section.projects.title"]').textContent = t.projectsTitle;
-  $('[data-i18n="section.projects.desc"]').textContent = t.projectsDesc;
-
-  $('[data-i18n="section.about.title"]').textContent = t.aboutTitle;
-  $('[data-i18n="section.about.text"]').textContent = t.aboutText;
-  $('[data-i18n="section.stack.title"]').textContent = t.stackTitle;
-  $('[data-i18n="section.stack.text"]').textContent = t.stackText;
-
-  $('[data-i18n="section.contact.title"]').textContent = t.contactTitle;
-  $('[data-i18n="section.contact.text"]').textContent = t.contactText;
-
-  $('[data-i18n="footer.left"]').textContent = t.footerLeft;
-  $('[data-i18n="footer.right"]').textContent = t.footerRight;
+  // generic: replace all [data-i18n] with matching key
+  $$("[data-i18n]").forEach((node) => {
+    const key = node.getAttribute("data-i18n");
+    if (!key) return;
+    if (typeof t[key] !== "string") return;
+    node.textContent = t[key];
+  });
 
   renderProjects();
   updateLangButtons();
 }
 
-function renderProjects(){
-  const lang = state.lang;
-  const t = content[lang];
-  const grid = $('#projectsGrid');
-  grid.innerHTML = '';
+function setLang(lang) {
+  state.lang = (lang === "en") ? "en" : "de";
+  localStorage.setItem(STORAGE_KEY, state.lang);
+  applyI18n();
+}
+
+function updateLangButtons() {
+  const btnDE = $("#lang-de");
+  const btnEN = $("#lang-en");
+  if (!btnDE || !btnEN) return;
+
+  const isDE = state.lang === "de";
+
+  btnDE.classList.toggle("active", isDE);
+  btnEN.classList.toggle("active", !isDE);
+
+  btnDE.setAttribute("aria-pressed", isDE ? "true" : "false");
+  btnEN.setAttribute("aria-pressed", !isDE ? "true" : "false");
+}
+
+function renderProjects() {
+  const t = content[state.lang] || content.de;
+  const grid = $("#projectsList");
+  if (!grid) return;
+
+  grid.innerHTML = "";
 
   projects.forEach((p) => {
-    const card = document.createElement('article');
-    card.className = 'card';
+    const wrap = document.createElement("article");
+    wrap.className = "project";
 
-    const h = document.createElement('h3');
-    h.textContent = p.title[lang] || p.title.de;
+    const h = document.createElement("h3");
+    h.className = "project__title";
+    h.textContent = (p.title && (p.title[state.lang] || p.title.de)) || "Project";
 
-    const d = document.createElement('p');
-    d.className = 'muted';
-    d.textContent = p.description[lang] || p.description.de;
+    const d = document.createElement("p");
+    d.className = "project__desc";
+    d.textContent = (p.description && (p.description[state.lang] || p.description.de)) || "";
 
-    const tags = document.createElement('div');
-    tags.className = 'tags';
-    (p.tags || []).forEach(tag => {
-      const s = document.createElement('span');
-      s.className = 'tag';
+    const tags = document.createElement("div");
+    tags.className = "tags";
+    (p.tags || []).forEach((tag) => {
+      const s = document.createElement("span");
+      s.className = "tag";
       s.textContent = tag;
       tags.appendChild(s);
     });
 
-    const actions = document.createElement('div');
-    actions.className = 'actions';
+    const actions = document.createElement("div");
+    actions.className = "actions";
 
-    const makeBtn = (label, href) => {
-      const a = document.createElement('a');
-      a.className = 'btn small ghost';
+    const mk = (label, href) => {
+      const a = document.createElement("a");
+      a.className = "action";
       a.textContent = label;
       a.href = href;
-      a.target = '_blank';
-      a.rel = 'noreferrer';
+      a.target = "_blank";
+      a.rel = "noreferrer";
       return a;
     };
 
-    if (p.links?.demo) actions.appendChild(makeBtn(t.projButtons.demo, p.links.demo));
-    if (p.links?.repo) actions.appendChild(makeBtn(t.projButtons.repo, p.links.repo));
-    if (p.links?.docs) actions.appendChild(makeBtn(t.projButtons.docs, p.links.docs));
+    if (p.links?.demo) actions.appendChild(mk(t.projButtons.demo, p.links.demo));
+    if (p.links?.repo) actions.appendChild(mk(t.projButtons.repo, p.links.repo));
+    if (p.links?.docs) actions.appendChild(mk(t.projButtons.docs, p.links.docs));
 
-    card.appendChild(h);
-    card.appendChild(d);
-    card.appendChild(tags);
-    if (actions.children.length) card.appendChild(actions);
+    wrap.appendChild(h);
+    wrap.appendChild(d);
+    if (tags.children.length) wrap.appendChild(tags);
+    if (actions.children.length) wrap.appendChild(actions);
 
-    grid.appendChild(card);
+    grid.appendChild(wrap);
   });
 }
 
-function updateLangButtons(){
-  $$('#langToggle button').forEach(btn => {
-    btn.classList.toggle('active', btn.dataset.lang === state.lang);
-    btn.setAttribute('aria-pressed', btn.dataset.lang === state.lang ? 'true' : 'false');
-  });
-}
-
-function setupNav(){
+function setupNav() {
   // smooth scroll
-  $$('.nav a').forEach(a => {
-    a.addEventListener('click', (e) => {
-      const href = a.getAttribute('href') || '';
-      if (!href.startsWith('#')) return;
-      e.preventDefault();
+  $$(".nav a").forEach((a) => {
+    a.addEventListener("click", (e) => {
+      const href = a.getAttribute("href") || "";
+      if (!href.startsWith("#")) return;
       const target = document.querySelector(href);
-      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      if (!target) return;
+      e.preventDefault();
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
     });
   });
 
-  // active state
-  const sections = ['#projects', '#about', '#contact'].map(id => document.querySelector(id)).filter(Boolean);
-  const links = $$('.nav a').filter(a => (a.getAttribute('href')||'').startsWith('#'));
+  // active state via IntersectionObserver -> aria-current="page"
+  const navLinks = $$(".nav a").filter((a) => (a.getAttribute("href") || "").startsWith("#"));
+  const sections = navLinks
+    .map((a) => document.querySelector(a.getAttribute("href")))
+    .filter(Boolean);
+
+  if (!sections.length || !navLinks.length) return;
 
   const obs = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (!entry.isIntersecting) return;
-      const id = '#' + entry.target.id;
-      links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === id));
-    });
-  }, { rootMargin: '-40% 0px -55% 0px', threshold: 0.01 });
+    const visible = entries
+      .filter((e) => e.isIntersecting)
+      .sort((a, b) => (b.intersectionRatio || 0) - (a.intersectionRatio || 0))[0];
 
-  sections.forEach(s => obs.observe(s));
+    if (!visible) return;
+    const id = "#" + visible.target.id;
+
+    navLinks.forEach((a) => {
+      if (a.getAttribute("href") === id) a.setAttribute("aria-current", "page");
+      else a.removeAttribute("aria-current");
+    });
+  }, { rootMargin: "-40% 0px -55% 0px", threshold: [0.01, 0.2, 0.35, 0.5] });
+
+  sections.forEach((s) => obs.observe(s));
 }
 
-function boot(){
-  // language: default DE, keep last
-  const stored = localStorage.getItem('4don_lang');
-  if (stored === 'en') state.lang = 'en';
+function setupYear() {
+  const y = $("#year");
+  if (y) y.textContent = String(new Date().getFullYear());
+}
 
-  // wire toggle
-  $$('#langToggle button').forEach(btn => {
-    btn.addEventListener('click', () => setLang(btn.dataset.lang));
-  });
+function boot() {
+  // restore language (default de)
+  const stored = localStorage.getItem(STORAGE_KEY);
+  if (stored === "en") state.lang = "en";
+
+  // language buttons
+  $("#lang-de")?.addEventListener("click", () => setLang("de"));
+  $("#lang-en")?.addEventListener("click", () => setLang("en"));
 
   setupNav();
-  setLang(state.lang);
+  setupYear();
+  applyI18n();
 }
 
-boot();
+document.addEventListener("DOMContentLoaded", boot);
