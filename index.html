@@ -22,27 +22,33 @@
 <body>
   <a class="skip" href="#content">Zum Inhalt springen</a>
 
-  <header class="header">
-    <div class="wrap header__inner">
-      <a class="brand" href="#top" aria-label="4don.com Home">
-        <img class="brand__logo" src="/assets/img/4don-mark.svg" width="24" height="24" alt="4don logo" />
-        <span class="brand__text">4don.com</span>
+<header class="site-header" id="top">
+  <div class="container header-inner">
+    <!-- Left: Logo -->
+    <div class="header-left">
+      <a class="brand" href="#top" aria-label="4don Home">
+        <img src="/assets/img/4don-mark.svg" alt="4don" class="brand-logo" />
       </a>
+    </div>
 
-      <div class="rightbar">
-        <nav class="nav" aria-label="Hauptnavigation">
-          <a class="nav__pill" href="#projects" data-i18n="nav_projects">Projekte</a>
-          <a class="nav__pill" href="#about" data-i18n="nav_about">Über mich</a>
-          <a class="nav__pill" href="#contact" data-i18n="nav_contact">Kontakt</a>
-        </nav>
+    <!-- Center: Pill-Nav -->
+    <nav class="header-center pill" aria-label="Primary">
+      <a class="pill-item" href="#projects" data-nav="projects" aria-current="page" data-i18n="nav_projects">Projekte</a>
+      <a class="pill-item" href="#about" data-nav="about" data-i18n="nav_about">Über mich</a>
+      <a class="pill-item" href="#contact" data-nav="contact" data-i18n="nav_contact">Kontakt</a>
+    </nav>
 
-        <div class="lang" aria-label="Language switcher">
-          <button id="btn-de" class="lang__pill active" type="button">DE</button>
-          <button id="btn-en" class="lang__pill" type="button">EN</button>
-        </div>
+    <!-- Right: Language-Pill -->
+    <div class="header-right">
+      <div class="pill pill-lang" role="group" aria-label="Language">
+        <button class="pill-item pill-btn" id="lang-de" type="button" aria-pressed="true">DE</button>
+        <span class="pill-sep" aria-hidden="true">·</span>
+        <button class="pill-item pill-btn" id="lang-en" type="button" aria-pressed="false">EN</button>
       </div>
     </div>
-  </header>
+  </div>
+</header>
+
 
   <main id="content" class="main">
     <section class="hero" id="top">
