@@ -3,216 +3,125 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>4don.com – Erik</title>
-  <meta name="description" content="Minimalistisches Portfolio: Automations- und Tech-Projekte von Erik (Raspberry Pi, Smart Home, Networking, Homelab)." />
+  <meta name="description" content="4don.com — Erik's minimalist portfolio for automation, Raspberry Pi, networking and homelab projects." />
+  <meta name="theme-color" content="#1b0f2a" />
 
-  <!-- CSS -->
-  <link rel="stylesheet" href="styles.css" />
+  <title>4don.com — Erik</title>
 
-  <!-- Favicons / PWA (passen zu deinem assets/icons Ordner) -->
-  <link rel="icon" href="assets/icons/favicon.ico" sizes="any">
-  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="assets/icons/favicon-16.png">
-  <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
-  <link rel="manifest" href="site.webmanifest">
-  <meta name="theme-color" content="#120a1f">
+  <!-- Favicons / App -->
+  <link rel="icon" href="/assets/icons/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" href="/assets/icons/favicon-32.png" sizes="32x32" />
+  <link rel="icon" type="image/png" href="/assets/icons/favicon-16.png" sizes="16x16" />
+  <link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
 
-  <!-- JS -->
-  <script defer src="script.js"></script>
+  <!-- Logo mark (used small in header). We intentionally do NOT show a big hero logo. -->
+  <link rel="preload" href="/assets/img/4don-mark.svg" as="image" type="image/svg+xml" />
+  <link rel="stylesheet" href="/styles.css" />
 </head>
-
 <body>
-  <a class="skip" href="#projects" data-i18n="skip">Zum Inhalt springen</a>
+  <a class="skip" href="#content">Zum Inhalt springen</a>
 
-  <div class="wrap">
-    <div class="topbar">
-      <a class="brand" href="#top" aria-label="4don.com">
-        <img class="brand-mark" src="assets/img/4don-mark-white.svg" alt="4don logo" width="22" height="22" />
-        <span>4don.com</span>
+  <header class="header">
+    <div class="wrap header__inner">
+      <a class="brand" href="#top" aria-label="4don.com Home">
+        <img class="brand__logo" src="/assets/img/4don-mark.svg" width="24" height="24" alt="4don logo" />
+        <span class="brand__text">4don.com</span>
       </a>
 
       <div class="rightbar">
-        <nav class="nav" aria-label="Navigation">
-          <a href="#projects" data-i18n="nav_projects">Projekte</a>
-          <a href="#about" data-i18n="nav_about">Über mich</a>
-          <a href="#contact" data-i18n="nav_contact">Kontakt</a>
+        <nav class="nav" aria-label="Hauptnavigation">
+          <a class="nav__pill" href="#projects" data-i18n="nav_projects">Projekte</a>
+          <a class="nav__pill" href="#about" data-i18n="nav_about">Über mich</a>
+          <a class="nav__pill" href="#contact" data-i18n="nav_contact">Kontakt</a>
         </nav>
 
         <div class="lang" aria-label="Language switcher">
-          <button id="btn-de" class="active" type="button">DE</button>
-          <button id="btn-en" type="button">English</button>
+          <button id="btn-de" class="lang__pill active" type="button">DE</button>
+          <button id="btn-en" class="lang__pill" type="button">EN</button>
         </div>
       </div>
     </div>
+  </header>
 
-    <header class="hero" id="top">
-      <div class="chips">
-        <span class="chip" data-i18n="chip_role">Automation Engineer</span>
-        <span class="chip">Raspberry Pi</span>
-        <span class="chip" data-i18n="chip_smarthome">Smart Home</span>
-        <span class="chip" data-i18n="chip_networking">Networking</span>
-        <span class="chip" data-i18n="chip_homelab">Homelab</span>
-      </div>
-
-      <h1 data-i18n="hero_title">Hi, ich bin Erik 👋</h1>
-      <p class="lead" data-i18n="hero_lead">
-        Ich baue pragmatische Automations- und Tech-Projekte, die im Alltag wirklich funktionieren.
-        Hier sammle ich Highlights – minimalistisch, schnell und ohne Buzzword-Overkill.
-      </p>
-
-      <div class="cta">
-        <a class="btn primary" href="#projects" data-i18n="cta_projects">🚀 Projekte ansehen</a>
-        <a class="btn" href="mailto:info@4don.com" data-i18n="cta_email">✉️ info@4don.com</a>
-        <a class="btn" href="https://github.com/e4don" target="_blank" rel="noopener" data-i18n="cta_github">🐙 GitHub</a>
-      </div>
-
-      <p class="hint" data-i18n="hint">
-        Tipp: Diese Seite ist statisch (Cloudflare Pages) — schnell, günstig, robust.
-      </p>
-    </header>
-
-    <main class="grid">
-      <section class="card" id="projects">
-        <div class="section-title">
-          <h2 data-i18n="projects_title">Projekte</h2>
-          <small data-i18n="projects_sub">Ausgewählte Dinge, die ich gebaut, optimiert oder automatisiert habe.</small>
-        </div>
-
-        <div class="projects">
-
-          <article class="proj">
-            <div class="t">
-              <h3 data-i18n="p1_title">RMV Info Display (Raspberry Pi Kiosk)</h3>
-              <p data-i18n="p1_desc">Live-Verbindungen, Laufwege & „Pendler-Mode“ – optimiert für schnelle „Ein Blick reicht“-Infos.</p>
-              <ul class="tags">
-                <li class="tag">Raspberry Pi</li>
-                <li class="tag" data-i18n="tag_kiosk">Kiosk UI</li>
-                <li class="tag">APIs</li>
-              </ul>
-              <div class="proj-actions">
-                <a class="linkbtn primary" href="#" data-i18n="more">Mehr</a>
-                <a class="linkbtn" href="https://github.com/e4don" target="_blank" rel="noopener">GitHub</a>
-              </div>
-            </div>
-          </article>
-
-          <article class="proj">
-            <div class="t">
-              <h3 data-i18n="p2_title">Home Assistant Setup</h3>
-              <p data-i18n="p2_desc">Automationen, Sensorik & smarter Alltag – ohne Cloud-Zwang, mit Fokus auf Stabilität.</p>
-              <ul class="tags">
-                <li class="tag" data-i18n="tag_smarthome">Smart Home</li>
-                <li class="tag">Self-Hosted</li>
-                <li class="tag" data-i18n="tag_security">Security</li>
-              </ul>
-              <div class="proj-actions">
-                <a class="linkbtn primary" href="#" data-i18n="more">Mehr</a>
-                <a class="linkbtn" href="https://github.com/e4don" target="_blank" rel="noopener">GitHub</a>
-              </div>
-            </div>
-          </article>
-
-          <article class="proj">
-            <div class="t">
-              <h3 data-i18n="p3_title">Synology Backup & Homelab</h3>
-              <p data-i18n="p3_desc">Backup-Strategien, Replikation, USV-Integration & saubere Datensicherung im Alltag.</p>
-              <ul class="tags">
-                <li class="tag">NAS</li>
-                <li class="tag" data-i18n="tag_backup">Backup</li>
-                <li class="tag" data-i18n="tag_network">Network</li>
-              </ul>
-              <div class="proj-actions">
-                <a class="linkbtn primary" href="#" data-i18n="more">Mehr</a>
-                <a class="linkbtn" href="https://github.com/e4don" target="_blank" rel="noopener">GitHub</a>
-              </div>
-            </div>
-          </article>
-
-          <article class="proj">
-            <div class="t">
-              <h3 data-i18n="p4_title">4don.com (Cloudflare Pages)</h3>
-              <p data-i18n="p4_desc">Minimal-Portfolio, schnell deployt – gebaut als Basis für spätere Blog/Wiki-Erweiterung.</p>
-              <ul class="tags">
-                <li class="tag">Cloudflare</li>
-                <li class="tag">Pages</li>
-                <li class="tag">DNS</li>
-              </ul>
-              <div class="proj-actions">
-                <a class="linkbtn primary" href="#contact" data-i18n="contact">Kontakt</a>
-                <a class="linkbtn" href="https://github.com/e4don/4don-portfolio" target="_blank" rel="noopener">Repo</a>
-              </div>
-            </div>
-          </article>
-
-        </div>
-      </section>
-
-      <aside class="card about" id="about">
-        <div class="section-title">
-          <h2 data-i18n="about_title">Über mich</h2>
-          <small data-i18n="about_sub">„Klarer Plan, saubere Umsetzung.“</small>
-        </div>
-
-        <p data-i18n="about_text">
-          Fokus auf robuste Lösungen, die auch nach Monaten noch laufen – und nicht nur im Screenshot gut aussehen.
-        </p>
-
-        <h3 class="muted-h" data-i18n="stack_title">Stack / Tools</h3>
-        <ul class="stack">
-          <li>Cloudflare</li>
-          <li>GitHub</li>
-          <li>Raspberry Pi</li>
-          <li>Home Assistant</li>
-          <li>Synology</li>
-          <li data-i18n="stack_networks">Netzwerke</li>
-          <li data-i18n="stack_automation">Automatisierung</li>
-        </ul>
-
-        <div id="contact" class="contact">
-          <div class="section-title">
-            <h2 data-i18n="contact_title">Kontakt</h2>
-            <small data-i18n="contact_sub">Schreib mir gern.</small>
+  <main id="content" class="main">
+    <section class="hero" id="top">
+      <div class="wrap">
+        <div class="card hero__card">
+          <div class="hero__meta">
+            <span class="pill" data-i18n="pill_role">Automation Engineer</span>
+            <span class="hero__topics" data-i18n="topics">Raspberry Pi · Smart Home · Networking · Homelab</span>
           </div>
 
-          <div class="contactbox">
-            <div class="contact-row">
-              <a class="pill" href="mailto:info@4don.com">
-                <span>
-                  <strong data-i18n="contact_mail_strong">info@4don.com</strong><br>
-                  <span class="pill-sub" data-i18n="contact_mail_small">Mail senden</span>
-                </span>
-                <span class="pill-arrow">↗</span>
-              </a>
+          <div class="hero__grid">
+            <div>
+              <h1 class="h1" data-i18n="hero_title">Hi, ich bin Erik <span aria-hidden="true">👋</span></h1>
+              <p class="lead" data-i18n="hero_lead">
+                Ich baue gern pragmatische Automations- und Tech-Projekte, die im Alltag wirklich funktionieren.
+                Hier sammle ich meine Highlights – minimalistisch, schnell und ohne Buzzword-Overkill.
+              </p>
 
-              <div class="pill">
-                <span>
-                  <strong data-i18n="copy_title">Adresse kopieren</strong><br>
-                  <span class="pill-sub" data-i18n="copy_sub">ein Klick → Zwischenablage</span>
-                </span>
-                <button type="button" class="pill-btn" onclick="copyText('info@4don.com', this)" data-i18n="copy_btn">Kopieren</button>
+              <div class="hero__cta">
+                <a class="btn btn--primary" href="#projects" data-i18n="cta_projects">🚀 Projekte ansehen</a>
+                <a class="btn btn--ghost" href="mailto:info@4don.com" id="contactEmailBtn">info@4don.com</a>
+                <a class="btn btn--ghost" href="https://github.com/e4don" target="_blank" rel="noreferrer">GitHub</a>
+              </div>
+
+              <div class="subtle" data-i18n="hero_note">
+                Tipp: Diese Seite ist statisch (Cloudflare Pages) — schnell, günstig, robust.
               </div>
             </div>
 
-            <div class="contact-row">
-              <a class="pill" href="https://github.com/e4don" target="_blank" rel="noopener">
-                <span><strong>GitHub</strong><br><span class="pill-sub">github.com/e4don</span></span>
-                <span class="pill-arrow">↗</span>
-              </a>
-
-              <div class="pill">
-                <span class="status"><i></i><strong data-i18n="status_online">Online</strong><br><span class="pill-sub" data-i18n="status_deployed">Deployed via Cloudflare Pages</span></span>
-                <span class="pill-arrow">✓</span>
-              </div>
-            </div>
+            <!-- Logo stays only in header (no large hero logo) -->
           </div>
         </div>
-      </aside>
-    </main>
 
-    <footer>
-      <span>© <span id="year"></span> Erik · 4don.com</span>
-      <span data-i18n="footer_right">Deployed with Cloudflare Pages</span>
-    </footer>
-  </div>
+        <div class="grid">
+          <section class="card" id="projects">
+            <div class="card__head">
+              <h2 class="h2" data-i18n="projects_title">Projekte</h2>
+              <p class="muted" data-i18n="projects_sub">Ausgewählte Dinge, die ich gebaut, optimiert oder automatisiert habe.</p>
+            </div>
+
+            <div class="projects" id="projectsList" aria-live="polite"></div>
+          </section>
+
+          <aside class="card" id="about">
+            <div class="card__head">
+              <h2 class="h2" data-i18n="about_title">Über mich</h2>
+              <p class="muted" data-i18n="about_text">
+                Ich mag: "klarer Plan, saubere Umsetzung".
+                Fokus auf robuste Lösungen, die auch nach Monaten noch laufen — und nicht nur im Screenshot gut aussehen.
+              </p>
+            </div>
+
+            <div class="stack">
+              <h3 class="h3" data-i18n="stack_title">Stack / Tools</h3>
+              <ul class="list" id="stackList">
+                <li>Cloudflare Pages · GitHub</li>
+                <li>Raspberry Pi · Home Assistant</li>
+                <li>Synology · Networking</li>
+                <li>Automation</li>
+              </ul>
+            </div>
+
+            <div class="contact" id="contact">
+              <h3 class="h3" data-i18n="contact_title">Kontakt</h3>
+              <p class="muted" data-i18n="contact_text">Schreib mir gern:</p>
+              <a class="btn btn--primary btn--full" href="mailto:info@4don.com" id="contactEmail">✉️ info@4don.com</a>
+              <p class="subtle" data-i18n="contact_note">(Formular optional — kommt später, wenn du willst.)</p>
+            </div>
+          </aside>
+        </div>
+
+        <footer class="footer">
+          <div class="footer__left">© <span id="year"></span> Erik · 4don.com</div>
+          <div class="footer__right">Deployed with Cloudflare Pages</div>
+        </footer>
+      </div>
+    </section>
+  </main>
+
+  <script src="/script.js" defer></script>
 </body>
 </html>
