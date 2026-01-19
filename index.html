@@ -17,59 +17,63 @@
 
   <!-- Logo mark (used small in header). We intentionally do NOT show a big hero logo. -->
   <link rel="preload" href="/assets/img/4don-mark.svg" as="image" type="image/svg+xml" />
+
   <link rel="stylesheet" href="/styles.css" />
 </head>
 <body>
   <a class="skip" href="#content">Zum Inhalt springen</a>
 
-<header class="site-header" id="top">
-  <div class="container header-inner">
-    <!-- Left: Logo -->
-    <div class="header-left">
-      <a class="brand" href="#top" aria-label="4don Home">
-        <img src="/assets/img/4don-mark.svg" alt="4don" class="brand-logo" />
-      </a>
-    </div>
+  <!-- Header: 3 zones (Left / Center / Right) -->
+  <header class="header" id="top">
+    <div class="wrap header__inner header__grid">
+      <!-- Left: Logo -->
+      <div class="header__left">
+        <a class="brand" href="#top" aria-label="4don.com Home">
+          <img class="brand__logo" src="/assets/img/4don-mark.svg" width="24" height="24" alt="4don logo" />
+          <span class="brand__text">4don.com</span>
+        </a>
+      </div>
 
-    <!-- Center: Pill-Nav -->
-    <nav class="header-center pill" aria-label="Primary">
-      <a class="pill-item" href="#projects" data-nav="projects" aria-current="page" data-i18n="nav_projects">Projekte</a>
-      <a class="pill-item" href="#about" data-nav="about" data-i18n="nav_about">Über mich</a>
-      <a class="pill-item" href="#contact" data-nav="contact" data-i18n="nav_contact">Kontakt</a>
-    </nav>
+      <!-- Center: Pill Nav -->
+      <nav class="nav pill" aria-label="Hauptnavigation">
+        <a class="nav__pill" href="#projects" data-nav="projects" aria-current="page" data-i18n="nav_projects">Projekte</a>
+        <a class="nav__pill" href="#about" data-nav="about" data-i18n="nav_about">Über mich</a>
+        <a class="nav__pill" href="#contact" data-nav="contact" data-i18n="nav_contact">Kontakt</a>
+      </nav>
 
-    <!-- Right: Language-Pill -->
-    <div class="header-right">
-      <div class="pill pill-lang" role="group" aria-label="Language">
-        <button class="pill-item pill-btn" id="lang-de" type="button" aria-pressed="true">DE</button>
-        <span class="pill-sep" aria-hidden="true">·</span>
-        <button class="pill-item pill-btn" id="lang-en" type="button" aria-pressed="false">EN</button>
+      <!-- Right: Language Pill -->
+      <div class="header__right">
+        <div class="lang pill" id="langToggle" aria-label="Language switcher" role="group">
+          <button id="lang-de" class="lang__pill active" type="button" data-lang="de" aria-pressed="true">DE</button>
+          <span class="lang__sep" aria-hidden="true">·</span>
+          <button id="lang-en" class="lang__pill" type="button" data-lang="en" aria-pressed="false">English</button>
+        </div>
       </div>
     </div>
-  </div>
-</header>
-
+  </header>
 
   <main id="content" class="main">
-    <section class="hero" id="top">
+    <section class="hero" aria-label="Hero">
       <div class="wrap">
         <div class="card hero__card">
           <div class="hero__meta">
-            <span class="pill" data-i18n="pill_role">Automation Engineer</span>
-            <span class="hero__topics" data-i18n="topics">Raspberry Pi · Smart Home · Networking · Homelab</span>
+            <span class="pill hero__pill" data-i18n="badge_role">Automation Engineer</span>
+            <span class="hero__topics" data-i18n="badge_topics">Raspberry Pi · Smart Home · Networking · Homelab</span>
           </div>
 
           <div class="hero__grid">
             <div>
               <h1 class="h1" data-i18n="hero_title">Hi, ich bin Erik <span aria-hidden="true">👋</span></h1>
-              <p class="lead" data-i18n="hero_lead">
-                Ich baue gern pragmatische Automations- und Tech-Projekte, die im Alltag wirklich funktionieren.
-                Hier sammle ich meine Highlights – minimalistisch, schnell und ohne Buzzword-Overkill.
+              <p class="lead" data-i18n="hero_subtitle">
+                Ich baue pragmatische Automations- und Tech-Projekte, die im Alltag wirklich funktionieren — minimalistisch, schnell und ohne Buzzword-Overkill.
               </p>
 
               <div class="hero__cta">
                 <a class="btn btn--primary" href="#projects" data-i18n="cta_projects">🚀 Projekte ansehen</a>
+
+                <!-- mail must be info@4don.com -->
                 <a class="btn btn--ghost" href="mailto:info@4don.com" id="contactEmailBtn">info@4don.com</a>
+
                 <a class="btn btn--ghost" href="https://github.com/e4don" target="_blank" rel="noreferrer">GitHub</a>
               </div>
 
@@ -78,7 +82,7 @@
               </div>
             </div>
 
-            <!-- Logo stays only in header (no large hero logo) -->
+            <!-- intentionally no big hero logo -->
           </div>
         </div>
 
@@ -86,9 +90,10 @@
           <section class="card" id="projects">
             <div class="card__head">
               <h2 class="h2" data-i18n="projects_title">Projekte</h2>
-              <p class="muted" data-i18n="projects_sub">Ausgewählte Dinge, die ich gebaut, optimiert oder automatisiert habe.</p>
+              <p class="muted" data-i18n="projects_desc">Ausgewählte Dinge, die ich gebaut, optimiert oder automatisiert habe.</p>
             </div>
 
+            <!-- JS renders projects here -->
             <div class="projects" id="projectsList" aria-live="polite"></div>
           </section>
 
@@ -96,15 +101,14 @@
             <div class="card__head">
               <h2 class="h2" data-i18n="about_title">Über mich</h2>
               <p class="muted" data-i18n="about_text">
-                Ich mag: "klarer Plan, saubere Umsetzung".
-                Fokus auf robuste Lösungen, die auch nach Monaten noch laufen — und nicht nur im Screenshot gut aussehen.
+                Ich mag: „klarer Plan, saubere Umsetzung“. Fokus auf robuste Lösungen, die auch nach Monaten noch laufen — und nicht nur im Screenshot gut aussehen.
               </p>
             </div>
 
             <div class="stack">
               <h3 class="h3" data-i18n="stack_title">Stack / Tools</h3>
               <ul class="list" id="stackList">
-                <li>Cloudflare Pages · GitHub</li>
+                <li>Cloudflare · GitHub</li>
                 <li>Raspberry Pi · Home Assistant</li>
                 <li>Synology · Networking</li>
                 <li>Automation</li>
@@ -114,15 +118,17 @@
             <div class="contact" id="contact">
               <h3 class="h3" data-i18n="contact_title">Kontakt</h3>
               <p class="muted" data-i18n="contact_text">Schreib mir gern:</p>
+
               <a class="btn btn--primary btn--full" href="mailto:info@4don.com" id="contactEmail">✉️ info@4don.com</a>
+
               <p class="subtle" data-i18n="contact_note">(Formular optional — kommt später, wenn du willst.)</p>
             </div>
           </aside>
         </div>
 
         <footer class="footer">
-          <div class="footer__left">© <span id="year"></span> Erik · 4don.com</div>
-          <div class="footer__right">Deployed with Cloudflare Pages</div>
+          <div class="footer__left" data-i18n="footer_left">© <span id="year"></span> Erik · 4don.com</div>
+          <div class="footer__right" data-i18n="footer_right">Deployed with Cloudflare Pages</div>
         </footer>
       </div>
     </section>
