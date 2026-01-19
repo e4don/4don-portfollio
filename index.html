@@ -3,556 +3,128 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>4don.com – Erik</title>
-  <meta name="description" content="Minimalistisches Portfolio: Automations- und Tech-Projekte von Erik (Raspberry Pi, Smart Home, Networking, Homelab)." />
+  <meta name="description" content="4don.com — Erik's minimalist portfolio for automation, Raspberry Pi, networking and homelab projects." />
+  <meta name="theme-color" content="#1b0f2a" />
 
-  <style>
-    :root{
-      --bg0:#08060e;
-      --bg1:#0d0a16;
-      --card: rgba(255,255,255,.06);
-      --stroke: rgba(255,255,255,.10);
-      --text: rgba(255,255,255,.92);
-      --muted: rgba(255,255,255,.70);
-      --muted2: rgba(255,255,255,.55);
+  <title>4don.com — Erik</title>
 
-      --p1:#a855f7;
-      --p2:#7c3aed;
-      --p3:#22d3ee;
-      --ok:#22c55e;
+  <!-- Favicons / App -->
+  <link rel="icon" href="/assets/icons/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" href="/assets/icons/favicon-32.png" sizes="32x32" />
+  <link rel="icon" type="image/png" href="/assets/icons/favicon-16.png" sizes="16x16" />
+  <link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
 
-      --radius: 18px;
-      --radius2: 24px;
-      --shadow: 0 20px 60px rgba(0,0,0,.45);
-      --blur: 14px;
-      --max: 1050px;
-    }
-
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
-      color:var(--text);
-      background:
-        radial-gradient(1000px 600px at 15% 15%, rgba(168,85,247,.28), transparent 60%),
-        radial-gradient(900px 560px at 80% 20%, rgba(124,58,237,.22), transparent 55%),
-        radial-gradient(900px 700px at 50% 85%, rgba(34,211,238,.10), transparent 60%),
-        linear-gradient(180deg, var(--bg0), var(--bg1));
-      background-attachment: fixed;
-    }
-
-    a{color:inherit; text-decoration:none}
-    .wrap{max-width:var(--max); margin:0 auto; padding:28px 18px 44px;}
-
-    .topbar{
-      display:flex; align-items:center; justify-content:space-between;
-      gap:12px; margin:10px 0 18px;
-    }
-    .brand{
-      display:flex; align-items:center; gap:10px; font-weight:700; letter-spacing:.2px;
-    }
-    .dot{width:10px; height:10px; border-radius:999px; background:linear-gradient(135deg,var(--p1),var(--p2)); box-shadow:0 0 0 6px rgba(168,85,247,.12)}
-
-    .rightbar{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      flex-wrap:wrap;
-      justify-content:flex-end;
-    }
-
-    .nav{
-      display:flex; gap:8px; align-items:center;
-      padding:6px; border:1px solid var(--stroke);
-      background:rgba(255,255,255,.04); border-radius:999px;
-      backdrop-filter: blur(var(--blur));
-    }
-    .nav a{
-      padding:8px 12px; border-radius:999px; color:var(--muted);
-      font-size:13px; transition:.2s ease;
-    }
-    .nav a:hover{color:var(--text); background:rgba(255,255,255,.06)}
-
-    .lang{
-      display:flex; gap:6px; align-items:center;
-      padding:6px; border:1px solid var(--stroke);
-      background:rgba(255,255,255,.04); border-radius:999px;
-      backdrop-filter: blur(var(--blur));
-    }
-    .lang button{
-      appearance:none;
-      border:1px solid transparent;
-      background:transparent;
-      color:var(--muted);
-      font-size:13px;
-      padding:8px 10px;
-      border-radius:999px;
-      cursor:pointer;
-      transition:.2s ease;
-    }
-    .lang button:hover{color:var(--text); background:rgba(255,255,255,.06)}
-    .lang button.active{
-      color:var(--text);
-      border-color: rgba(168,85,247,.35);
-      background: linear-gradient(135deg, rgba(168,85,247,.18), rgba(124,58,237,.12));
-    }
-
-    .hero{
-      margin-top:14px;
-      border:1px solid var(--stroke);
-      background:linear-gradient(135deg, rgba(255,255,255,.07), rgba(255,255,255,.03));
-      border-radius: var(--radius2);
-      padding:26px 24px;
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(var(--blur));
-    }
-    .chips{display:flex; flex-wrap:wrap; gap:8px; margin-bottom:10px}
-    .chip{
-      font-size:12px; color:var(--muted);
-      padding:6px 10px; border-radius:999px;
-      border:1px solid var(--stroke);
-      background:rgba(255,255,255,.04);
-    }
-    h1{margin:0 0 10px; font-size:38px; line-height:1.1}
-    .lead{margin:0 0 16px; color:var(--muted); max-width:72ch}
-    .cta{display:flex; flex-wrap:wrap; gap:10px; margin-top:10px}
-    .btn{
-      display:inline-flex; align-items:center; gap:8px;
-      padding:10px 12px; border-radius:12px;
-      border:1px solid var(--stroke);
-      background:rgba(255,255,255,.04);
-      color:var(--text);
-      font-size:13px; transition:.2s ease;
-    }
-    .btn:hover{transform: translateY(-1px); background:rgba(255,255,255,.07)}
-    .btn.primary{
-      border-color: rgba(168,85,247,.35);
-      background: linear-gradient(135deg, rgba(168,85,247,.22), rgba(124,58,237,.16));
-    }
-
-    .grid{
-      margin-top:18px;
-      display:grid; grid-template-columns: 1.6fr 1fr; gap:14px;
-    }
-    @media (max-width: 920px){
-      .grid{grid-template-columns:1fr}
-      h1{font-size:34px}
-    }
-
-    .card{
-      border:1px solid var(--stroke);
-      background:rgba(255,255,255,.04);
-      border-radius: var(--radius);
-      padding:16px 16px;
-      backdrop-filter: blur(var(--blur));
-    }
-    .card h2{margin:0 0 6px; font-size:16px}
-    .card p{margin:0; color:var(--muted); font-size:13px; line-height:1.45}
-    .section-title{display:flex; align-items:baseline; justify-content:space-between; gap:10px; margin-bottom:10px}
-    .section-title small{color:var(--muted2)}
-
-    .projects{
-      display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:10px;
-    }
-    @media (max-width: 700px){ .projects{grid-template-columns:1fr} }
-
-    .proj{
-      border:1px solid var(--stroke);
-      background:linear-gradient(135deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
-      border-radius:16px;
-      padding:14px;
-      transition:.2s ease;
-      position:relative;
-      overflow:hidden;
-    }
-    .proj:before{
-      content:"";
-      position:absolute; inset:-2px;
-      background: radial-gradient(520px 240px at 20% 0%, rgba(168,85,247,.22), transparent 60%);
-      opacity:.85;
-      pointer-events:none;
-    }
-    .proj:hover{transform: translateY(-2px); background:rgba(255,255,255,.06)}
-    .proj .t{position:relative; z-index:1}
-    .proj h3{margin:0 0 6px; font-size:14px}
-    .proj p{margin:0 0 10px; color:var(--muted); font-size:13px}
-    .tags{display:flex; flex-wrap:wrap; gap:6px; margin:0 0 10px; padding:0; list-style:none}
-    .tag{
-      font-size:11px; color:rgba(255,255,255,.75);
-      padding:5px 8px; border-radius:999px;
-      border:1px solid rgba(255,255,255,.10);
-      background:rgba(0,0,0,.18);
-    }
-    .proj-actions{display:flex; gap:8px; flex-wrap:wrap}
-    .linkbtn{
-      font-size:12px; padding:8px 10px; border-radius:12px;
-      border:1px solid rgba(255,255,255,.12);
-      background:rgba(255,255,255,.04);
-      color:var(--text);
-      display:inline-flex; align-items:center; gap:8px;
-    }
-    .linkbtn:hover{background:rgba(255,255,255,.07)}
-    .linkbtn.primary{
-      border-color: rgba(168,85,247,.35);
-      background: linear-gradient(135deg, rgba(168,85,247,.18), rgba(124,58,237,.12));
-    }
-
-    .about ul{margin:10px 0 0; padding:0; list-style:none; display:flex; flex-wrap:wrap; gap:8px}
-    .about li{font-size:12px; color:var(--muted); border:1px solid var(--stroke); background:rgba(255,255,255,.03); padding:6px 9px; border-radius:999px}
-
-    .contactbox{display:flex; flex-direction:column; gap:10px; margin-top:10px}
-    .contact-row{display:flex; gap:10px; flex-wrap:wrap}
-    .pill{
-      flex:1;
-      min-width: 220px;
-      display:flex; align-items:center; justify-content:space-between; gap:10px;
-      padding:10px 12px;
-      border-radius:14px;
-      border:1px solid var(--stroke);
-      background:rgba(255,255,255,.04);
-      color:var(--muted);
-    }
-    .pill strong{color:var(--text); font-weight:600}
-    .pill button{
-      border:1px solid rgba(255,255,255,.12);
-      background:rgba(255,255,255,.05);
-      color:var(--text);
-      padding:8px 10px;
-      border-radius:12px;
-      cursor:pointer;
-    }
-    .pill button:hover{background:rgba(255,255,255,.08)}
-    footer{
-      margin-top:16px;
-      display:flex;
-      justify-content:space-between;
-      gap:10px;
-      color:rgba(255,255,255,.45);
-      font-size:12px;
-      padding:6px 2px;
-    }
-    .status{display:inline-flex; align-items:center; gap:6px}
-    .status i{width:8px; height:8px; border-radius:99px; background:var(--ok); box-shadow:0 0 0 6px rgba(34,197,94,.12)}
-  </style>
+  <link rel="preload" href="/assets/img/4don-mark.svg" as="image" type="image/svg+xml" />
+  <link rel="stylesheet" href="/styles.css" />
 </head>
-
 <body>
-  <div class="wrap">
-    <div class="topbar">
-      <div class="brand">
-        <span class="dot"></span>
-        <span>4don.com</span>
-      </div>
+  <a class="skip" href="#content">Zum Inhalt springen</a>
 
-      <div class="rightbar">
-        <nav class="nav" aria-label="Navigation">
-          <a href="#projects" data-i18n="nav_projects">Projekte</a>
-          <a href="#about" data-i18n="nav_about">Über mich</a>
-          <a href="#contact" data-i18n="nav_contact">Kontakt</a>
-        </nav>
+  <header class="header">
+    <div class="wrap header__inner">
+      <a class="brand" href="#top" aria-label="4don.com Home">
+        <span class="brand__dot" aria-hidden="true"></span>
+        <span class="brand__text">4don.com</span>
+      </a>
 
-        <div class="lang" aria-label="Language switcher">
-          <button id="btn-de" class="active" type="button">DE</button>
-          <button id="btn-en" type="button">EN</button>
-        </div>
+      <nav class="nav" aria-label="Hauptnavigation">
+        <a class="nav__link" href="#projects" data-i18n="nav_projects">Projekte</a>
+        <a class="nav__link" href="#about" data-i18n="nav_about">Über mich</a>
+        <a class="nav__link" href="#contact" data-i18n="nav_contact">Kontakt</a>
+      </nav>
+
+      <div class="actions">
+        <button class="chip" id="langToggle" type="button" aria-label="Sprache umschalten">
+          <span class="chip__label" id="langLabel">DE</span>
+          <span class="chip__sep" aria-hidden="true">·</span>
+          <span class="chip__hint" id="langHint">English</span>
+        </button>
       </div>
     </div>
+  </header>
 
-    <header class="hero" id="top">
-      <div class="chips">
-        <span class="chip" data-i18n="chip_role">Automation Engineer</span>
-        <span class="chip">Raspberry Pi</span>
-        <span class="chip" data-i18n="chip_smarthome">Smart Home</span>
-        <span class="chip" data-i18n="chip_networking">Networking</span>
-        <span class="chip" data-i18n="chip_homelab">Homelab</span>
-      </div>
-
-      <h1 data-i18n="hero_title">Hi, ich bin Erik 👋</h1>
-      <p class="lead" data-i18n="hero_lead">
-        Ich baue pragmatische Automations- und Tech-Projekte, die im Alltag wirklich funktionieren.
-        Hier sammle ich Highlights – minimalistisch, schnell und ohne Buzzword-Overkill.
-      </p>
-
-      <div class="cta">
-        <a class="btn primary" href="#projects" data-i18n="cta_projects">🚀 Projekte ansehen</a>
-        <!-- Mail bleibt erstmal erik@... (wie du wolltest). Ändern wir beim nächsten Commit auf info@. -->
-        <a class="btn" href="mailto:erik@4don.com" data-i18n="cta_email">✉️ erik@4don.com</a>
-        <a class="btn" href="https://github.com/e4don" target="_blank" rel="noopener" data-i18n="cta_github">🐙 GitHub</a>
-      </div>
-    </header>
-
-    <main class="grid">
-      <section class="card" id="projects">
-        <div class="section-title">
-          <h2 data-i18n="projects_title">Projekte</h2>
-          <small data-i18n="projects_sub">Ausgewählte Dinge, die ich gebaut, optimiert oder automatisiert habe.</small>
-        </div>
-
-        <div class="projects">
-
-          <article class="proj">
-            <div class="t">
-              <h3 data-i18n="p1_title">RMV Info Display (Raspberry Pi Kiosk)</h3>
-              <p data-i18n="p1_desc">Live-Verbindungen, Laufwege & „Pendler-Mode“ – optimiert für schnelle „Ein Blick reicht“-Infos.</p>
-              <ul class="tags">
-                <li class="tag">Raspberry Pi</li>
-                <li class="tag" data-i18n="tag_kiosk">Kiosk UI</li>
-                <li class="tag">APIs</li>
-              </ul>
-              <div class="proj-actions">
-                <a class="linkbtn primary" href="#" data-i18n="more">Mehr</a>
-                <a class="linkbtn" href="https://github.com/e4don" target="_blank" rel="noopener">GitHub</a>
-              </div>
-            </div>
-          </article>
-
-          <article class="proj">
-            <div class="t">
-              <h3 data-i18n="p2_title">Home Assistant Setup</h3>
-              <p data-i18n="p2_desc">Automationen, Sensorik & smarter Alltag – ohne Cloud-Zwang, mit Fokus auf Stabilität.</p>
-              <ul class="tags">
-                <li class="tag" data-i18n="tag_smarthome">Smart Home</li>
-                <li class="tag">Self-Hosted</li>
-                <li class="tag" data-i18n="tag_security">Security</li>
-              </ul>
-              <div class="proj-actions">
-                <a class="linkbtn primary" href="#" data-i18n="more">Mehr</a>
-                <a class="linkbtn" href="https://github.com/e4don" target="_blank" rel="noopener">GitHub</a>
-              </div>
-            </div>
-          </article>
-
-          <article class="proj">
-            <div class="t">
-              <h3 data-i18n="p3_title">Synology Backup & Homelab</h3>
-              <p data-i18n="p3_desc">Backup-Strategien, Replikation, USV-Integration & saubere Datensicherung im Alltag.</p>
-              <ul class="tags">
-                <li class="tag">NAS</li>
-                <li class="tag" data-i18n="tag_backup">Backup</li>
-                <li class="tag" data-i18n="tag_network">Network</li>
-              </ul>
-              <div class="proj-actions">
-                <a class="linkbtn primary" href="#" data-i18n="more">Mehr</a>
-                <a class="linkbtn" href="https://github.com/e4don" target="_blank" rel="noopener">GitHub</a>
-              </div>
-            </div>
-          </article>
-
-          <article class="proj">
-            <div class="t">
-              <h3 data-i18n="p4_title">4don.com (Cloudflare Pages)</h3>
-              <p data-i18n="p4_desc">Minimal-Portfolio, schnell deployt – gebaut als Basis für spätere Blog/Wiki-Erweiterung.</p>
-              <ul class="tags">
-                <li class="tag">Cloudflare</li>
-                <li class="tag">Pages</li>
-                <li class="tag">DNS</li>
-              </ul>
-              <div class="proj-actions">
-                <a class="linkbtn primary" href="#contact" data-i18n="contact">Kontakt</a>
-                <a class="linkbtn" href="https://github.com/e4don/4don-portfolio" target="_blank" rel="noopener">Repo</a>
-              </div>
-            </div>
-          </article>
-
-        </div>
-      </section>
-
-      <aside class="card about" id="about">
-        <div class="section-title">
-          <h2 data-i18n="about_title">Über mich</h2>
-          <small data-i18n="about_sub">„Klarer Plan, saubere Umsetzung.“</small>
-        </div>
-
-        <p data-i18n="about_text">
-          Fokus auf robuste Lösungen, die auch nach Monaten noch laufen – und nicht nur im Screenshot gut aussehen.
-        </p>
-
-        <h3 style="margin:14px 0 6px; font-size:13px; color:var(--muted)" data-i18n="stack_title">Stack / Tools</h3>
-        <ul>
-          <li>Cloudflare</li>
-          <li>GitHub</li>
-          <li>Raspberry Pi</li>
-          <li>Home Assistant</li>
-          <li>Synology</li>
-          <li data-i18n="stack_networks">Netzwerke</li>
-          <li data-i18n="stack_automation">Automatisierung</li>
-        </ul>
-
-        <div id="contact" style="margin-top:16px">
-          <div class="section-title">
-            <h2 data-i18n="contact_title">Kontakt</h2>
-            <small data-i18n="contact_sub">Schreib mir gern.</small>
+  <main id="content" class="main">
+    <section class="hero" id="top">
+      <div class="wrap">
+        <div class="card hero__card">
+          <div class="hero__meta">
+            <span class="pill" data-i18n="pill_role">Automation Engineer</span>
+            <span class="hero__topics" data-i18n="topics">Raspberry Pi · Smart Home · Networking · Homelab</span>
           </div>
 
-          <div class="contactbox">
-            <div class="contact-row">
-              <a class="pill" href="mailto:erik@4don.com">
-                <span><strong data-i18n="contact_mail_strong">erik@4don.com</strong><br><span style="font-size:12px; color:var(--muted2)" data-i18n="contact_mail_small">Mail senden</span></span>
-                <span style="opacity:.85">↗</span>
-              </a>
+          <div class="hero__grid">
+            <div>
+              <h1 class="h1" data-i18n="hero_title">Hi, ich bin Erik <span aria-hidden="true">👋</span></h1>
+              <p class="lead" data-i18n="hero_lead">
+                Ich baue gern pragmatische Automations- und Tech-Projekte, die im Alltag wirklich funktionieren.
+                Hier sammle ich meine Highlights – minimalistisch, schnell und ohne Buzzword-Overkill.
+              </p>
 
-              <div class="pill">
-                <span><strong data-i18n="copy_title">Adresse kopieren</strong><br><span style="font-size:12px; color:var(--muted2)" data-i18n="copy_sub">ein Klick → Zwischenablage</span></span>
-                <button type="button" onclick="copyText('erik@4don.com', this)" data-i18n="copy_btn">Kopieren</button>
+              <div class="hero__cta">
+                <a class="btn btn--primary" href="#projects" data-i18n="cta_projects">🚀 Projekte ansehen</a>
+                <a class="btn btn--ghost" href="mailto:info@4don.com" id="contactEmailBtn">info@4don.com</a>
+                <a class="btn btn--ghost" href="https://github.com/e4don" target="_blank" rel="noreferrer">GitHub</a>
+              </div>
+
+              <div class="subtle" data-i18n="hero_note">
+                Tipp: Diese Seite ist statisch (Cloudflare Pages) — schnell, günstig, robust.
               </div>
             </div>
 
-            <div class="contact-row">
-              <a class="pill" href="https://github.com/e4don" target="_blank" rel="noopener">
-                <span><strong>GitHub</strong><br><span style="font-size:12px; color:var(--muted2)">github.com/e4don</span></span>
-                <span style="opacity:.85">↗</span>
-              </a>
-
-              <div class="pill">
-                <span class="status"><i></i><strong data-i18n="status_online">Online</strong><br><span style="font-size:12px; color:var(--muted2)" data-i18n="status_deployed">Deployed via Cloudflare Pages</span></span>
-                <span style="opacity:.85">✓</span>
-              </div>
+            <div class="hero__mark" aria-hidden="true">
+              <img src="/assets/img/4don-mark.svg" alt="" />
+              <div class="glow"></div>
             </div>
           </div>
         </div>
-      </aside>
-    </main>
 
-    <footer>
-      <span>© <span id="year"></span> Erik · 4don.com</span>
-      <span data-i18n="footer_right">Deployed with Cloudflare Pages</span>
-    </footer>
-  </div>
+        <div class="grid">
+          <section class="card" id="projects">
+            <div class="card__head">
+              <h2 class="h2" data-i18n="projects_title">Projekte</h2>
+              <p class="muted" data-i18n="projects_sub">Ausgewählte Dinge, die ich gebaut, optimiert oder automatisiert habe.</p>
+            </div>
 
-  <script>
-    const I18N = {
-      de: {
-        nav_projects: "Projekte",
-        nav_about: "Über mich",
-        nav_contact: "Kontakt",
-        chip_role: "Automation Engineer",
-        chip_smarthome: "Smart Home",
-        chip_networking: "Networking",
-        chip_homelab: "Homelab",
-        hero_title: "Hi, ich bin Erik 👋",
-        hero_lead: "Ich baue pragmatische Automations- und Tech-Projekte, die im Alltag wirklich funktionieren. Hier sammle ich Highlights – minimalistisch, schnell und ohne Buzzword-Overkill.",
-        cta_projects: "🚀 Projekte ansehen",
-        cta_email: "✉️ erik@4don.com",
-        cta_github: "🐙 GitHub",
-        projects_title: "Projekte",
-        projects_sub: "Ausgewählte Dinge, die ich gebaut, optimiert oder automatisiert habe.",
-        more: "Mehr",
-        contact: "Kontakt",
-        tag_kiosk: "Kiosk UI",
-        tag_smarthome: "Smart Home",
-        tag_security: "Security",
-        tag_backup: "Backup",
-        tag_network: "Network",
-        p1_title: "RMV Info Display (Raspberry Pi Kiosk)",
-        p1_desc: "Live-Verbindungen, Laufwege & „Pendler-Mode“ – optimiert für schnelle „Ein Blick reicht“-Infos.",
-        p2_title: "Home Assistant Setup",
-        p2_desc: "Automationen, Sensorik & smarter Alltag – ohne Cloud-Zwang, mit Fokus auf Stabilität.",
-        p3_title: "Synology Backup & Homelab",
-        p3_desc: "Backup-Strategien, Replikation, USV-Integration & saubere Datensicherung im Alltag.",
-        p4_title: "4don.com (Cloudflare Pages)",
-        p4_desc: "Minimal-Portfolio, schnell deployt – gebaut als Basis für spätere Blog/Wiki-Erweiterung.",
-        about_title: "Über mich",
-        about_sub: "„Klarer Plan, saubere Umsetzung.“",
-        about_text: "Fokus auf robuste Lösungen, die auch nach Monaten noch laufen – und nicht nur im Screenshot gut aussehen.",
-        stack_title: "Stack / Tools",
-        stack_networks: "Netzwerke",
-        stack_automation: "Automatisierung",
-        contact_title: "Kontakt",
-        contact_sub: "Schreib mir gern.",
-        contact_mail_strong: "erik@4don.com",
-        contact_mail_small: "Mail senden",
-        copy_title: "Adresse kopieren",
-        copy_sub: "ein Klick → Zwischenablage",
-        copy_btn: "Kopieren",
-        status_online: "Online",
-        status_deployed: "Deployed via Cloudflare Pages",
-        footer_right: "Deployed with Cloudflare Pages"
-      },
-      en: {
-        nav_projects: "Projects",
-        nav_about: "About",
-        nav_contact: "Contact",
-        chip_role: "Automation Engineer",
-        chip_smarthome: "Smart Home",
-        chip_networking: "Networking",
-        chip_homelab: "Homelab",
-        hero_title: "Hi, I'm Erik 👋",
-        hero_lead: "I build practical automation and tech projects that work in real life. This is where I collect highlights — minimal, fast, and without buzzword overload.",
-        cta_projects: "🚀 View projects",
-        cta_email: "✉️ erik@4don.com",
-        cta_github: "🐙 GitHub",
-        projects_title: "Projects",
-        projects_sub: "Selected things I built, improved, or automated.",
-        more: "More",
-        contact: "Contact",
-        tag_kiosk: "Kiosk UI",
-        tag_smarthome: "Smart Home",
-        tag_security: "Security",
-        tag_backup: "Backup",
-        tag_network: "Network",
-        p1_title: "RMV Info Display (Raspberry Pi kiosk)",
-        p1_desc: "Live connections, walking routes & a commuter mode — optimized for quick, glanceable decisions.",
-        p2_title: "Home Assistant setup",
-        p2_desc: "Automations, sensors & a smarter home — without cloud lock-in, focused on reliability.",
-        p3_title: "Synology backup & homelab",
-        p3_desc: "Backup strategies, replication, UPS integration & a clean, reliable data setup.",
-        p4_title: "4don.com (Cloudflare Pages)",
-        p4_desc: "Minimal portfolio, fast deployment — built as a base for a future blog/wiki.",
-        about_title: "About",
-        about_sub: "“Clear plan, clean execution.”",
-        about_text: "I focus on robust solutions that still work months later — not just in screenshots.",
-        stack_title: "Stack / Tools",
-        stack_networks: "Networking",
-        stack_automation: "Automation",
-        contact_title: "Contact",
-        contact_sub: "Feel free to reach out.",
-        contact_mail_strong: "erik@4don.com",
-        contact_mail_small: "Send an email",
-        copy_title: "Copy address",
-        copy_sub: "one click → clipboard",
-        copy_btn: "Copy",
-        status_online: "Online",
-        status_deployed: "Deployed via Cloudflare Pages",
-        footer_right: "Deployed with Cloudflare Pages"
-      }
-    };
+            <div class="projects" id="projectsList" aria-live="polite"></div>
+          </section>
 
-    function setLang(lang){
-      const dict = I18N[lang] || I18N.de;
+          <aside class="card" id="about">
+            <div class="card__head">
+              <h2 class="h2" data-i18n="about_title">Über mich</h2>
+              <p class="muted" data-i18n="about_text">
+                Ich mag: "klarer Plan, saubere Umsetzung".
+                Fokus auf robuste Lösungen, die auch nach Monaten noch laufen — und nicht nur im Screenshot gut aussehen.
+              </p>
+            </div>
 
-      document.documentElement.lang = lang === "en" ? "en" : "de";
-      localStorage.setItem("lang", lang);
+            <div class="stack">
+              <h3 class="h3" data-i18n="stack_title">Stack / Tools</h3>
+              <ul class="list" id="stackList">
+                <li>Cloudflare Pages · GitHub</li>
+                <li>Raspberry Pi · Home Assistant</li>
+                <li>Synology · Networking</li>
+                <li>Automation</li>
+              </ul>
+            </div>
 
-      // Toggle active state
-      document.getElementById("btn-de").classList.toggle("active", lang !== "en");
-      document.getElementById("btn-en").classList.toggle("active", lang === "en");
+            <div class="contact" id="contact">
+              <h3 class="h3" data-i18n="contact_title">Kontakt</h3>
+              <p class="muted" data-i18n="contact_text">Schreib mir gern:</p>
+              <a class="btn btn--primary btn--full" href="mailto:info@4don.com" id="contactEmail">✉️ info@4don.com</a>
+              <p class="subtle" data-i18n="contact_note">(Formular optional — kommt später, wenn du willst.)</p>
+            </div>
+          </aside>
+        </div>
 
-      // Apply translations
-      document.querySelectorAll("[data-i18n]").forEach(el => {
-        const key = el.getAttribute("data-i18n");
-        if (dict[key]) el.textContent = dict[key];
-      });
+        <footer class="footer">
+          <div class="footer__left">© <span id="year"></span> Erik · 4don.com</div>
+          <div class="footer__right">Deployed with Cloudflare Pages</div>
+        </footer>
+      </div>
+    </section>
+  </main>
 
-      // Make sure title + description are localized lightly
-      document.title = (lang === "en") ? "4don.com – Erik" : "4don.com – Erik";
-    }
-
-    function copyText(text, btn){
-      navigator.clipboard.writeText(text).then(() => {
-        const old = btn.textContent;
-        btn.textContent = (localStorage.getItem("lang") === "en") ? "Copied ✓" : "Kopiert ✓";
-        setTimeout(() => btn.textContent = old, 1200);
-      }).catch(() => alert("Copy failed: " + text));
-    }
-
-    // init
-    document.getElementById("year").textContent = new Date().getFullYear();
-    document.getElementById("btn-de").addEventListener("click", () => setLang("de"));
-    document.getElementById("btn-en").addEventListener("click", () => setLang("en"));
-
-    const saved = localStorage.getItem("lang");
-    setLang(saved === "en" ? "en" : "de"); // default DE
-  </script>
+  <script src="/script.js" defer></script>
 </body>
 </html>

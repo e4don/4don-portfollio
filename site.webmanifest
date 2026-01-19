@@ -1,0 +1,14 @@
+{
+  "name": "4don.com",
+  "short_name": "4don",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0B0712",
+  "theme_color": "#2C1238",
+  "icons": [
+    {"src": "/assets/icons/icon-192.png", "sizes": "192x192", "type": "image/png"},
+    {"src": "/assets/icons/icon-512.png", "sizes": "512x512", "type": "image/png"},
+    {"src": "/assets/icons/icon-192-maskable.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable"},
+    {"src": "/assets/icons/icon-512-maskable.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}
+  ]
+}
