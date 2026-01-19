@@ -1,38 +1,37 @@
-/* 4don.com – bilingual content + project rendering + nav active state */
+/* 4don.com – working bilingual content + project rendering + nav active state (matches current index.html) */
 
-const $ = (sel, el = document) => el.querySelector(sel);
+const $  = (sel, el = document) => el.querySelector(sel);
 const $$ = (sel, el = document) => Array.from(el.querySelectorAll(sel));
 
 const STORAGE_KEY = "4don_lang";
 
-const content = {
+const I18N = {
   de: {
     nav_projects: "Projekte",
     nav_about: "Über mich",
     nav_contact: "Kontakt",
 
-    badge_role: "Automation Engineer",
-    badge_topics: "Raspberry Pi · Smart Home · Networking · Homelab",
+    pill_role: "Automation Engineer",
+    topics: "Raspberry Pi · Smart Home · Networking · Homelab",
 
     hero_title: "Hi, ich bin Erik 👋",
-    hero_subtitle:
-      "Ich baue pragmatische Automations- und Tech-Projekte, die im Alltag wirklich funktionieren — minimalistisch, schnell und ohne Buzzword-Overkill.",
-    cta_projects: "🚀 Projekte ansehen",
+    hero_lead:
+      "Ich baue gern pragmatische Automations- und Tech-Projekte, die im Alltag wirklich funktionieren. Hier sammle ich meine Highlights – minimalistisch, schnell und ohne Buzzword-Overkill.",
     hero_note: "Tipp: Diese Seite ist statisch (Cloudflare Pages) — schnell, günstig, robust.",
+    cta_projects: "🚀 Projekte ansehen",
 
     projects_title: "Projekte",
-    projects_desc: "Ausgewählte Dinge, die ich gebaut, optimiert oder automatisiert habe.",
+    projects_sub: "Ausgewählte Dinge, die ich gebaut, optimiert oder automatisiert habe.",
 
     about_title: "Über mich",
     about_text:
-      "Ich mag: „klarer Plan, saubere Umsetzung“. Fokus auf robuste Lösungen, die auch nach Monaten noch laufen — und nicht nur im Screenshot gut aussehen.",
+      "Ich mag: \"klarer Plan, saubere Umsetzung\". Fokus auf robuste Lösungen, die auch nach Monaten noch laufen — und nicht nur im Screenshot gut aussehen.",
     stack_title: "Stack / Tools",
 
     contact_title: "Kontakt",
     contact_text: "Schreib mir gern:",
     contact_note: "(Formular optional — kommt später, wenn du willst.)",
 
-    footer_left: "©",
     footer_right: "Deployed with Cloudflare Pages",
 
     projButtons: { demo: "Demo", repo: "GitHub", docs: "Docs" }
@@ -43,17 +42,17 @@ const content = {
     nav_about: "About",
     nav_contact: "Contact",
 
-    badge_role: "Automation Engineer",
-    badge_topics: "Raspberry Pi · Smart Home · Networking · Homelab",
+    pill_role: "Automation Engineer",
+    topics: "Raspberry Pi · Smart Home · Networking · Homelab",
 
     hero_title: "Hi, I’m Erik 👋",
-    hero_subtitle:
-      "I build pragmatic automation and tech projects that work in everyday life — minimal, fast and without buzzword overload.",
-    cta_projects: "🚀 View projects",
+    hero_lead:
+      "I build pragmatic automation and tech projects that work in everyday life. Here I collect some highlights — minimal, fast and without buzzword overload.",
     hero_note: "Tip: This site is static (Cloudflare Pages) — fast, cheap and robust.",
+    cta_projects: "🚀 View projects",
 
     projects_title: "Projects",
-    projects_desc: "A small selection of things I built, optimized or automated.",
+    projects_sub: "A small selection of things I built, optimized or automated.",
 
     about_title: "About",
     about_text:
@@ -64,20 +63,19 @@ const content = {
     contact_text: "Feel free to reach out:",
     contact_note: "(Optional form — we can add it later.)",
 
-    footer_left: "©",
     footer_right: "Deployed with Cloudflare Pages",
 
     projButtons: { demo: "Demo", repo: "GitHub", docs: "Docs" }
   }
 };
 
-// Replace these with real links when you have them.
+// Beispiel-Projekte (kannst du später easy ersetzen)
 const projects = [
   {
     title: { de: "RMV Info Display (Raspberry Pi Kiosk)", en: "RMV Info Display (Raspberry Pi Kiosk)" },
     description: {
       de: "Live-Verbindungen, Laufwege & ein „Pendler-Mode“ — optimiert für schnelles „Ein Blick reicht“.",
-      en: "Live connections, walking routes and a “commuter mode” — optimized for quick glances."
+      en: "Live connections, walking routes & a commuter mode — optimized for quick glances."
     },
     tags: ["Raspberry Pi", "API", "Kiosk UI"],
     links: { repo: "https://github.com/e4don", demo: null, docs: null }
@@ -95,80 +93,62 @@ const projects = [
     title: { de: "Synology Backup & Homelab", en: "Synology Backup & Homelab" },
     description: {
       de: "Backup-Strategien, Replikation, USV-Integration & saubere Datensicherung.",
-      en: "Backup strategies, replication, UPS integration and clean data protection."
+      en: "Backup strategies, replication, UPS integration & clean data protection."
     },
     tags: ["NAS", "Backup", "Network"],
     links: { repo: null, demo: null, docs: null }
-  },
-  {
-    title: { de: "4don.com (Cloudflare Pages)", en: "4don.com (Cloudflare Pages)" },
-    description: {
-      de: "Minimal-Portfolio, schnell deployed — gebaut für spätere Blog/Wiki-Erweiterung.",
-      en: "Minimal portfolio, fast deploy — built to grow into blog/wiki later."
-    },
-    tags: ["Cloudflare", "Pages", "DNS"],
-    links: { repo: "https://github.com/e4don/4don-portfolio", demo: "https://4don.com", docs: null }
   }
 ];
 
 const state = { lang: "de" };
 
-function applyI18n() {
-  const t = content[state.lang] || content.de;
-
-  // set document lang
-  document.documentElement.lang = state.lang;
-
-  // generic: replace all [data-i18n] with matching key
-  $$("[data-i18n]").forEach((node) => {
-    const key = node.getAttribute("data-i18n");
-    if (!key) return;
-    if (typeof t[key] !== "string") return;
-    node.textContent = t[key];
-  });
-
-  renderProjects();
-  updateLangButtons();
-}
-
-function setLang(lang) {
+function applyLanguage(lang) {
   state.lang = (lang === "en") ? "en" : "de";
   localStorage.setItem(STORAGE_KEY, state.lang);
-  applyI18n();
-}
+  document.documentElement.lang = state.lang;
 
-function updateLangButtons() {
-  const btnDE = $("#lang-de");
-  const btnEN = $("#lang-en");
-  if (!btnDE || !btnEN) return;
+  const dict = I18N[state.lang] || I18N.de;
 
-  const isDE = state.lang === "de";
+  // 1) Alle data-i18n Texte ersetzen
+  $$("[data-i18n]").forEach((node) => {
+    const key = node.getAttribute("data-i18n");
+    const val = dict[key];
+    if (typeof val === "string") node.textContent = val;
+  });
 
-  btnDE.classList.toggle("active", isDE);
-  btnEN.classList.toggle("active", !isDE);
+  // 2) Language buttons state
+  const btnDE = $("#btn-de");
+  const btnEN = $("#btn-en");
+  if (btnDE && btnEN) {
+    const isDE = state.lang === "de";
+    btnDE.classList.toggle("active", isDE);
+    btnEN.classList.toggle("active", !isDE);
+    btnDE.setAttribute("aria-pressed", String(isDE));
+    btnEN.setAttribute("aria-pressed", String(!isDE));
+  }
 
-  btnDE.setAttribute("aria-pressed", isDE ? "true" : "false");
-  btnEN.setAttribute("aria-pressed", !isDE ? "true" : "false");
+  // 3) Projekte neu rendern
+  renderProjects();
 }
 
 function renderProjects() {
-  const t = content[state.lang] || content.de;
-  const grid = $("#projectsList");
+  const dict = I18N[state.lang] || I18N.de;
+  const grid = $("#projectsList");           // IMPORTANT: matches index.html
   if (!grid) return;
 
   grid.innerHTML = "";
 
   projects.forEach((p) => {
-    const wrap = document.createElement("article");
-    wrap.className = "project";
+    const card = document.createElement("article");
+    card.className = "project";
 
     const h = document.createElement("h3");
     h.className = "project__title";
-    h.textContent = (p.title && (p.title[state.lang] || p.title.de)) || "Project";
+    h.textContent = p.title[state.lang] || p.title.de;
 
     const d = document.createElement("p");
     d.className = "project__desc";
-    d.textContent = (p.description && (p.description[state.lang] || p.description.de)) || "";
+    d.textContent = p.description[state.lang] || p.description.de;
 
     const tags = document.createElement("div");
     tags.className = "tags";
@@ -192,21 +172,21 @@ function renderProjects() {
       return a;
     };
 
-    if (p.links?.demo) actions.appendChild(mk(t.projButtons.demo, p.links.demo));
-    if (p.links?.repo) actions.appendChild(mk(t.projButtons.repo, p.links.repo));
-    if (p.links?.docs) actions.appendChild(mk(t.projButtons.docs, p.links.docs));
+    if (p.links?.demo) actions.appendChild(mk(dict.projButtons.demo, p.links.demo));
+    if (p.links?.repo) actions.appendChild(mk(dict.projButtons.repo, p.links.repo));
+    if (p.links?.docs) actions.appendChild(mk(dict.projButtons.docs, p.links.docs));
 
-    wrap.appendChild(h);
-    wrap.appendChild(d);
-    if (tags.children.length) wrap.appendChild(tags);
-    if (actions.children.length) wrap.appendChild(actions);
+    card.appendChild(h);
+    card.appendChild(d);
+    if (tags.children.length) card.appendChild(tags);
+    if (actions.children.length) card.appendChild(actions);
 
-    grid.appendChild(wrap);
+    grid.appendChild(card);
   });
 }
 
 function setupNav() {
-  // smooth scroll
+  // Smooth scroll
   $$(".nav a").forEach((a) => {
     a.addEventListener("click", (e) => {
       const href = a.getAttribute("href") || "";
@@ -218,13 +198,13 @@ function setupNav() {
     });
   });
 
-  // active state via IntersectionObserver -> aria-current="page"
+  // Active state (aria-current)
   const navLinks = $$(".nav a").filter((a) => (a.getAttribute("href") || "").startsWith("#"));
   const sections = navLinks
     .map((a) => document.querySelector(a.getAttribute("href")))
     .filter(Boolean);
 
-  if (!sections.length || !navLinks.length) return;
+  if (!navLinks.length || !sections.length) return;
 
   const obs = new IntersectionObserver((entries) => {
     const visible = entries
@@ -232,8 +212,8 @@ function setupNav() {
       .sort((a, b) => (b.intersectionRatio || 0) - (a.intersectionRatio || 0))[0];
 
     if (!visible) return;
-    const id = "#" + visible.target.id;
 
+    const id = "#" + visible.target.id;
     navLinks.forEach((a) => {
       if (a.getAttribute("href") === id) a.setAttribute("aria-current", "page");
       else a.removeAttribute("aria-current");
@@ -249,17 +229,19 @@ function setupYear() {
 }
 
 function boot() {
-  // restore language (default de)
+  // Language restore
   const stored = localStorage.getItem(STORAGE_KEY);
   if (stored === "en") state.lang = "en";
 
-  // language buttons
-  $("#lang-de")?.addEventListener("click", () => setLang("de"));
-  $("#lang-en")?.addEventListener("click", () => setLang("en"));
+  // Wire language buttons (matches index.html)
+  $("#btn-de")?.addEventListener("click", () => applyLanguage("de"));
+  $("#btn-en")?.addEventListener("click", () => applyLanguage("en"));
 
   setupNav();
   setupYear();
-  applyI18n();
+
+  // First render
+  applyLanguage(state.lang);
 }
 
 document.addEventListener("DOMContentLoaded", boot);
