@@ -1,2 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /draft/
+Disallow: /_dev/
+
+Sitemap: https://www.4don.com/sitemap.xml

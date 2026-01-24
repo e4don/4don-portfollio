@@ -1,0 +1,34 @@
+{
+  "projects": [
+    {
+      "title": "RMV Morning Display",
+      "date": "2026-01",
+      "description": "Ein Info-Display für Abfahrten, Leave-by Timer und Karte (Raspberry Pi Kiosk).",
+      "image": "assets/images/projects/rmv-morning-display.png",
+      "url": "projects/rmv-morning-display.html",
+      "github": "",
+      "visibility": "private",
+      "tags": ["Raspberry Pi", "Node.js", "Kiosk", "OpenStreetMap", "API"]
+    },
+    {
+      "title": "Pi-hole Setup",
+      "date": "2025-12",
+      "description": "Pi-hole Setup, Logging/Backup-Strategien und robuste DNS-Konfiguration (FritzBox, statische IPs, etc.).",
+      "image": "assets/images/projects/pi-hole.png",
+      "url": "projects/pi-hole-setup.html",
+      "github": "",
+      "visibility": "private",
+      "tags": ["Raspberry Pi", "Networking", "DNS"]
+    },
+    {
+      "title": "4don Portfolio",
+      "date": "2026-01",
+      "description": "Meine Website mit Multi-Page Setup, Projekten, About und Legal.",
+      "image": "assets/images/projects/4don-portfolio.png",
+      "url": "projects/4don-portfolio.html",
+      "github": "https://github.com/e4don/4don-portfollio",
+      "visibility": "public",
+      "tags": ["HTML", "CSS", "Cloudflare Pages", "GitHub"]
+    }
+  ]
+}
