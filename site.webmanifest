@@ -1,14 +1,36 @@
 {
-  "name": "4don.com",
+  "name": "4don — Portfolio",
   "short_name": "4don",
+  "description": "Portfolio & Projekte — Automatisierung, Tech und Maker Stuff.",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
-  "background_color": "#0B0712",
-  "theme_color": "#2C1238",
+  "background_color": "#12131a",
+  "theme_color": "#7a3ff2",
   "icons": [
-    {"src": "/assets/icons/icon-192.png", "sizes": "192x192", "type": "image/png"},
-    {"src": "/assets/icons/icon-512.png", "sizes": "512x512", "type": "image/png"},
-    {"src": "/assets/icons/icon-192-maskable.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable"},
-    {"src": "/assets/icons/icon-512-maskable.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}
+    {
+      "src": "/assets/favicons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/favicons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/assets/favicons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/favicons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
   ]
 }

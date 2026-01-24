@@ -1,23 +1,67 @@
 <!doctype html>
 <html lang="de">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>404 — 4don.com</title>
-  <link rel="stylesheet" href="/styles.css" />
-</head>
-<body>
-  <div class="bg" aria-hidden="true"></div>
-  <main class="wrap">
-    <section class="hero" style="min-height: 70vh; display:grid; place-items:center;">
-      <div class="card" style="max-width: 680px; text-align:center;">
-        <h1 class="h1">404</h1>
-        <p class="lead">Diese Seite gibt es nicht (mehr).</p>
-        <div class="cta" style="justify-content:center;">
-          <a class="btn" href="/">Zur Startseite</a>
-        </div>
+  <head>
+    <meta charset="utf-8" />
+    <title>404 — Seite nicht gefunden | 4don</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <meta name="robots" content="noindex, nofollow" />
+
+    <!-- Apple / Mobile -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+
+    <!-- Manifest / PWA -->
+    <link rel="manifest" href="site.webmanifest" />
+    <meta name="theme-color" content="#7a3ff2" />
+
+    <!-- SEO Basic -->
+    <meta name="author" content="4don" />
+    <meta name="robots" content="index, follow" />
+
+    <!-- Favicons -->
+    <link rel="icon" href="/assets/favicons/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicons/favicon-32.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicons/apple-touch-icon.png" />
+
+    <!-- Manifest -->
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="/assets/css/main.css" />
+    <noscript><link rel="stylesheet" href="/assets/css/noscript.css" /></noscript>
+  </head>
+
+  <body class="is-preload">
+    <div id="wrapper" class="fade-in">
+      <header id="header">
+        <a href="/" class="logo">4don</a>
+      </header>
+
+      <div id="main">
+        <section class="post">
+          <header class="major">
+            <h1>404</h1>
+            <p>Diese Seite existiert nicht (mehr).</p>
+          </header>
+
+          <p>
+            Vielleicht ist der Link veraltet oder falsch geschrieben.<br />
+            Kein Problem — zurück zur Startseite:
+          </p>
+
+          <ul class="actions special">
+            <li><a href="/" class="button large">Zur Startseite</a></li>
+          </ul>
+        </section>
       </div>
-    </section>
-  </main>
-</body>
+
+      <div id="copyright">
+        <ul>
+          <li>&copy; 4don — All rights reserved.</li>
+        </ul>
+      </div>
+    </div>
+
+    <script src="/assets/js/main.js"></script>
+  </body>
 </html>
