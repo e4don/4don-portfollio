@@ -213,5 +213,54 @@
 
     <!-- Projekte JSON Loader (nur auf projects.html) -->
     <script src="assets/js/projects.js"></script>
+    <script>
+  // =========================================================
+  // 4don: Restore scroll position when returning from a detail page
+  // Works even if projects are rendered dynamically via projects.js
+  // =========================================================
+
+  (function () {
+    const KEY_Y = "projects.scrollY";
+    const KEY_ARMED = "projects.restoreArmed";
+
+    // 1) Save scroll position before leaving projects.html
+    //    - capture clicks on links that go to /projects/*.html
+    document.addEventListener(
+      "click",
+      function (e) {
+        const a = e.target.closest("a");
+        if (!a) return;
+
+        const href = a.getAttribute("href") || "";
+        // Matches: "projects/xyz.html" or "./projects/xyz.html" or "../projects/xyz.html"
+        // On projects.html your links are likely "projects/<slug>.html" or similar.
+        const isProjectDetail = /(^|\/)projects\/.+\.html(\?|#|$)/.test(href);
+
+        if (isProjectDetail) {
+          sessionStorage.setItem(KEY_Y, String(window.scrollY || 0));
+          sessionStorage.setItem(KEY_ARMED, "1");
+        }
+      },
+      true // capture phase -> catches it early
+    );
+
+    // 2) Restore scroll after everything has rendered
+    //    - wait for load, then a tiny delay so DOM height is final
+    window.addEventListener("load", function () {
+      const armed = sessionStorage.getItem(KEY_ARMED) === "1";
+      const y = parseInt(sessionStorage.getItem(KEY_Y) || "0", 10);
+
+      if (!armed || !Number.isFinite(y)) return;
+
+      // disarm so it only happens once
+      sessionStorage.removeItem(KEY_ARMED);
+
+      // If your projects list is rendered async, give it a moment
+      setTimeout(function () {
+        window.scrollTo(0, y);
+      }, 50);
+    });
+  })();
+</script>
   </body>
 </html>

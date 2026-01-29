@@ -1,30 +1,40 @@
 /* 4don - Projects Loader
-   Lädt /projects.json und rendert Projekt-Cards im Massively-Layout.
+   Loads /projects.json and renders project cards using the HTML5 UP Massively layout.
 
    Features:
-   - Sortierung (neu -> alt) via date (YYYY-MM oder YYYY-MM-DD)
-   - Search (Titel/Beschreibung/Tags)
-   - Tag-Filter (Dropdown)
-   - Badges statt "Tags: …"
-   - Optional: GitHub-Button, wenn github vorhanden
-   - Bild-Fallback via onerror (wenn Projektbild 404)
-   - Detailseiten (url) öffnen im selben Tab
+   - Sorting (newest → oldest) via date (YYYY-MM or YYYY-MM-DD)
+   - Search (title / description / tags)
+   - Tag filter (dropdown)
+   - Badge-based tag display
+   - Optional GitHub button (if github URL exists)
+   - Image fallback via onerror (404-safe)
+   - Project detail pages open in same tab
+   - SPA-like back navigation:
+     -> Saves search/tag + scroll before navigating to detail pages
+     -> Restores search/tag + scroll after returning
 */
 
 (function () {
   const grid = document.getElementById('projectsGrid');
   if (!grid) return;
 
-  // Controls (optional; falls nicht vorhanden, läuft's trotzdem)
+  // UI controls (optional; script works even if some are missing)
   const searchEl = document.getElementById('projectSearch');
   const tagEl = document.getElementById('tagFilter');
   const resetEl = document.getElementById('resetFilters');
   const metaEl = document.getElementById('projectsMeta');
 
-  // Fallback-Image (für missing/404 Projektbilder)
+  // Fallback image for missing / 404 project images
   const FALLBACK_IMG = 'assets/images/projects/fallback.png';
 
-  // Helper: sicherer Text (XSS-safe für HTML-Strings)
+  // =========================================================
+  // SPA-like restore keys (sessionStorage)
+  // =========================================================
+  const KEY_STATE = 'projects.uiState'; // JSON: { q, tag }
+  const KEY_SCROLL = 'projects.scrollY'; // number
+  const KEY_ARMED = 'projects.restoreArmed'; // "1" => restore on next render
+
+  // Escape helper (XSS-safe for HTML string output)
   const esc = (s) =>
     String(s ?? '')
       .replaceAll('&', '&amp;')
@@ -33,10 +43,10 @@
       .replaceAll('"', '&quot;')
       .replaceAll("'", '&#039;');
 
-  // Normalisiert tags
+  // Normalize tags into a clean string array
   const normTags = (tags) => (Array.isArray(tags) ? tags.filter(Boolean).map(String) : []);
 
-  // Date parse: akzeptiert "YYYY-MM" oder "YYYY-MM-DD"
+  // Date parser (accepts YYYY-MM or YYYY-MM-DD)
   const parseDate = (d) => {
     if (!d) return 0;
     const s = String(d).trim();
@@ -45,20 +55,88 @@
     return Number.isFinite(t) ? t : 0;
   };
 
-  // State
+  // Internal state
   let allProjects = [];
+
+  // =========================================================
+  // Save / restore UI state (search + tag) and scroll position
+  //
+  // Why?
+  // - Browser back navigation is unreliable with dynamic rendering
+  // - Project list is rebuilt from JSON on every load
+  // =========================================================
+  function saveUIState() {
+    try {
+      const state = {
+        q: searchEl ? String(searchEl.value ?? '') : '',
+        tag: tagEl ? String(tagEl.value ?? '__all__') : '__all__',
+      };
+      sessionStorage.setItem(KEY_STATE, JSON.stringify(state));
+    } catch (_) {
+      /* ignore */
+    }
+  }
+
+  function restoreUIState() {
+    // Must be called AFTER tag options are built
+    try {
+      const raw = sessionStorage.getItem(KEY_STATE);
+      if (!raw) return;
+
+      const state = JSON.parse(raw);
+
+      // Restore search
+      if (searchEl && typeof state.q === 'string') {
+        searchEl.value = state.q;
+      }
+
+      // Restore tag only if option exists
+      if (tagEl && typeof state.tag === 'string') {
+        const hasOption = Array.from(tagEl.options).some((o) => o.value === state.tag);
+        tagEl.value = hasOption ? state.tag : '__all__';
+      }
+    } catch (_) {
+      /* ignore */
+    }
+  }
+
+  function rememberProjectsScrollAndState() {
+    // Called before navigating to a project detail page
+    try {
+      saveUIState();
+      sessionStorage.setItem(KEY_SCROLL, String(window.scrollY || 0));
+      sessionStorage.setItem(KEY_ARMED, '1');
+    } catch (_) {
+      /* ignore */
+    }
+  }
+
+  // Global click capture:
+  // Only links explicitly marked with data-project-link
+  // will trigger state + scroll saving.
+  document.addEventListener(
+    'click',
+    (e) => {
+      const a = e.target.closest('a');
+      if (!a) return;
+      if (a.hasAttribute('data-project-link')) {
+        rememberProjectsScrollAndState();
+      }
+    },
+    true // capture phase (fires early, even for nested elements)
+  );
 
   function buildTagOptions(projects) {
     if (!tagEl) return;
 
-    // Dropdown value in lowercase (robust gegen DNS vs dns etc.)
+    // Collect unique tags (case-insensitive, sorted)
     const set = new Set();
     projects.forEach((p) => normTags(p.tags).forEach((t) => set.add(String(t).trim())));
 
     const tags = Array.from(set).sort((a, b) => a.localeCompare(b, 'de', { sensitivity: 'base' }));
 
     tagEl.innerHTML =
-      `<option value="__all__">Alle Tags</option>` +
+      `<option value="__all__">All tags</option>` +
       tags
         .map((t) => {
           const label = esc(t);
@@ -70,11 +148,7 @@
 
   function updateMeta(shown, total) {
     if (!metaEl) return;
-    if (total === 0) {
-      metaEl.textContent = '';
-      return;
-    }
-    metaEl.textContent = `${shown} von ${total} Projekten`;
+    metaEl.textContent = total === 0 ? '' : `${shown} of ${total} projects`;
   }
 
   function matchesFilters(p) {
@@ -85,11 +159,11 @@
     const desc = String(p.description ?? '').toLowerCase();
 
     const tags = normTags(p.tags);
-    const tagsLower = tags.map((t) => String(t).toLowerCase());
+    const tagsLower = tags.map((t) => t.toLowerCase());
     const tagsStr = tagsLower.join(' ');
 
-    const tagOk = tag === '__all__' ? true : tagsLower.includes(tag);
-    const qOk = !q ? true : title.includes(q) || desc.includes(q) || tagsStr.includes(q);
+    const tagOk = tag === '__all__' || tagsLower.includes(tag);
+    const qOk = !q || title.includes(q) || desc.includes(q) || tagsStr.includes(q);
 
     return tagOk && qOk;
   }
@@ -98,8 +172,8 @@
     if (!Array.isArray(projects) || projects.length === 0) {
       grid.innerHTML = `
         <article>
-          <header><h2>Keine Projekte gefunden</h2></header>
-          <p>Bitte Filter zurücksetzen oder <code>projects.json</code> prüfen.</p>
+          <header><h2>No projects found</h2></header>
+          <p>Reset filters or check <code>projects.json</code>.</p>
         </article>`;
       return;
     }
@@ -110,27 +184,19 @@
         const date = esc(p.date || '');
         const desc = esc(p.description || '');
 
-        // Projektbild: wenn nicht gesetzt -> FALLBACK_IMG
         const img = esc(p.image || FALLBACK_IMG);
-
-        // Links:
-        // - url = Detailseite (same tab)
-        // - github = Repo-Link (neues Tab)
         const url = esc(p.url || '');
         const github = esc(p.github || '');
-
         const tags = normTags(p.tags).map(esc);
 
-        // Buttons: Open (url) + GitHub (optional)
+        // Action buttons
         const actions = [];
 
         if (url) {
-          // Detailseite same tab (kein target blank)
-          actions.push(`<li><a href="${url}" class="button">Open</a></li>`);
+          actions.push(`<li><a href="${url}" class="button" data-project-link="1">Open</a></li>`);
         }
 
         if (github) {
-          // GitHub bewusst neues Tab
           actions.push(
             `<li><a href="${github}" class="button" target="_blank" rel="noopener">GitHub</a></li>`
           );
@@ -139,29 +205,17 @@
         const actionsHtml =
           actions.length > 0 ? `<ul class="actions special">${actions.join('')}</ul>` : '';
 
-        // Bild-Fallback auch bei 404 (onerror)
-        const imgTag = `<img src="${img}" alt="${title}" onerror="this.onerror=null;this.src='${esc(
-          FALLBACK_IMG
-        )}';" />`;
+        const imgTag = `<img src="${img}" alt="${title}"
+          onerror="this.onerror=null;this.src='${esc(FALLBACK_IMG)}';" />`;
 
-        // Image Wrapper:
-        // Wenn URL existiert: Bild klickbar -> same tab
         const imageHtml = url
-          ? `<a href="${url}" class="image fit">${imgTag}</a>`
+          ? `<a href="${url}" class="image fit" data-project-link="1">${imgTag}</a>`
           : `<span class="image fit">${imgTag}</span>`;
 
-        // Badges
         const badges =
           tags.length > 0
             ? `<div class="project-badges">
-                ${tags
-                  .map((t, idx) => {
-                    // optional Accent:
-                    // const cls = idx === 0 ? 'project-badge is-accent' : 'project-badge';
-                    const cls = 'project-badge';
-                    return `<span class="${cls}">${t}</span>`;
-                  })
-                  .join('')}
+                ${tags.map((t) => `<span class="project-badge">${t}</span>`).join('')}
               </div>`
             : '';
 
@@ -169,11 +223,14 @@
           <article>
             <header>
               ${date ? `<span class="date">${date}</span>` : ''}
-              <h2>${url ? `<a href="${url}">${title}</a>` : title}</h2>
+              ${
+                url
+                  ? `<h2><a href="${url}" data-project-link="1">${title}</a></h2>`
+                  : `<h2>${title}</h2>`
+              }
             </header>
 
             ${imageHtml}
-
             <p>${desc}</p>
             ${badges}
             ${actionsHtml}
@@ -187,9 +244,29 @@
     const filtered = allProjects.filter(matchesFilters);
     updateMeta(filtered.length, allProjects.length);
     render(filtered);
+
+    // Keep UI state in sync
+    saveUIState();
+
+    // Restore scroll position after returning from a detail page
+    try {
+      const armed = sessionStorage.getItem(KEY_ARMED) === '1';
+      if (armed) {
+        const y = parseInt(sessionStorage.getItem(KEY_SCROLL) || '0', 10);
+        sessionStorage.removeItem(KEY_ARMED);
+
+        if (Number.isFinite(y)) {
+          setTimeout(() => window.scrollTo(0, y), 50);
+        }
+      }
+    } catch (_) {
+      /* ignore */
+    }
   }
 
+  // =========================================================
   // Load projects.json
+  // =========================================================
   fetch('projects.json', { cache: 'no-store' })
     .then((res) => {
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -203,24 +280,26 @@
         updateMeta(0, 0);
         grid.innerHTML = `
           <article>
-            <header><h2>Keine Projekte gefunden</h2></header>
-            <p>In <code>projects.json</code> sind aktuell keine Einträge vorhanden.</p>
+            <header><h2>No projects found</h2></header>
+            <p><code>projects.json</code> contains no entries.</p>
           </article>`;
         return;
       }
 
-      // Sortierung: neueste zuerst
+      // Sort newest first
       projects.sort((a, b) => parseDate(b.date) - parseDate(a.date));
-
       allProjects = projects;
 
-      // Tag-Dropdown füllen
+      // Build tag dropdown BEFORE restoring UI state
       buildTagOptions(allProjects);
 
-      // Initial render
+      // Restore search + tag (if returning from detail page)
+      restoreUIState();
+
+      // Initial render (also restores scroll if armed)
       applyAndRender();
 
-      // Events
+      // UI events
       if (searchEl) searchEl.addEventListener('input', applyAndRender);
       if (tagEl) tagEl.addEventListener('change', applyAndRender);
 
@@ -228,6 +307,14 @@
         resetEl.addEventListener('click', () => {
           if (searchEl) searchEl.value = '';
           if (tagEl) tagEl.value = '__all__';
+
+          // Clear stored UI state
+          try {
+            sessionStorage.removeItem(KEY_STATE);
+          } catch (_) {
+            /* ignore */
+          }
+
           applyAndRender();
         });
       }
@@ -236,10 +323,10 @@
       updateMeta(0, 0);
       grid.innerHTML = `
         <article>
-          <header><h2>Projekte konnten nicht geladen werden</h2></header>
+          <header><h2>Failed to load projects</h2></header>
           <p>
-            Fehler: <code>${esc(err.message)}</code><br />
-            Tipp: Öffne die Seite über einen lokalen Server (z.B. VS Code "Live Server").
+            Error: <code>${esc(err.message)}</code><br />
+            Tip: Open the site via a local server (e.g. VS Code "Live Server").
           </p>
         </article>
       `;
