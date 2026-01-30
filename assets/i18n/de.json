@@ -1,0 +1,22 @@
+{
+  "nav": {
+    "home": "Home",
+    "projects": "Projekte",
+    "about": "Über mich",
+    "contact": "Kontakt",
+    "imprint": "Impressum",
+    "privacy": "Datenschutz"
+  },
+  "projects": {
+    "allTags": "Alle Tags",
+    "meta": "{shown} von {total} Projekten",
+    "emptyTitle": "Keine Projekte gefunden",
+    "emptyHint": "Bitte Filter zurücksetzen oder projects.json prüfen.",
+    "loadFailTitle": "Projekte konnten nicht geladen werden",
+    "loadFailTip": "Tipp: Öffne die Seite über einen lokalen Server (z.B. VS Code \"Live Server\").",
+    "open": "Open",
+    "github": "GitHub",
+    "reset": "Zurücksetzen",
+    "searchPlaceholder": "Titel, Beschreibung oder Tag…"
+  }
+}

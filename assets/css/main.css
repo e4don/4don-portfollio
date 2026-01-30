@@ -5200,3 +5200,274 @@ body {
     gap: 1.25rem;
   }
 }
+
+/* =========================================================
+   4don — Language Switch (DE/EN pill toggle)
+   Append at the end of main.css
+
+   Notes:
+   - Massively uses overflow clipping on #nav; we disable it so the switch is not cut off.
+   - Massively icon list is optimized for <a>; we explicitly support <button> here.
+   ========================================================= */
+
+/* Prevent #nav from clipping right-side items */
+#nav {
+  overflow: visible !important;
+}
+
+/* Make the icon list a predictable flex row */
+#nav ul.icons {
+  display: flex !important;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0;
+}
+
+/* Remove inline padding so gap controls spacing */
+#nav ul.icons li {
+  padding: 0 !important;
+}
+
+/* Ensure buttons inside the icon row are visible and behave normally */
+#nav .icons li button {
+  display: inline-flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+
+  width: auto !important;
+  max-width: none !important;
+  margin: 0 !important;
+
+  font-size: inherit !important;
+  line-height: 1 !important;
+
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+/* Switch wrapper */
+#nav .icons .lang-switch {
+  display: flex;
+  align-items: center;
+  margin-left: 0.75rem; /* spacing from social icons */
+}
+
+/* Switch button */
+#nav .icons .lang-switch__btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  height: 34px;          /* was 30px */
+  min-width: 82px;       /* was 76px */
+  padding: 0;
+
+  border: 1px solid rgba(122, 63, 242, 0.75);
+  border-radius: 999px;
+
+  background: rgba(122, 63, 242, 0.22);
+  color: rgba(255, 255, 255, 0.95);
+
+  cursor: pointer;
+
+  letter-spacing: 0;
+  text-transform: none;
+
+  box-shadow:
+    0 0 0 1px rgba(122, 63, 242, 0.18) inset,
+    0 10px 24px rgba(0, 0, 0, 0.22);
+
+  /* Visual alignment tweak inside Massively nav */
+  transform: translateY(-1px);
+}
+
+/* Track */
+#nav .icons .lang-switch__track {
+  position: absolute;
+  inset: 5px;       /* was 4px */
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.18);
+}
+
+/* Thumb */
+#nav .icons .lang-switch__thumb {
+  position: absolute;
+  top: 50%;
+  left: 3px;     /* fine horizontal alignment - was 5px */
+  transform: translateY(-50%);
+
+  width: 32px;      /* was 30px */
+  height: 22px;     /* was 20px */
+  border-radius: 999px;
+
+  background: rgba(255, 255, 255, 0.62);      /* was (255, 255, 255, 0.92) */
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.18);       /* was 0 8px 18px rgba(0, 0, 0, 0.22) */
+
+  transition: transform 180ms ease;
+}
+
+/* Labels */
+#nav .icons .lang-switch__labels {
+  position: relative;
+  z-index: 2;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 100%;
+  padding: 0 10px;     /* was 9px */
+
+  font-size: 12px;     /* was 11px */
+  font-weight: 600;
+  line-height: 1;
+}
+
+#nav .icons .lang-switch__label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 34px;   /* was 30px */
+
+  user-select: none;
+  color: rgba(255, 255, 255, 0.85);
+
+  transition: color 180ms ease, opacity 180ms ease;
+}
+
+/* Active state: EN (thumb moves to the right) */
+#nav .icons .lang-switch__btn.is-en .lang-switch__thumb {
+  transform: translate(34px, -50%);
+}
+
+/* Label emphasis */
+#nav .icons .lang-switch__btn.is-de .lang-switch__label--de,
+#nav .icons .lang-switch__btn.is-en .lang-switch__label--en {
+  color: rgba(255, 255, 255, 0.98);
+}
+
+#nav .icons .lang-switch__btn.is-de .lang-switch__label--en,
+#nav .icons .lang-switch__btn.is-en .lang-switch__label--de {
+  opacity: 0.7;
+}
+
+/* Hover */
+#nav .icons .lang-switch__btn:hover {
+  background: rgba(122, 63, 242, 0.3);
+  border-color: rgba(122, 63, 242, 0.9);
+}
+
+/* Keyboard focus */
+#nav .icons .lang-switch__btn:focus-visible {
+  outline: 2px solid rgba(122, 63, 242, 0.9);
+  outline-offset: 3px;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  #nav .icons .lang-switch__thumb,
+  #nav .icons .lang-switch__label {
+    transition: none !important;
+  }
+}
+
+/* =========================================================
+   4don — Language Switch: active label highlighting
+   ========================================================= */
+
+/* Default label style (slightly muted) */
+#nav .icons .lang-switch__label {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+/* Active label = purple */
+#nav .icons .lang-switch__btn.is-de .lang-switch__label--de {
+  color: rgba(122, 63, 242, 1);
+  text-shadow: 0 0 10px rgba(122, 63, 242, 0.35);
+}
+
+#nav .icons .lang-switch__btn.is-en .lang-switch__label--en {
+  color: rgba(122, 63, 242, 1);
+  text-shadow: 0 0 10px rgba(122, 63, 242, 0.35);
+}
+
+/* Inactive label even more muted */
+#nav .icons .lang-switch__btn.is-de .lang-switch__label--en,
+#nav .icons .lang-switch__btn.is-en .lang-switch__label--de {
+  color: rgba(255, 255, 255, 0.55);
+}
+
+/* =========================================================
+   4don — navPanel: force border-only pill for language switch
+   (Massively navPanel overrides button styles)
+   ========================================================= */
+
+#navPanel .icons li.lang-switch {
+  display: flex;
+  align-items: center;
+}
+
+/* Force the button box to exist + show border */
+#navPanel .icons li.lang-switch .lang-switch__btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  height: 30px !important;
+  min-width: 72px !important;
+  padding: 0 !important;
+
+  background: transparent !important;
+  border: 1px solid rgba(122, 63, 242, 0.75) !important;
+  border-radius: 999px !important;
+
+  box-shadow: none !important;
+  opacity: 1 !important;
+}
+
+/* Ensure labels are visible and centered */
+#navPanel .icons li.lang-switch .lang-switch__labels {
+  width: 100% !important;
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  padding: 0 10px !important;
+}
+
+/* Hide track/thumb in mobile panel (border-only look) */
+#navPanel .icons li.lang-switch .lang-switch__track {
+  display: none !important;
+}
+
+/* Label colors on white panel */
+#navPanel .icons li.lang-switch .lang-switch__label {
+  color: rgba(0, 0, 0, 0.55) !important;
+  font-weight: 600 !important;
+}
+
+/* Active label highlight */
+#navPanel .icons li.lang-switch .lang-switch__btn.is-de .lang-switch__label--de,
+#navPanel .icons li.lang-switch .lang-switch__btn.is-en .lang-switch__label--en {
+  color: rgba(122, 63, 242, 1) !important;
+  font-weight: 700 !important;
+}
+
+/* Inactive label muted */
+#navPanel .icons li.lang-switch .lang-switch__btn.is-de .lang-switch__label--en,
+#navPanel .icons li.lang-switch .lang-switch__btn.is-en .lang-switch__label--de {
+  color: rgba(0, 0, 0, 0.35) !important;
+}
+
+/* =========================================================
+   4don — navPanel icons row layout (keep switch right-aligned)
+   ========================================================= */
+
+#navPanel ul.icons {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.75rem !important;
+  flex-wrap: wrap !important; /* allow wrap on very small screens */
+}
+
+/* Push the language switch to the far right */
+#navPanel ul.icons li.lang-switch {
+  margin-left: auto !important;
+}

@@ -135,6 +135,9 @@
 
     const tags = Array.from(set).sort((a, b) => a.localeCompare(b, 'de', { sensitivity: 'base' }));
 
+    // Localized label for the "__all__" option
+    const allLabel = esc(tt('projects.allTags', 'All tags'));
+
     tagEl.innerHTML =
       `<option value="__all__">All tags</option>` +
       tags
@@ -170,6 +173,9 @@
 
   function render(projects) {
     if (!Array.isArray(projects) || projects.length === 0) {
+      const emptyTitle = esc(tt('projects.emptyTitle', 'No projects found'));
+      const emptyHint = esc(tt('projects.emptyHint', 'Reset filters or check projects.json.'));
+
       grid.innerHTML = `
         <article>
           <header><h2>No projects found</h2></header>
@@ -177,6 +183,9 @@
         </article>`;
       return;
     }
+
+    const openLabel = esc(tt('projects.open', 'Open'));
+    const githubLabel = esc(tt('projects.github', 'GitHub'));
 
     grid.innerHTML = projects
       .map((p) => {
@@ -198,7 +207,7 @@
 
         if (github) {
           actions.push(
-            `<li><a href="${github}" class="button" target="_blank" rel="noopener">GitHub</a></li>`
+            `<li><a href="${github}" class="button" target="_blank" rel="noopener">${githubLabel}</a></li>`
           );
         }
 
@@ -238,6 +247,9 @@
         `;
       })
       .join('');
+
+    // Re-apply translations for any data-i18n elements rendered dynamically (optional)
+    window.i18n?.apply?.(grid);
   }
 
   function applyAndRender() {
@@ -278,6 +290,10 @@
       if (!Array.isArray(projects) || projects.length === 0) {
         allProjects = [];
         updateMeta(0, 0);
+
+        const emptyTitle = esc(tt('projects.emptyTitle', 'No projects found'));
+        const emptyHint = esc(tt('projects.emptyHint', 'Reset filters or check projects.json.'));
+
         grid.innerHTML = `
           <article>
             <header><h2>No projects found</h2></header>
@@ -318,9 +334,35 @@
           applyAndRender();
         });
       }
+          // ---------------------------------------------------------
+      // Browser back / forward support (q + tag via URL)
+      // ---------------------------------------------------------
+      window.addEventListener('popstate', () => {
+        const st = readUrlState();
+
+        if (searchEl) searchEl.value = st.q;
+
+        if (tagEl) {
+          const hasOption = Array.from(tagEl.options).some(
+            (o) => o.value === st.tag
+          );
+          tagEl.value = hasOption ? st.tag : '__all__';
+        }
+
+        applyAndRender();
+      });
     })
     .catch((err) => {
       updateMeta(0, 0);
+
+      const failTitle = esc(tt('projects.loadFailTitle', 'Failed to load projects'));
+      const failTip = esc(
+        tt(
+          'projects.loadFailTip',
+          'Tip: Open the site via a local server (e.g. VS Code "Live Server").'
+        )
+      );
+
       grid.innerHTML = `
         <article>
           <header><h2>Failed to load projects</h2></header>
