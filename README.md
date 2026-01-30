@@ -5,6 +5,66 @@ Personal portfolio site to present my projects, experience, and contact informat
 
 ## Version History
 
+### v1.8 — Content Translation & Structured Storytelling (next)
+**Status:** Planned
+**Focus:** Clean content separation, long-form translation, scalability
+
+#### Planned Scope
+- Introduce **language-specific content structure**
+content/
+de/
+en/
+- Migrate **About page** to structured DE / EN content
+- Prepare project stories for Markdown-based content
+- Keep templates language-agnostic
+- Establish repeatable translation workflow for future pages
+
+
+---
+
+### v1.7 — Internationalization Foundation & UX Refinements (current)
+**Status:** Stable
+**Focus:** Infrastructure, refactoring, i18n groundwork
+
+#### Highlights
+- Introduced full **DE / EN language infrastructure**
+  - Language resolution priority: URL → localStorage → browser
+  - Persistent language state across pages
+  - Shareable URLs via `?lang=de|en`
+- Implemented **language toggle (desktop + mobile)**
+  - Desktop: pill-style switch integrated into navigation
+  - Mobile: border-only variant inside off-canvas nav panel
+  - Active language visually highlighted
+- Added **SPA-like back navigation** for project pages
+  - Restores scroll position
+  - Restores search, tag filter and query state
+- URL synchronization for Projects page
+  - `?lang=`
+  - `?q=` (search)
+  - `?tag=` (filter)
+  - Browser back/forward fully supported
+- Refactored project detail styling
+  - Extracted shared styles into `projects/_project-style.css`
+  - Removed duplicated inline `<style>` blocks
+- Improved SEO / Social sharing
+  - Updated default OG image
+  - Cleaned meta setup across pages
+
+#### Technical Notes
+- HTML5 UP *Massively* template adapted without breaking core structure
+- No frameworks introduced (pure HTML / CSS / vanilla JS)
+- Mobile navigation quirks accepted intentionally for v1.7
+  - Minor layout differences in language switch on very small screens
+  - Documented for later refinement
+
+#### Known Limitations
+- Long-form content still lives in HTML
+- Language switch UI may slightly differ between desktop and mobile
+- Content translation not yet completed (infrastructure only)
+
+
+---
+
 ### v1.6.0 — Projects Refactor & SPA-like Back Navigation
 **Release date:** 2026-01-29
 
