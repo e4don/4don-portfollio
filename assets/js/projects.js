@@ -1,4 +1,4 @@
-/* 4don - Projects Loader (v1.7)
+/* 4don - Projects Loader
    Loads /projects.json and renders project cards using the HTML5 UP Massively layout.
 
    Features:
@@ -12,9 +12,6 @@
    - SPA-like back navigation:
      -> Saves search/tag + scroll before navigating to detail pages
      -> Restores search/tag + scroll after returning
-   - i18n-ready (DE/EN):
-     -> Uses window.i18n.t() when available
-     -> Re-applies translations after rendering (window.i18n.apply)
 */
 
 (function () {
@@ -36,17 +33,6 @@
   const KEY_STATE = 'projects.uiState'; // JSON: { q, tag }
   const KEY_SCROLL = 'projects.scrollY'; // number
   const KEY_ARMED = 'projects.restoreArmed'; // "1" => restore on next render
-  const KEY_URL_SYNC = 'projects.urlSync'; // optional flag, not required
-
-  // =========================================================
-  // i18n helpers (safe fallback when i18n.js is not loaded)
-  // =========================================================
-  const tt = (key, fallback) => (window.i18n?.t ? window.i18n.t(key, fallback) : fallback);
-
-  const format = (s, vars) =>
-    String(s).replace(/\{(\w+)\}/g, (_, k) =>
-      Object.prototype.hasOwnProperty.call(vars, k) ? String(vars[k]) : `{${k}}`
-    );
 
   // Escape helper (XSS-safe for HTML string output)
   const esc = (s) =>
@@ -69,46 +55,15 @@
     return Number.isFinite(t) ? t : 0;
   };
 
-  // =========================================================
-  // URL sync helpers (q + tag)
-  // =========================================================
-  function readUrlState() {
-    try {
-      const url = new URL(window.location.href);
-      const q = url.searchParams.get('q') ?? '';
-      const tag = url.searchParams.get('tag') ?? '__all__';
-      return { q, tag };
-    } catch (_) {
-      return { q: '', tag: '__all__' };
-    }
-  }
-
-  function writeUrlState({ q, tag }) {
-    try {
-      const url = new URL(window.location.href);
-
-      // q
-      const qq = String(q || '').trim();
-      if (qq) url.searchParams.set('q', qq);
-      else url.searchParams.delete('q');
-
-      // tag
-      const ttg = String(tag || '__all__');
-      if (ttg && ttg !== '__all__') url.searchParams.set('tag', ttg);
-      else url.searchParams.delete('tag');
-
-      // keep lang param intact (handled by i18n.js)
-      history.replaceState({}, '', url);
-    } catch (_) {
-      /* ignore */
-    }
-  }
-
   // Internal state
   let allProjects = [];
 
   // =========================================================
   // Save / restore UI state (search + tag) and scroll position
+  //
+  // Why?
+  // - Browser back navigation is unreliable with dynamic rendering
+  // - Project list is rebuilt from JSON on every load
   // =========================================================
   function saveUIState() {
     try {
@@ -184,7 +139,7 @@
     const allLabel = esc(tt('projects.allTags', 'All tags'));
 
     tagEl.innerHTML =
-      `<option value="__all__">${allLabel}</option>` +
+      `<option value="__all__">All tags</option>` +
       tags
         .map((t) => {
           const label = esc(t);
@@ -196,12 +151,7 @@
 
   function updateMeta(shown, total) {
     if (!metaEl) return;
-    if (total === 0) {
-      metaEl.textContent = '';
-      return;
-    }
-    const tpl = tt('projects.meta', '{shown} of {total} projects');
-    metaEl.textContent = format(tpl, { shown, total });
+    metaEl.textContent = total === 0 ? '' : `${shown} of ${total} projects`;
   }
 
   function matchesFilters(p) {
@@ -228,8 +178,8 @@
 
       grid.innerHTML = `
         <article>
-          <header><h2>${emptyTitle}</h2></header>
-          <p>${emptyHint}</p>
+          <header><h2>No projects found</h2></header>
+          <p>Reset filters or check <code>projects.json</code>.</p>
         </article>`;
       return;
     }
@@ -252,9 +202,7 @@
         const actions = [];
 
         if (url) {
-          actions.push(
-            `<li><a href="${url}" class="button" data-project-link="1">${openLabel}</a></li>`
-          );
+          actions.push(`<li><a href="${url}" class="button" data-project-link="1">Open</a></li>`);
         }
 
         if (github) {
@@ -266,16 +214,13 @@
         const actionsHtml =
           actions.length > 0 ? `<ul class="actions special">${actions.join('')}</ul>` : '';
 
-        // 404-safe image fallback
         const imgTag = `<img src="${img}" alt="${title}"
           onerror="this.onerror=null;this.src='${esc(FALLBACK_IMG)}';" />`;
 
-        // Image wrapper: clickable when url exists (same tab)
         const imageHtml = url
           ? `<a href="${url}" class="image fit" data-project-link="1">${imgTag}</a>`
           : `<span class="image fit">${imgTag}</span>`;
 
-        // Badges
         const badges =
           tags.length > 0
             ? `<div class="project-badges">
@@ -314,12 +259,6 @@
 
     // Keep UI state in sync
     saveUIState();
-    // Keep the URL in sync (q + tag)
-    writeUrlState({
-      q: searchEl ? searchEl.value : '',
-      tag: tagEl ? tagEl.value : '__all__',
-    });
-
 
     // Restore scroll position after returning from a detail page
     try {
@@ -357,8 +296,8 @@
 
         grid.innerHTML = `
           <article>
-            <header><h2>${emptyTitle}</h2></header>
-            <p>${emptyHint}</p>
+            <header><h2>No projects found</h2></header>
+            <p><code>projects.json</code> contains no entries.</p>
           </article>`;
         return;
       }
@@ -370,51 +309,15 @@
       // Build tag dropdown BEFORE restoring UI state
       buildTagOptions(allProjects);
 
-      // 1) Apply URL state (q + tag) first (shareable links)
-      const urlState = readUrlState();
-      if (searchEl) searchEl.value = urlState.q;
-
-      if (tagEl) {
-        const hasOption = Array.from(tagEl.options).some((o) => o.value === urlState.tag);
-        tagEl.value = hasOption ? urlState.tag : '__all__';
-      }
-
-      // 2) Then restore session state (SPA-like back), but only if armed
-      // This ensures: returning from detail page restores your last UI,
-      // while direct links use the URL state.
-      try {
-        const armed = sessionStorage.getItem(KEY_ARMED) === '1';
-        if (armed) restoreUIState();
-      } catch (_) {
-        /* ignore */
-      }
+      // Restore search + tag (if returning from detail page)
+      restoreUIState();
 
       // Initial render (also restores scroll if armed)
       applyAndRender();
 
       // UI events
-      if (searchEl) {
-        // Translate placeholder via data-i18n-attr in HTML where possible
-        // but still keep state in sync with user input
-        searchEl.addEventListener('input', applyAndRender);
-      }
-
-      if (tagEl) {
-        tagEl.addEventListener('change', applyAndRender);
-
-        // If language changes, rebuild the tag dropdown label and keep selection
-        window.i18n?.onChange?.(() => {
-          const prev = tagEl.value;
-          buildTagOptions(allProjects);
-
-          // Restore selection (if it still exists)
-          const hasOption = Array.from(tagEl.options).some((o) => o.value === prev);
-          tagEl.value = hasOption ? prev : '__all__';
-
-          // Re-apply UI text (meta + empty states if any)
-          applyAndRender();
-        });
-      }
+      if (searchEl) searchEl.addEventListener('input', applyAndRender);
+      if (tagEl) tagEl.addEventListener('change', applyAndRender);
 
       if (resetEl) {
         resetEl.addEventListener('click', () => {
@@ -462,10 +365,10 @@
 
       grid.innerHTML = `
         <article>
-          <header><h2>${failTitle}</h2></header>
+          <header><h2>Failed to load projects</h2></header>
           <p>
             Error: <code>${esc(err.message)}</code><br />
-            ${failTip}
+            Tip: Open the site via a local server (e.g. VS Code "Live Server").
           </p>
         </article>
       `;
