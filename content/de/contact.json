@@ -1,0 +1,28 @@
+{
+  "meta": {
+    "title": "Kontakt",
+    "description": "Kontakt zu 4don: Mail, GitHub und Nachricht senden."
+  },
+  "header": {
+    "title": "Kontakt",
+    "intro": "Am schnellsten erreichst du mich per E-Mail oder über GitHub. Alternativ kannst du mir hier direkt eine Nachricht schicken."
+  },
+  "direct": {
+    "title": "Direkt",
+    "mailCta": "Mail: info@4don.com",
+    "githubCta": "GitHub"
+  },
+  "form": {
+    "title": "Nachricht senden",
+    "hint": "Kurze Nachricht reicht — ich melde mich so schnell wie möglich.",
+    "nameLabel": "Name",
+    "emailLabel": "E-Mail",
+    "messageLabel": "Nachricht",
+    "namePlaceholder": "Dein Name",
+    "emailPlaceholder": "dein.name@example.com",
+    "messagePlaceholder": "Worum geht’s?",
+    "submit": "Senden",
+    "success": "Danke! Deine Nachricht wurde gesendet.",
+    "error": "Uups — das hat nicht geklappt. Bitte versuche es später erneut oder nutze E-Mail."
+  }
+}

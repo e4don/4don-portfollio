@@ -1,0 +1,11 @@
+{
+  "meta": {
+    "title": "Projekte",
+    "description": "Übersicht meiner Projekte rund um Automation, Web und Maker-Themen."
+  },
+  "header": {
+    "title": "Projekte",
+    "introHtml": "Die Karten unten werden automatisch aus <code>projects.json</code> geladen.",
+    "note": "Hinweis: Einige Projekte sind aktuell privat – Links/Repos folgen, sobald sie public sind."
+  }
+}

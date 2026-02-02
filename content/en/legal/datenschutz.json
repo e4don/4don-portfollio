@@ -1,0 +1,43 @@
+{
+  "meta": {
+    "title": "Privacy",
+    "description": "Privacy policy for 4don."
+  },
+  "header": {
+    "title": "Privacy policy",
+    "subtitle": "A short, pragmatic privacy notice for a static portfolio website."
+  },
+  "note": {
+    "html": "<p><em>Note:</em> This is an English convenience translation. The German version is the legally relevant one.</p>"
+  },
+  "sections": [
+    {
+      "title": "1. Controller",
+      "html": "<p>Erik Fordon<br />Address: Anne-Frank-Str. 3, 65428 Rüsselsheim, Germany<br />Email: <a href=\"mailto:info@4don.com\">info@4don.com</a></p>"
+    },
+    {
+      "title": "2. Access data / server logs",
+      "html": "<p>When you visit this website, the hosting provider processes technically required data (e.g., IP address, timestamp, requested page, user agent) in server log files. This processing is carried out to operate and secure the website.</p>"
+    },
+    {
+      "title": "3. Cookies",
+      "html": "<p>This website does not set its own cookies for tracking or marketing purposes.</p>"
+    },
+    {
+      "title": "4. Contact",
+      "html": "<p>If you contact me by email, the data you provide will be processed to handle your request. Your data will not be shared with third parties.</p>"
+    },
+    {
+      "title": "5. External links",
+      "html": "<p>This website may contain links to external sites (e.g., GitHub). The respective provider is always responsible for the content of external sites.</p>"
+    },
+    {
+      "title": "6. Your rights",
+      "html": "<p>Subject to applicable laws, you have the right to access, rectification, erasure, restriction of processing, and to object. You also have the right to lodge a complaint with a data protection supervisory authority.</p>"
+    }
+  ],
+  "links": {
+    "toImprint": "→ Imprint",
+    "imprintHref": "impressum.html"
+  }
+}

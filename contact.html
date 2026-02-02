@@ -103,45 +103,63 @@
       <div id="main">
         <section class="post">
           <header class="major">
-            <h1>Kontakt</h1>
-            <p>
-              Am schnellsten erreichst du mich per E-Mail oder über GitHub. Ein Formular baue ich
-              später ggf. nach (oder über einen Dienst wie Formspree).
-            </p>
+            <h1 id="contact-title">Kontakt</h1>
+            <p id="contact-intro"></p>
           </header>
 
-          <h2>Direkt</h2>
+          <h2 id="contact-direct-title">Direkt</h2>
           <ul class="actions">
-            <li><a class="button primary" href="mailto:info@4don.com">Mail: info@4don.com</a></li>
+            <li><a class="button primary" href="mailto:info@4don.com" id="contact-mail-cta">Mail</a></li>
             <li>
-              <a class="button" href="https://github.com/e4don" target="_blank" rel="noopener"
-                >GitHub</a
-              >
+              <a class="button" href="https://github.com/e4don" target="_blank" rel="noopener" id="contact-github-cta">GitHub</a>
             </li>
           </ul>
 
           <hr />
-          <!--optional
-          <h2>Optional</h2>
-          <p>Wenn du willst, ergänze ich hier noch LinkedIn/Instagram oder ein Kontaktformular.</p>
--->
-          <ul class="icons alt">
-            <li>
-              <a href="https://github.com/e4don" class="icon brands alt fa-github"
-                ><span class="label">GitHub</span></a
-              >
-            </li>
-            <!-- optional -->
-            <!-- <li><a href="https://www.linkedin.com/in/DEINNAME" class="icon brands alt fa-linkedin"><span class="label">LinkedIn</span></a></li> -->
-          </ul>
+
+          <h2 id="contact-form-title">Nachricht senden</h2>
+          <p id="contact-form-hint"></p>
+
+          <form id="contact-form" method="POST">
+            <!-- Honeypot (spam protection) -->
+            <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
+
+            <!-- Helpful metadata -->
+            <input type="hidden" name="page" value="contact" />
+            <input type="hidden" name="lang" id="contact-hidden-lang" value="en" />
+
+            <div class="fields">
+              <div class="field half">
+                <label id="contact-label-name" for="contact-input-name">Name</label>
+                <input type="text" name="name" id="contact-input-name" required />
+              </div>
+
+              <div class="field half">
+                <label id="contact-label-email" for="contact-input-email">E-Mail</label>
+                <input type="email" name="email" id="contact-input-email" required />
+              </div>
+
+              <div class="field">
+                <label id="contact-label-message" for="contact-input-message">Nachricht</label>
+                <textarea name="message" id="contact-input-message" rows="6" required></textarea>
+              </div>
+            </div>
+
+            <ul class="actions">
+              <li><button type="submit" class="button primary" id="contact-submit">Senden</button></li>
+            </ul>
+
+            <p id="contact-form-status" class="form-status" style="display:none; margin-top: 1rem;"></p>
+          </form>
         </section>
       </div>
+
 
       <!-- Footer (Content)
       <footer id="footer" class="footer-4don">
         <section class="split contact">
           <section>
-            <h3>Kontakt</h3>
+            <h3 data-i18n="footer.contact">Kontakt</h3>
             <p>
               <a href="mailto:info@4don.com">info@4don.com</a><br />
               <a href="https://github.com/e4don" target="_blank" rel="noopener">github.com/e4don</a>
@@ -149,7 +167,7 @@
           </section>
 
           <section>
-            <h3>Links</h3>
+            <h3 data-i18n="footer.links">Links</h3>
             <ul class="icons alt">
               <li>
                 <a
@@ -169,10 +187,12 @@
       <!-- Copyright (Bottom bar) -->
       <div id="copyright">
         <ul>
-          <li>&copy; 4don — All rights reserved.</li>
-          <li><a href="legal/impressum.html">Impressum</a></li>
-          <li><a href="legal/datenschutz.html">Datenschutz</a></li>
-          <li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
+          <li data-i18n="copyright.rights">© 4don — All rights reserved.</li>
+          <li><a href="legal/impressum.html" data-i18n="copyright.imprint">Impressum</a></li>
+          <li><a href="legal/datenschutz.html" data-i18n="copyright.privacy">Datenschutz</a></li>
+          <li class="credit">
+            <a href="https://html5up.net" data-i18n="copyright.design">Design: HTML5 UP</a>
+          </li>
         </ul>
       </div>
     </div>
@@ -185,6 +205,7 @@
     <script src="assets/js/util.js"></script>
     <script src="assets/js/main.js"></script>
     <script src="assets/js/i18n.js"></script>
+    <script src="assets/js/content-contact.js"></script>
     <script>window.i18nInit?.({ basePath: "assets/i18n" });</script>
   </body>
 </html>

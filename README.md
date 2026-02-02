@@ -1,28 +1,71 @@
 # 4don-portfolio
 
 Personal portfolio site to present my projects, experience, and contact information.
-“Live: https://www.4don.com”
-
-## Version History
-
-### v1.8 — Content Translation & Structured Storytelling (next)
-**Status:** Planned
-**Focus:** Clean content separation, long-form translation, scalability
-
-#### Planned Scope
-- Introduce **language-specific content structure**
-content/
-de/
-en/
-- Migrate **About page** to structured DE / EN content
-- Prepare project stories for Markdown-based content
-- Keep templates language-agnostic
-- Establish repeatable translation workflow for future pages
-
+Live: https://www.4don.com
 
 ---
 
-### v1.7 — Internationalization Foundation & UX Refinements (current)
+## Version History
+
+### v1.9 — Project Content Model & Authoring Workflow (planned)
+**Status:** Planned
+**Focus:** Make project pages easier to maintain + translation-friendly writing workflow
+
+#### Goal
+Project pages should be maintainable like “writing documents”, not like “editing escaped JSON strings”.
+The new structure should reduce copy/paste friction and make it fast to add new projects.
+
+#### Planned Scope
+- Redesign the **project detail content format**
+  - Move away from large `bodyHtml` strings
+  - Introduce structured sections (e.g. `goal`, `features`, `timeline`, `roadmap`, `checklist`)
+  - Allow “write first, format later” content blocks
+- Improve authoring experience
+  - Avoid manual JSON escaping
+  - Define a repeatable workflow for writing + translation (DE/EN)
+- Translate project pages using the new concept
+  - Convert existing project pages (Portfolio, RMV Display, Pi-hole) into the new structured model
+- UI polish items (kept intentionally out of v1.8)
+  - Language switch button design refinement (desktop + mobile alignment)
+  - Contact page: improve form UX (success feedback polish / animation iteration)
+
+#### Notes / Ideas for the new model
+- Use section arrays like:
+  - `{ "type": "h2", "text": "Goal" }`, `{ "type": "p", "text": "..." }`
+  - or a stricter schema with named fields
+- Optionally switch long-form text to Markdown files later (if it stays framework-free)
+
+---
+
+### v1.8 — Content Translation & Page Localization (released)
+**Status:** Released
+**Focus:** Turn the i18n foundation into real bilingual content (DE/EN) without over-optimizing UI
+
+#### Highlights
+- Introduced a **language-specific content layer** (`content/de` + `content/en`)
+- Migrated core pages to content-driven translation
+  - Home / About / Contact
+  - Legal pages (Imprint + Privacy) prepared for localized content
+- Implemented **project detail page localization** (first working iteration)
+  - Project pages can load content per language
+  - Fixed path handling for project pages living under `/projects/`
+- Improved release robustness by keeping templates mostly language-agnostic
+  - HTML stays stable
+  - Content + meta text moves into language files / loaders
+
+#### Why it matters
+- v1.8 is the first version where the site is not only “i18n-ready” but actually bilingual.
+- A repeatable translation approach exists for new pages.
+- The project pages proved the concept, but also revealed what needs improvement in v1.9 (authoring friction due to escaped HTML-in-JSON).
+
+#### Known Limitations
+- Project page authoring is still “developer-style” (large JSON-escaped HTML strings)
+- Project translations will be improved after the new v1.9 content model is defined
+- Minor UI polish intentionally postponed (focus on scalable translation first)
+
+---
+
+### v1.7 — Internationalization Foundation & UX Refinements
 **Status:** Stable
 **Focus:** Infrastructure, refactoring, i18n groundwork
 
@@ -34,34 +77,19 @@ en/
 - Implemented **language toggle (desktop + mobile)**
   - Desktop: pill-style switch integrated into navigation
   - Mobile: border-only variant inside off-canvas nav panel
-  - Active language visually highlighted
-- Added **SPA-like back navigation** for project pages
+- Added **SPA-like back navigation** for projects
   - Restores scroll position
   - Restores search, tag filter and query state
 - URL synchronization for Projects page
-  - `?lang=`
-  - `?q=` (search)
-  - `?tag=` (filter)
-  - Browser back/forward fully supported
-- Refactored project detail styling
-  - Extracted shared styles into `projects/_project-style.css`
-  - Removed duplicated inline `<style>` blocks
-- Improved SEO / Social sharing
+  - `?lang=` / `?q=` / `?tag=` + back/forward support
+- Refactored project detail styling into `/projects/_project-style.css`
+- Improved SEO / social sharing
   - Updated default OG image
   - Cleaned meta setup across pages
 
-#### Technical Notes
-- HTML5 UP *Massively* template adapted without breaking core structure
-- No frameworks introduced (pure HTML / CSS / vanilla JS)
-- Mobile navigation quirks accepted intentionally for v1.7
-  - Minor layout differences in language switch on very small screens
-  - Documented for later refinement
-
 #### Known Limitations
-- Long-form content still lives in HTML
-- Language switch UI may slightly differ between desktop and mobile
-- Content translation not yet completed (infrastructure only)
-
+- Long-form content still lived in HTML
+- Language switch UI differences on very small screens (accepted for now)
 
 ---
 
@@ -69,123 +97,83 @@ en/
 **Release date:** 2026-01-29
 
 **What changed**
-- Extracted project detail page styling into a shared stylesheet: `/projects/_project-style.css`
-- Replaced “Back to Projects” behavior with `history.back()` for natural navigation
-- Added SPA-like restore on the projects overview: search + tag + scroll position survive “back”
-- Updated OG default image reference (social preview)
+- Shared stylesheet for project pages: `/projects/_project-style.css`
+- Natural back behavior via `history.back()` for detail pages
+- SPA-like restore on the projects overview (search + tag + scroll)
 
 **Why it matters**
-- Project detail pages are now consistent and easier to maintain (no duplicated inline `<style>` blocks)
-- “Back” feels like a real app: you return to the exact scroll position + filter state
-
-**Notes**
-- The state restore is session-based (`sessionStorage`) and only activates when navigating to marked project links.
-
+- Consistent project pages without duplicated inline styles
+- Back navigation feels “app-like”
 
 ---
 
 ### v1.5.1 — Project Detail Pages & Navigation Polishing
 **What changed**
-- Project detail pages present in `/projects/` (RMV Morning Display, Pi-hole, 4don Portfolio)
-- “Back to Projects” UX refined (pre-refactor, still link-based)
-- Continued hardening of dynamic projects rendering and card UI consistency
-
-**Why it matters**
-- Clear separation between overview (projects list) and detail content (project pages)
-
+- Introduced project detail pages under `/projects/`
+- Continued hardening of dynamic projects rendering
 
 ---
 
 ### v1.5.0 — Social Preview & Shareability (OG/Twitter)
 **What changed**
-- Added OG/Twitter meta tags across pages for proper social link previews
-- Introduced default OG image reference (for consistent sharing visuals)
-
-**Why it matters**
-- Sharing 4don.com links now looks professional on LinkedIn / WhatsApp / iMessage / etc.
-
+- OG/Twitter meta tags across pages
+- Default OG image for consistent previews
 
 ---
 
 ### v1.4 — Branding Consolidation (Dark/Purple Direction)
 **What changed**
-- Consolidated “4don Branding Tweaks” into the Massively CSS structure
-- Continued aligning typography, spacing, and UI accents toward the dark/purple premium look
-
-**Why it matters**
-- Branding started to feel “designed”, not just “template customized”
-- Cleaner maintainability: changes live in the right places (not random CSS overrides)
-
+- Consolidated branding tweaks into the Massively CSS structure
+- Improved typography + spacing consistency
 
 ---
 
 ### v1.3 — Projects Page Hardening (Search/Tags/Badges)
 **What changed**
-- Solidified projects filtering/search behavior (title/description/tags)
-- Tag dropdown + badges matured into a stable UX
-- Improved robustness around empty states and project metadata
-
-**Why it matters**
-- The projects page became the “core navigation hub” of the portfolio
-
+- Mature filtering/search behavior
+- Tag dropdown + badges stabilized
+- Robust empty/error states
 
 ---
 
 ### v1.2 — PWA & SEO Baseline
 **What changed**
-- Added PWA/SEO groundwork: `site.webmanifest`, `theme-color`, Apple web-app meta
-- Favicons and installability moved closer to “real product” quality
-
-**Why it matters**
-- 4don.com gained the fundamentals for modern browser integration (install / theming / share-ready)
-
+- Added `site.webmanifest`, `theme-color`, Apple web-app meta
+- Favicons + installability improvements
 
 ---
 
 ### v1.1 — Major Projects Upgrade (Dynamic Data + Detail Pages)
 **What changed**
-- Big step forward for the projects system:
-  - dynamic rendering from `projects.json`
-  - sorting by date
-  - search + tag filtering
-  - badges instead of raw tag lists
-  - optional GitHub button (only if link exists)
-  - image fallback (missing path + 404 safe)
-- Introduced project detail pages in `/projects/`
-
-**Why it matters**
-- Projects became data-driven and scalable: adding a new project no longer requires HTML duplication
-
+- Dynamic rendering from `projects.json` + `projects.js`
+- Sorting, search, tag filtering, badges, GitHub button, image fallback
+- Introduced `/projects/` detail pages
 
 ---
 
 ### v1.0 — Massively Template Stabilization
 **What changed**
-- Stabilized the initial Massively-based site structure after the first template integration
-- Ensured core pages and navigation behave consistently
-
-**Why it matters**
-- Created a clean foundation to build the dynamic projects system on top
-
+- Stabilized initial Massively-based site structure
+- Consistent navigation + page layout
 
 ---
 
 ### v0.1 — Switch to HTML5 UP Massively (Multi-Page Portfolio)
 **What changed**
-- Migrated from the initial prototype to the Massively template structure
-- Introduced multiple pages (home / projects / about / contact + legal pages)
-- Introduced the first dynamic project list approach via `projects.json` + `projects.js`
-
-**Why it matters**
-- The project moved from “idea/prototype” to an extensible portfolio structure
-
+- Migrated from prototype to Massively
+- Multi-page setup + early dynamic projects concept
 
 ---
 
 ### v0.0 — Initial Prototype (First Idea)
 **What changed**
-- Very first concept: custom HTML/CSS/JS prototype
-- Focused on validating content and layout direction before template adoption
+- First HTML/CSS/JS prototype to validate direction
 
-**Why it matters**
-- This was the “proof that the idea works” phase before investing into a full template system
+---
+
+## Tracked ToDos (for upcoming versions)
+- Contact page: finalize the form setup and UX polish
+- Improve Formspree mail output (subject, reply-to, meta information)
+- Language switch button: design refinement + consistent behavior on small screens
+- Project pages: rework content format to remove JSON-escaped authoring friction
+- Project page translations after the new v1.9 structure is defined
