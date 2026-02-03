@@ -59,13 +59,13 @@
           <span>4DON</span>
         </h1>
 
-        <p>
+        <p id="home-intro-text">
           Portfolio & Projekte — Automatisierung, Tech und Dinge, die Spaß machen.<br />
           Schau gern rein: Projekte, About, Kontakt.
         </p>
 
         <ul class="actions">
-          <li><a href="#header" class="button icon solid solo fa-arrow-down scrolly">Weiter</a></li>
+          <li><a href="#header" class="button icon solid solo fa-arrow-down scrolly" id="home-intro-cta">Weiter</a></li>
         </ul>
       </div>
 
@@ -129,22 +129,21 @@
         <!-- Featured Post -->
         <article class="post featured">
           <header class="major">
-            <span class="date">Willkommen</span>
+            <span class="date" id="home-featured-kicker">Willkommen</span>
             <h2>
-              <a href="projects.html">Meine Projekte<br />auf einen Blick</a>
+              <a href="projects.html" id="home-featured-title">Meine Projekte<br />auf einen Blick</a>
             </h2>
-            <p>
-              Hier entstehen kleine und große Projekte rund um Automation, Web, Raspberry Pi, und
-              alles, was man optimieren kann.
+            <p id="home-featured-text">
+              Hier entstehen kleine und große Projekte rund um Automation, Web, Raspberry Pi, und alles, was man optimieren kann.
             </p>
           </header>
 
           <a href="projects.html" class="image main">
-            <img src="assets/images/projects.png" alt="Projekt-Preview" />
+            <img src="assets/images/projects.png" id="home-featured-image" alt="Projekt-Preview" />
           </a>
 
           <ul class="actions special">
-            <li><a href="projects.html" class="button large">Zu den Projekten</a></li>
+            <li><a href="projects.html" class="button large" id="home-featured-cta">Zu den Projekten</a></li>
           </ul>
         </article>
 
@@ -152,29 +151,29 @@
         <section class="posts">
           <article>
             <header>
-              <span class="date">Kurzprofil</span>
-              <h2><a href="about.html">Über mich</a></h2>
+              <span class="date" id="home-card-0-kicker">Kurzprofil</span>
+              <h2><a href="about.html" id="home-card-0-title">Über mich</a></h2>
             </header>
             <a href="about.html" class="image fit">
-              <img src="assets/images/aboutme.png" alt="Über mich" />
+              <img src="assets/images/aboutme.png" id="home-card-0-image" alt="Über mich" />
             </a>
-            <p>Wer ich bin, was ich mache und welche Themen mich aktuell am meisten reizen.</p>
+            <p id="home-card-0-text">Wer ich bin, was ich mache und welche Themen mich aktuell am meisten reizen.</p>
             <ul class="actions special">
-              <li><a href="about.html" class="button">Öffnen</a></li>
+              <li><a href="about.html" class="button" id="home-card-0-cta">Öffnen</a></li>
             </ul>
           </article>
 
           <article>
             <header>
-              <span class="date">Kontakt</span>
-              <h2><a href="contact.html">Schreib mir</a></h2>
+              <span class="date" id="home-card-1-kicker">Kontakt</span>
+              <h2><a href="contact.html" id="home-card-1-title">Schreib mir</a></h2>
             </header>
             <a href="contact.html" class="image fit">
-              <img src="assets/images/contact.png" alt="Kontakt" />
+              <img src="assets/images/contact.png" id="home-card-1-image" alt="Kontakt" />
             </a>
-            <p>Fragen, Ideen oder Feedback? Ich freue mich über Nachrichten.</p>
+            <p id="home-card-1-text">Fragen, Ideen oder Feedback? Ich freue mich über Nachrichten.</p>
             <ul class="actions special">
-              <li><a href="contact.html" class="button">Kontakt</a></li>
+              <li><a href="contact.html" class="button" id="home-card-1-cta">Kontakt</a></li>
             </ul>
           </article>
         </section>
@@ -184,7 +183,7 @@
       <footer id="footer" class="footer-4don">
         <section class="split contact">
           <section>
-            <h3>Kontakt</h3>
+            <h3 data-i18n="footer.contact">Kontakt</h3>
             <p>
               <a href="mailto:info@4don.com">info@4don.com</a><br />
               <a href="https://github.com/e4don" target="_blank" rel="noopener">github.com/e4don</a>
@@ -192,7 +191,7 @@
           </section>
 
           <section>
-            <h3>Links</h3>
+            <h3 data-i18n="footer.links">Links</h3>
             <ul class="icons alt">
               <li>
                 <a
@@ -223,11 +222,12 @@
       <!-- Copyright (Bottom bar) -->
 <div id="copyright">
   <ul>
-    <li>© 4don — All rights reserved.</li>
-    <li><a href="legal/impressum.html">Impressum</a></li>
-    <li><a href="legal/datenschutz.html">Datenschutz</a></li>
-    <li class="credit"><a href="https://html5up.net">Design: HTML5 UP</a></li>
-    <!--- <li>Design: <a href="https://html5up.net">HTML5 UP</a></li>-->
+    <li data-i18n="copyright.rights">© 4don — All rights reserved.</li>
+    <li><a href="legal/impressum.html" data-i18n="copyright.imprint">Impressum</a></li>
+    <li><a href="legal/datenschutz.html" data-i18n="copyright.privacy">Datenschutz</a></li>
+    <li class="credit">
+      <a href="https://html5up.net" data-i18n="copyright.design">Design: HTML5 UP</a>
+    </li>
   </ul>
 </div>
 
@@ -241,6 +241,7 @@
     <script src="assets/js/util.js"></script>
     <script src="assets/js/main.js"></script>
     <script src="assets/js/i18n.js"></script>
+    <script src="assets/js/content-home.js"></script>
     <script>window.i18nInit?.({ basePath: "assets/i18n" });</script>
 
 
