@@ -111,12 +111,14 @@
       <div id="main">
         <section class="post">
           <header class="major">
-            <h1>Projekte</h1>
+            <h1 id="projects-page-title">Projekte</h1>
             <p>
-              Die Karten unten werden automatisch aus <code>projects.json</code> geladen.<br />
-              <span style="opacity: 0.85">
-                Hinweis: Einige Projekte sind aktuell privat – Links/Repos folgen, sobald sie public
-                sind.
+              <span id="projects-page-intro">
+                Die Karten unten werden automatisch aus <code>projects.json</code> geladen.
+              </span>
+              <br />
+              <span id="projects-page-note" style="opacity: 0.85">
+                Hinweis: Einige Projekte sind aktuell privat – Links/Repos folgen, sobald sie public sind.
               </span>
             </p>
           </header>
@@ -197,7 +199,7 @@
 <footer id="footer" class="footer-4don">
   <section class="split contact">
     <section>
-      <h3>Kontakt</h3>
+      <h3 data-i18n="footer.contact">Kontakt</h3>
       <p>
         <a href="mailto:info@4don.com">info@4don.com</a><br />
         <a href="https://github.com/e4don" target="_blank" rel="noopener">github.com/e4don</a>
@@ -205,7 +207,7 @@
     </section>
 
     <section>
-      <h3>Links</h3>
+      <h3 data-i18n="footer.links">Links</h3>
       <ul class="icons alt">
         <li>
           <a
@@ -236,10 +238,12 @@
       <!-- Copyright (Bottom bar) -->
 <div id="copyright">
   <ul>
-    <li>© 4don — All rights reserved.</li>
-    <li><a href="legal/impressum.html">Impressum</a></li>
-    <li><a href="legal/datenschutz.html">Datenschutz</a></li>
-    <li class="credit"><a href="https://html5up.net">Design: HTML5 UP</a></li>
+    <li data-i18n="copyright.rights">© 4don — All rights reserved.</li>
+    <li><a href="legal/impressum.html" data-i18n="copyright.imprint">Impressum</a></li>
+    <li><a href="legal/datenschutz.html" data-i18n="copyright.privacy">Datenschutz</a></li>
+    <li class="credit">
+      <a href="https://html5up.net" data-i18n="copyright.design">Design: HTML5 UP</a>
+    </li>
   </ul>
 </div>
 
@@ -251,8 +255,14 @@
     <script src="assets/js/breakpoints.min.js"></script>
     <script src="assets/js/util.js"></script>
     <script src="assets/js/main.js"></script>
+    <!-- i18n FIRST -->
+    <script src="assets/js/i18n.js"></script>
+    <script>window.i18nInit?.({ basePath: "assets/i18n" });</script>
 
-    <!-- Projekte JSON Loader (nur auf projects.html) -->
+    <!-- then content header loader (optional) -->
+    <script src="assets/js/content-projects.js"></script>
+
+    <!-- projects loader LAST -->
     <script src="assets/js/projects.js"></script>
     <script src="assets/js/i18n.js"></script>
     <script>window.i18nInit?.({ basePath: "assets/i18n" });</script>

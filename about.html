@@ -103,49 +103,35 @@
       <div id="main">
         <section class="post">
           <header class="major">
-            <h1>Über mich</h1>
-            <p>
-              Hi — ich bin Erik. Ich baue Dinge: Automation, Web, Raspberry Pi, Tools & kleine
-              Experimente, die am Ende einfach funktionieren sollen.
-            </p>
+            <h1 id="about-hero-title">About</h1>
+            <p id="about-hero-intro"></p>
           </header>
-    <!-- Mini Profil (clean) -->
-    <section class="about-mini">
-      <div class="about-mini__avatar">
-        <img src="assets/images/profile.png" alt="Erik — Profilbild" />
-      </div>
 
-      <div class="about-mini__info">
-        <h2 class="about-mini__name">Erik Fordon</h2>
-        <p class="about-mini__headline">Automationsingenieur</p>
-        <p class="about-mini__location">Germany</p>
-      </div>
-    </section>
+          <!-- Mini Profil (clean) -->
+          <section class="about-mini">
+            <div class="about-mini__avatar">
+              <img id="about-avatar" src="assets/images/profile.png" alt="" />
+            </div>
 
-          <h2>Was mich ausmacht</h2>
-          <p>
-            Ich mag klare Strukturen, saubere Oberflächen und pragmatische Lösungen. Wenn etwas
-            nervt, wird’s automatisiert. Wenn etwas fehlt, wird’s gebaut.
-          </p>
+            <div class="about-mini__info">
+              <h2 class="about-mini__name" id="about-name"></h2>
+              <p class="about-mini__headline" id="about-role"></p>
+              <p class="about-mini__location" id="about-location"></p>
+            </div>
+          </section>
 
-          <h2>Woran ich arbeite</h2>
-          <ul>
-            <li>
-              Automations-/Engineering-Themen (Industrie/Prozesse, Standards, saubere Umsetzung)
-            </li>
-            <li>Web-Projekte (kleine Tools, Dashboards, Portfolio)</li>
-            <li>Raspberry Pi / Home-Setups (Kiosk-Displays, Monitoring, Utilities)</li>
-          </ul>
+          <h2 id="about-mindset-title"></h2>
+          <p id="about-mindset-text"></p>
 
-          <h2>Tech, die ich mag</h2>
-          <p>
-            Je nach Projekt: Siemens/Industrie-Stack, Web (HTML/CSS/JS), Node.js, APIs, Raspberry
-            Pi, und alles was robust & wartbar bleibt.
-          </p>
+          <h2 id="about-work-title"></h2>
+          <ul id="about-work-list"></ul>
+
+          <h2 id="about-tech-title"></h2>
+          <p id="about-tech-text"></p>
 
           <ul class="actions">
-            <li><a href="projects.html" class="button">Zu den Projekten</a></li>
-            <li><a href="contact.html" class="button">Kontakt</a></li>
+            <li><a href="projects.html" class="button" id="about-cta-projects"></a></li>
+            <li><a href="contact.html" class="button" id="about-cta-contact"></a></li>
           </ul>
         </section>
       </div>
@@ -154,7 +140,7 @@
       <footer id="footer" class="footer-4don">
         <section class="split contact">
           <section>
-            <h3>Kontakt</h3>
+            <h3 data-i18n="footer.contact">Kontakt</h3>
             <p>
               <a href="mailto:info@4don.com">info@4don.com</a><br />
               <a href="https://github.com/e4don" target="_blank" rel="noopener">github.com/e4don</a>
@@ -162,7 +148,7 @@
           </section>
 
           <section>
-            <h3>Links</h3>
+            <h3 data-i18n="footer.links">Links</h3>
             <ul class="icons alt">
               <li>
                 <a
@@ -193,10 +179,12 @@
       <!-- Copyright (Bottom bar) -->
 <div id="copyright">
   <ul>
-    <li>© 4don — All rights reserved.</li>
-    <li><a href="legal/impressum.html">Impressum</a></li>
-    <li><a href="legal/datenschutz.html">Datenschutz</a></li>
-    <li class="credit"><a href="https://html5up.net">Design: HTML5 UP</a></li>
+    <li data-i18n="copyright.rights">© 4don — All rights reserved.</li>
+    <li><a href="legal/impressum.html" data-i18n="copyright.imprint">Impressum</a></li>
+    <li><a href="legal/datenschutz.html" data-i18n="copyright.privacy">Datenschutz</a></li>
+    <li class="credit">
+      <a href="https://html5up.net" data-i18n="copyright.design">Design: HTML5 UP</a>
+    </li>
   </ul>
 </div>
 
@@ -208,6 +196,7 @@
     <script src="assets/js/util.js"></script>
     <script src="assets/js/main.js"></script>
     <script src="assets/js/i18n.js"></script>
+    <script src="assets/js/content-about.js"></script>
     <script>window.i18nInit?.({ basePath: "assets/i18n" });</script>
   </body>
 </html>

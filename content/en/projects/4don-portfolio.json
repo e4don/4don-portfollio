@@ -1,0 +1,35 @@
+{
+  "meta": {
+    "title": "4DON.com — Portfolio",
+    "ogTitle": "4don — 4don Portfolio",
+    "description": "4don Portfolio — a minimalist, purple-ambient project platform with a dynamic projects overview (JSON → UI), clear navigation, and a clean go-live setup."
+  },
+  "ui": {
+    "back": "Back",
+    "miniNote": "Note: Some projects/repos are intentionally private. Links will appear once they are public.",
+    "backToProjects": "Back to Projects",
+    "contact": "Contact"
+  },
+  "header": {
+    "kicker": "Project",
+    "title": "4don Portfolio",
+    "subtitle": "Minimal. Purple ambient. Maintainable. Projects loaded dynamically from JSON — plus a clean go-live setup."
+  },
+  "metaBox": {
+    "statusLabel": "Status",
+    "statusValue": "V1.5 (release-ready)",
+    "hostingLabel": "Hosting",
+    "hostingValue": "Cloudflare Pages",
+    "stackLabel": "Stack",
+    "stackValue": "HTML / CSS / JS",
+    "contentLabel": "Content",
+    "contentValue": "JSON → UI"
+  },
+  "links": {
+    "liveLabel": "View Live",
+    "liveHref": "../index.html",
+    "githubLabel": "GitHub",
+    "githubHref": "https://github.com/e4don/4don-portfolio"
+  },
+  "bodyHtml": "<h2>Goal</h2>\n<p>\n  The 4don Portfolio is my personal project platform to document automation and maker projects in a\n  clean and structured way. The setup is intentionally kept minimalist and maintainable: clear\n  navigation, a consistent dark-purple look, fast load times, and a dynamic projects overview\n  (JSON → UI).\n</p>\n\n<hr class=\"section-sep\" />\n\n<h2>Features</h2>\n<div class=\"callouts\">\n  <div class=\"callout\">\n    <h3>Branding &amp; Layout</h3>\n    <ul class=\"checklist\">\n      <li><span class=\"check\">✅</span><span>Apple-inspired dark mode + purple ambient look</span></li>\n      <li><span class=\"check\">✅</span><span>Multi-page structure (Home, Projects, About, Contact, Legal)</span></li>\n      <li><span class=\"check\">✅</span><span>Footer + copyright bar consistent across all pages</span></li>\n    </ul>\n  </div>\n\n  <div class=\"callout\">\n    <h3>Projects System</h3>\n    <ul class=\"checklist\">\n      <li><span class=\"check\">✅</span><span><code>projects.json</code> as the source (easy to maintain)</span></li>\n      <li><span class=\"check\">✅</span><span>Cards are rendered via <code>projects.js</code></span></li>\n      <li><span class=\"check\">✅</span><span>Sorting (new → old), search, tag filter, badges</span></li>\n      <li><span class=\"check\">✅</span><span>Optional GitHub button + image fallback</span></li>\n    </ul>\n  </div>\n</div>\n\n<hr class=\"section-sep\" />\n\n<h2>Structure</h2>\n<p class=\"muted\">This is how the website is intended (quick overview):</p>\n<pre><code>/\n├─ index.html\n├─ projects.html\n├─ about.html\n├─ contact.html\n├─ projects.json\n├─ robots.txt\n├─ sitemap.xml\n├─ 404.html\n├─ site.webmanifest\n├─ legal/\n│  ├─ impressum.html\n│  └─ datenschutz.html\n└─ projects/\n   ├─ rmv-morning-display.html\n   ├─ pi-hole-setup.html\n   └─ 4don-portfolio.html</code></pre>\n\n<hr class=\"section-sep\" />\n\n<h2>Development (V1.x)</h2>\n<p class=\"muted\">A short project log as a “presentable” timeline.</p>\n\n<h3>Step 1 — Branding &amp; Purple Theme</h3>\n<ul>\n  <li>Cleaned up template colors and made the purple accent consistent</li>\n  <li>Integrated a dark purple background (ambient look)</li>\n</ul>\n\n<h3>Step 2 — Clean footer &amp; copyright</h3>\n<ul>\n  <li>Kept the large footer (Contact/Links)</li>\n  <li>Kept legal links compact in the copyright bar</li>\n</ul>\n\n<h3>Step 3 — Load projects from JSON</h3>\n<ul>\n  <li><code>projects.json</code> as the data source</li>\n  <li><code>projects.js</code> renders cards in the Massively layout</li>\n</ul>\n\n<h3>Step 4 — UX upgrade (Search / Filter / Badges)</h3>\n<ul>\n  <li>Sorting: new → old</li>\n  <li>Search + tag dropdown + reset</li>\n  <li>Badges instead of “Tags: …” + optional GitHub button</li>\n</ul>\n\n<h3>Step 5 — Release preparation</h3>\n<ul>\n  <li>robots.txt + sitemap.xml + 404.html + webmanifest</li>\n  <li>Unified head snippets (theme color, manifest, SEO)</li>\n</ul>\n\n<hr class=\"section-sep\" />\n\n<h2>Roadmap</h2>\n<div class=\"callouts\">\n  <div class=\"callout\">\n    <h3>V1.6 — Content upgrade</h3>\n    <ul class=\"checklist\">\n      <li><span class=\"check\">⬜</span><span>Detail pages per project (setup, screenshots, learnings)</span></li>\n      <li><span class=\"check\">⬜</span><span>Add demo links when available</span></li>\n      <li><span class=\"check\">⬜</span><span>Gradually make repos public + enable GitHub links</span></li>\n    </ul>\n  </div>\n\n  <div class=\"callout\">\n    <h3>V1.7 — Design polish</h3>\n    <ul class=\"checklist\">\n      <li><span class=\"check\">⬜</span><span>Badges: finalize spacing/alignment</span></li>\n      <li><span class=\"check\">⬜</span><span>Cards: make “View details” even cleaner (icon/CTA)</span></li>\n      <li><span class=\"check\">⬜</span><span>OG images per page (Home/Projects/About)</span></li>\n    </ul>\n  </div>\n</div>\n\n<hr class=\"section-sep\" />\n\n<h2>Go-live checklist (short)</h2>\n<p class=\"muted\">Before the final deploy, quickly check these:</p>\n\n<div class=\"callouts\">\n  <div class=\"callout\">\n    <h3>Functionality</h3>\n    <ul class=\"checklist\">\n      <li><span class=\"check\">✅</span><span>projects.html loads data correctly</span></li>\n      <li><span class=\"check\">✅</span><span>Search + filter + sorting work</span></li>\n      <li><span class=\"check\">✅</span><span>Links &amp; buttons are correct (same tab / external)</span></li>\n    </ul>\n  </div>\n\n  <div class=\"callout\">\n    <h3>Release</h3>\n    <ul class=\"checklist\">\n      <li><span class=\"check\">✅</span><span><code>/robots.txt</code> + <code>/sitemap.xml</code> are reachable</span></li>\n      <li><span class=\"check\">✅</span><span><code>/404.html</code> in the 4don look + (optional) noindex</span></li>\n      <li><span class=\"check\">✅</span><span><code>/site.webmanifest</code> is correct (name, icons, theme)</span></li>\n    </ul>\n  </div>\n</div>"
+}

@@ -4,7 +4,7 @@
   html5up.net | @ajlkn
   Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 -->
-<html>
+<html data-project-slug="4don-portfolio">
   <head>
     <title>4DON.com — Portfolio</title>
     <meta charset="utf-8" />
@@ -120,17 +120,21 @@
         <section class="post">
           <!-- Back Button -->
           <div class="project-topbar">
-            <button type="button" class="button small icon solid fa-arrow-left" onclick="history.back()">
-              Zurück
+            <button
+              type="button"
+              class="button small icon solid fa-arrow-left"
+              id="project-back-btn"
+              onclick="history.back()"
+            >
+              Back
             </button>
           </div>
 
           <header class="major">
-            <span class="date">Projekt</span>
-            <h1>4don Portfolio</h1>
-            <p class="muted">
-              Minimalistisch. Purple Ambient. Wartbar. Projekte dynamisch aus JSON — plus sauberes
-              Go-Live Setup.
+            <span class="date" id="project-kicker">Project</span>
+            <h1 id="project-title">4don Portfolio</h1>
+            <p class="muted" id="project-subtitle">
+              Minimalistisch. Purple Ambient. Wartbar. Projekte dynamisch aus JSON — plus sauberes Go-Live Setup.
             </p>
           </header>
 
@@ -151,20 +155,20 @@
             <!-- Meta -->
             <aside class="project-meta">
               <div class="meta-row">
-                <div class="meta-k">Status</div>
-                <div class="meta-v">V1.5 (Release-ready)</div>
+                <div class="meta-k" id="project-meta-status-k">Status</div>
+                <div class="meta-v" id="project-meta-status-v">V1.5 (Release-ready)</div>
               </div>
               <div class="meta-row">
-                <div class="meta-k">Hosting</div>
-                <div class="meta-v">Cloudflare Pages</div>
+                <div class="meta-k" id="project-meta-hosting-k">Hosting</div>
+                <div class="meta-v" id="project-meta-hosting-v">Cloudflare Pages</div>
               </div>
               <div class="meta-row">
-                <div class="meta-k">Stack</div>
-                <div class="meta-v">HTML / CSS / JS</div>
+                <div class="meta-k" id="project-meta-stack-k">Stack</div>
+                <div class="meta-v" id="project-meta-stack-v">HTML / CSS / JS</div>
               </div>
               <div class="meta-row">
-                <div class="meta-k">Content</div>
-                <div class="meta-v">JSON → UI</div>
+                <div class="meta-k" id="project-meta-content-k">Content</div>
+                <div class="meta-v" id="project-meta-content-v">JSON → UI</div>
               </div>
 
               <div class="badges" aria-label="Tags">
@@ -176,276 +180,44 @@
               </div>
 
               <ul class="actions" style="margin-top: 1.25rem">
-                <li><a class="button primary" href="../index.html">Live ansehen</a></li>
+                <li><a class="button primary" href="../index.html" id="project-btn-live">Live ansehen</a></li>
                 <li>
                   <a
                     class="button"
                     href="https://github.com/e4don/4don-portfolio"
                     target="_blank"
                     rel="noopener"
+                    id="project-btn-github"
                     >GitHub</a
                   >
                 </li>
               </ul>
 
-              <p class="mini-note">
+              <p class="mini-note" id="project-mini-note">
                 Hinweis: Einige Projekte/Repos sind bewusst privat. Links werden sichtbar, sobald
                 sie public sind.
               </p>
             </aside>
           </div>
 
-          <!-- Ziel -->
-          <h2>Ziel</h2>
-          <p>
-            Das 4don Portfolio ist meine persönliche Projektplattform, um Automation- und
-            Maker-Projekte sauber zu dokumentieren. Das Setup ist bewusst minimalistisch und wartbar
-            gehalten: klare Navigation, konsistenter Dark-Purple Look, schnelle Ladezeiten und eine
-            dynamische Projektübersicht (JSON → UI).
-          </p>
+          <!-- Content -->
+          <div id="project-body"></div>
 
-          <hr class="section-sep" />
-
-          <!-- Features -->
-          <h2>Features</h2>
-          <div class="callouts">
-            <div class="callout">
-              <h3>Branding & Layout</h3>
-              <ul class="checklist">
-                <li>
-                  <span class="check">✅</span
-                  ><span>Apple-inspired Dark Mode + Purple Ambient Look</span>
-                </li>
-                <li>
-                  <span class="check">✅</span
-                  ><span>Multi-Page Struktur (Home, Projekte, About, Kontakt, Legal)</span>
-                </li>
-                <li>
-                  <span class="check">✅</span
-                  ><span>Footer + Copyright-Bar konsistent auf allen Seiten</span>
-                </li>
-              </ul>
-            </div>
-
-            <div class="callout">
-              <h3>Projekte System</h3>
-              <ul class="checklist">
-                <li>
-                  <span class="check">✅</span
-                  ><span><code>projects.json</code> als Quelle (einfach pflegen)</span>
-                </li>
-                <li>
-                  <span class="check">✅</span
-                  ><span>Cards werden per <code>projects.js</code> gerendert</span>
-                </li>
-                <li>
-                  <span class="check">✅</span
-                  ><span>Sortierung (neu → alt), Search, Tag-Filter, Badges</span>
-                </li>
-                <li>
-                  <span class="check">✅</span
-                  ><span>Optionaler GitHub Button + Image-Fallback</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          <hr class="section-sep" />
-
-          <!-- Struktur -->
-          <h2>Struktur</h2>
-          <p class="muted">So ist die Website gedacht (Kurzüberblick):</p>
-          <pre><code>/
-├─ index.html
-├─ projects.html
-├─ about.html
-├─ contact.html
-├─ projects.json
-├─ robots.txt
-├─ sitemap.xml
-├─ 404.html
-├─ site.webmanifest
-├─ legal/
-│  ├─ impressum.html
-│  └─ datenschutz.html
-└─ projects/
-   ├─ rmv-morning-display.html
-   ├─ pi-hole-setup.html
-   └─ 4don-portfolio.html</code></pre>
-
-          <hr class="section-sep" />
-
-          <!-- Entwicklung / Timeline -->
-          <h2>Entwicklung (V1.x)</h2>
-          <p class="muted">Kurzes Projekt-Log als “vorzeigbare” Timeline.</p>
-
-          <h3>Step 1 — Branding & Purple Theme</h3>
-          <ul>
-            <li>Template-Farben bereinigt und Purple Accent konsistent gemacht</li>
-            <li>Dark Purple Background (Ambient Look) integriert</li>
-          </ul>
-
-          <h3>Step 2 — Footer & Copyright clean gemacht</h3>
-          <ul>
-            <li>Großer Footer (Kontakt/Links) bleibt</li>
-            <li>Legal unten kompakt in der Copyright-Bar</li>
-          </ul>
-
-          <h3>Step 3 — Projekte aus JSON laden</h3>
-          <ul>
-            <li><code>projects.json</code> als Datenquelle</li>
-            <li><code>projects.js</code> rendert Cards im Massively Layout</li>
-          </ul>
-
-          <h3>Step 4 — UX Upgrade (Search / Filter / Badges)</h3>
-          <ul>
-            <li>Sortierung: neu → alt</li>
-            <li>Search + Tag-Dropdown + Reset</li>
-            <li>Badges statt “Tags: …” + optionaler GitHub Button</li>
-          </ul>
-
-          <h3>Step 5 — Release Vorbereitung</h3>
-          <ul>
-            <li>robots.txt + sitemap.xml + 404.html + webmanifest</li>
-            <li>Head-Snippets vereinheitlicht (Theme Color, Manifest, SEO)</li>
-          </ul>
-
-          <hr class="section-sep" />
-
-          <!-- Roadmap -->
-          <h2>Roadmap</h2>
-          <div class="callouts">
-            <div class="callout">
-              <h3>V1.6 — Content Upgrade</h3>
-              <ul class="checklist">
-                <li>
-                  <span class="check">⬜</span
-                  ><span>Detailseiten pro Projekt (Setup, Screens, Learnings)</span>
-                </li>
-                <li>
-                  <span class="check">⬜</span><span>Demo-Links ergänzen, sobald verfügbar</span>
-                </li>
-                <li>
-                  <span class="check">⬜</span
-                  ><span>Repos schrittweise public schalten + GitHub Links aktivieren</span>
-                </li>
-              </ul>
-            </div>
-
-            <div class="callout">
-              <h3>V1.7 — Design Polish</h3>
-              <ul class="checklist">
-                <li>
-                  <span class="check">⬜</span
-                  ><span>Badges: Spacing/Alignment final perfektionieren</span>
-                </li>
-                <li>
-                  <span class="check">⬜</span
-                  ><span>Cards: „View Details“ noch cleaner (Icon/CTA)</span>
-                </li>
-                <li>
-                  <span class="check">⬜</span><span>OG Images je Seite (Home/Projects/About)</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          <hr class="section-sep" />
-
-          <!-- Go-Live Check -->
-          <h2>Go-Live Check (Kurz)</h2>
-          <p class="muted">Vor dem letzten Deploy einmal kurz abhaken:</p>
-
-          <div class="callouts">
-            <div class="callout">
-              <h3>Funktion</h3>
-              <ul class="checklist">
-                <li><span class="check">✅</span><span>projects.html lädt Daten korrekt</span></li>
-                <li>
-                  <span class="check">✅</span
-                  ><span>Search + Filter + Sortierung funktionieren</span>
-                </li>
-                <li>
-                  <span class="check">✅</span
-                  ><span>Links & Buttons sind korrekt (same tab / external)</span>
-                </li>
-              </ul>
-            </div>
-
-            <div class="callout">
-              <h3>Release</h3>
-              <ul class="checklist">
-                <li>
-                  <span class="check">✅</span
-                  ><span><code>/robots.txt</code> + <code>/sitemap.xml</code> erreichbar</span>
-                </li>
-                <li>
-                  <span class="check">✅</span
-                  ><span><code>/404.html</code> im 4don Look + (optional) noindex</span>
-                </li>
-                <li>
-                  <span class="check">✅</span
-                  ><span><code>/site.webmanifest</code> korrekt (Name, Icons, Theme)</span>
-                </li>
-              </ul>
-            </div>
-          </div>
 
           <ul class="actions" style="margin-top: 2rem">
-            <li><a href="../projects.html" class="button">Zurück zu Projekte</a></li>
-            <li><a href="../contact.html" class="button">Kontakt</a></li>
+            <li><a href="../projects.html" class="button" id="project-btn-backlist">Back to Projects</a></li>
+            <li><a href="../contact.html" class="button" id="project-btn-contact">Contact</a></li>
           </ul>
         </section>
       </div>
 
-      <!-- Footer (Content)
-      <footer id="footer" class="footer-4don">
-        <section class="split contact">
-          <section>
-            <h3>Kontakt</h3>
-            <p>
-              <a href="mailto:info@4don.com">info@4don.com</a><br />
-              <a href="https://github.com/e4don" target="_blank" rel="noopener">github.com/e4don</a>
-            </p>
-          </section>
-
-          <section>
-            <h3>Links</h3>
-            <ul class="icons alt">
-              <li>
-                <a
-                  href="https://github.com/e4don"
-                  class="icon brands alt fa-github"
-                  target="_blank"
-                  rel="noopener"
-                >
-                  <span class="label">GitHub</span>
-                </a>
-              </li>
-              Optional: LinkedIn
-              <li>
-                <a
-                  href="https://www.linkedin.com/in/erik-fordon"
-                  class="icon brands alt fa-linkedin"
-                  target="_blank"
-                  rel="noopener"
-                >
-                  <span class="label">LinkedIn</span>
-                </a>
-              </li>
-            </ul>
-          </section>
-        </section>
-      </footer>
-      -->
-
       <!-- Copyright (Bottom bar) -->
       <div id="copyright">
         <ul>
-          <li>© 4don — All rights reserved.</li>
-          <li><a href="../legal/impressum.html">Impressum</a></li>
-          <li><a href="../legal/datenschutz.html">Datenschutz</a></li>
-          <li class="credit"><a href="https://html5up.net">Design: HTML5 UP</a></li>
+          <li data-i18n="copyright.rights">© 4don — All rights reserved.</li>
+          <li><a href="../legal/impressum.html" data-i18n="copyright.imprint">Impressum</a></li>
+          <li><a href="../legal/datenschutz.html" data-i18n="copyright.privacy">Datenschutz</a></li>
+          <li class="credit"><a href="https://html5up.net" data-i18n="copyright.design">Design: HTML5 UP</a></li>
         </ul>
       </div>
 
@@ -459,6 +231,7 @@
       <script src="../assets/js/main.js"></script>
       <script src="../assets/js/i18n.js"></script>
       <script>window.i18nInit?.({ basePath: "../assets/i18n" });</script>
+      <script src="../assets/js/content-project-detail.js"></script>
     </div>
   </body>
 </html>

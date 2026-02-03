@@ -3,7 +3,7 @@
     {
       "title": "RMV Morning Display",
       "date": "2026-01",
-      "description": "Ein Info-Display für Abfahrten, Leave-by Timer und Karte (Raspberry Pi Kiosk).",
+      "description": "An info display for departures, a leave-by timer, and a map (Raspberry Pi kiosk).",
       "image": "assets/images/projects/rmv-morning-display.png",
       "url": "projects/rmv-morning-display.html",
       "github": "",
@@ -13,7 +13,7 @@
     {
       "title": "Pi-hole Setup",
       "date": "2025-12",
-      "description": "Pi-hole Setup, Logging/Backup-Strategien und robuste DNS-Konfiguration (FritzBox, statische IPs, etc.).",
+      "description": "Pi-hole setup, logging/backup strategies, and robust DNS configuration (FritzBox, static IPs, etc.).",
       "image": "assets/images/projects/pi-hole.png",
       "url": "projects/pi-hole-setup.html",
       "github": "",
@@ -22,11 +22,11 @@
     },
     {
       "title": "4don Portfolio",
-      "date": "2026-01",
-      "description": "Meine Website mit Multi-Page Setup, Projekten, About und Legal.",
+      "date": "2026-02",
+      "description": "My website with a multi-page setup, projects, about, and legal pages.",
       "image": "assets/images/projects/4don-portfolio.png",
       "url": "projects/4don-portfolio.html",
-      "github": "https://github.com/e4don/4don-portfollio",
+      "github": "https://github.com/e4don/4don-portfolio",
       "visibility": "public",
       "tags": ["HTML", "CSS", "Cloudflare Pages", "GitHub"]
     }
