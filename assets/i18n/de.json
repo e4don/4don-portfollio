@@ -14,9 +14,23 @@
     "emptyHint": "Bitte Filter zurücksetzen oder projects.json prüfen.",
     "loadFailTitle": "Projekte konnten nicht geladen werden",
     "loadFailTip": "Tipp: Öffne die Seite über einen lokalen Server (z.B. VS Code \"Live Server\").",
-    "open": "Open",
+    "open": "Öffnen",
     "github": "GitHub",
     "reset": "Zurücksetzen",
     "searchPlaceholder": "Titel, Beschreibung oder Tag…"
+  },
+  "footer": {
+    "contact": "Kontakt",
+    "links": "Links",
+    "legal": "Rechtliches",
+    "home": "Home",
+    "imprint": "Impressum",
+    "privacy": "Datenschutz"
+  },
+  "copyright": {
+    "rights": "© {year} 4don — Alle Rechte vorbehalten.",
+    "imprint": "Impressum",
+    "privacy": "Datenschutz",
+    "design": "Design: HTML5 UP"
   }
 }

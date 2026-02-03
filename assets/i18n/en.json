@@ -18,5 +18,19 @@
     "github": "GitHub",
     "reset": "Reset",
     "searchPlaceholder": "Search projects..."
+  },
+  "footer": {
+    "contact": "Contact",
+    "links": "Links",
+    "legal": "Legal",
+    "home": "Home",
+    "imprint": "Imprint",
+    "privacy": "Privacy"
+  },
+  "copyright": {
+    "rights": "© {year} 4don — All rights reserved.",
+    "imprint": "Imprint",
+    "privacy": "Privacy",
+    "design": "Design: HTML5 UP"
   }
 }

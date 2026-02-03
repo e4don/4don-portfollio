@@ -5471,3 +5471,32 @@ body {
 #navPanel ul.icons li.lang-switch {
   margin-left: auto !important;
 }
+
+/* =========================================================
+   4don — contacts form status messages
+   ========================================================= */
+
+/* Contact form status (success/error) */
+.form-status {
+  padding: 0.85rem 1rem;
+  border-radius: 0.5rem;
+  line-height: 1.4;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 200ms ease, transform 200ms ease;
+}
+
+.form-status.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.form-status.is-success {
+  border: 1px solid rgba(0, 255, 140, 0.35);
+  background: rgba(0, 255, 140, 0.08);
+}
+
+.form-status.is-error {
+  border: 1px solid rgba(255, 80, 80, 0.35);
+  background: rgba(255, 80, 80, 0.08);
+}

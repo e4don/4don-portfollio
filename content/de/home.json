@@ -1,0 +1,35 @@
+{
+  "meta": {
+    "title": "Home",
+    "description": "Portfolio & Projekte — Automatisierung, Tech und Maker Stuff."
+  },
+  "intro": {
+    "text": "Portfolio & Projekte — Automatisierung, Tech und Dinge, die Spaß machen.<br />Schau gern rein: Projekte, About, Kontakt.",
+    "cta": "Weiter"
+  },
+  "featured": {
+    "kicker": "Willkommen",
+    "titleHtml": "Meine Projekte<br />auf einen Blick",
+    "text": "Hier entstehen kleine und große Projekte rund um Automation, Web, Raspberry Pi, und alles, was man optimieren kann.",
+    "imageAlt": "Projekt-Preview",
+    "cta": "Zu den Projekten"
+  },
+  "cards": [
+    {
+      "kicker": "Kurzprofil",
+      "title": "Über mich",
+      "text": "Wer ich bin, was ich mache und welche Themen mich aktuell am meisten reizen.",
+      "imageAlt": "Über mich",
+      "cta": "Öffnen",
+      "href": "about.html"
+    },
+    {
+      "kicker": "Kontakt",
+      "title": "Schreib mir",
+      "text": "Fragen, Ideen oder Feedback? Ich freue mich über Nachrichten.",
+      "imageAlt": "Kontakt",
+      "cta": "Kontakt",
+      "href": "contact.html"
+    }
+  ]
+}

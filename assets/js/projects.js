@@ -1,5 +1,18 @@
-/* 4don - Projects Loader (v1.7)
-   Loads /projects.json and renders project cards using the HTML5 UP Massively layout.
+/* 4don - Projects Loader (v1.8)
+   Loads language-specific project card data and renders project cards
+   using the HTML5 UP Massively layout.
+
+   Data sources (recommended):
+   - DE cards:  content/de/projects.cards.json
+   - EN cards:  content/en/projects.cards.json
+
+   This script is intentionally responsible ONLY for:
+   - Loading the cards data (language-aware)
+   - Rendering cards
+   - Search + Tag filtering
+   - URL sync (q + tag)
+   - SPA-like back navigation restore (search/tag + scroll)
+   - i18n-ready UI text via window.i18n.t()
 
    Features:
    - Sorting (newest → oldest) via date (YYYY-MM or YYYY-MM-DD)
@@ -12,9 +25,10 @@
    - SPA-like back navigation:
      -> Saves search/tag + scroll before navigating to detail pages
      -> Restores search/tag + scroll after returning
-   - i18n-ready (DE/EN):
-     -> Uses window.i18n.t() when available
-     -> Re-applies translations after rendering (window.i18n.apply)
+   - Language-aware loading:
+     -> Reloads cards data when language changes (DE/EN)
+     -> Keeps current search + tag selection whenever possible
+     -> Keeps URL state (q + tag) in sync
 */
 
 (function () {
@@ -36,7 +50,6 @@
   const KEY_STATE = 'projects.uiState'; // JSON: { q, tag }
   const KEY_SCROLL = 'projects.scrollY'; // number
   const KEY_ARMED = 'projects.restoreArmed'; // "1" => restore on next render
-  const KEY_URL_SYNC = 'projects.urlSync'; // optional flag, not required
 
   // =========================================================
   // i18n helpers (safe fallback when i18n.js is not loaded)
@@ -68,6 +81,14 @@
     const t = Date.parse(iso);
     return Number.isFinite(t) ? t : 0;
   };
+
+  // =========================================================
+  // Language-aware data URL
+  // =========================================================
+  function getProjectsDataUrl() {
+    const lang = window.i18n?.getLang?.() || 'en';
+    return `content/${lang}/projects.cards.json`;
+  }
 
   // =========================================================
   // URL sync helpers (q + tag)
@@ -103,9 +124,6 @@
       /* ignore */
     }
   }
-
-  // Internal state
-  let allProjects = [];
 
   // =========================================================
   // Save / restore UI state (search + tag) and scroll position
@@ -171,6 +189,9 @@
     true // capture phase (fires early, even for nested elements)
   );
 
+  // =========================================================
+  // UI helpers
+  // =========================================================
   function buildTagOptions(projects) {
     if (!tagEl) return;
 
@@ -178,7 +199,7 @@
     const set = new Set();
     projects.forEach((p) => normTags(p.tags).forEach((t) => set.add(String(t).trim())));
 
-    const tags = Array.from(set).sort((a, b) => a.localeCompare(b, 'de', { sensitivity: 'base' }));
+    const tags = Array.from(set).sort((a, b) => a.localeCompare(b, 'en', { sensitivity: 'base' }));
 
     // Localized label for the "__all__" option
     const allLabel = esc(tt('projects.allTags', 'All tags'));
@@ -188,6 +209,7 @@
       tags
         .map((t) => {
           const label = esc(t);
+          // value is lowercase to match the filter logic
           const value = esc(t.toLowerCase());
           return `<option value="${value}">${label}</option>`;
         })
@@ -307,45 +329,93 @@
     window.i18n?.apply?.(grid);
   }
 
-  function applyAndRender() {
-    const filtered = allProjects.filter(matchesFilters);
-    updateMeta(filtered.length, allProjects.length);
-    render(filtered);
-
-    // Keep UI state in sync
-    saveUIState();
-    // Keep the URL in sync (q + tag)
-    writeUrlState({
-      q: searchEl ? searchEl.value : '',
-      tag: tagEl ? tagEl.value : '__all__',
-    });
-
-
+  function restoreScrollIfArmed() {
     // Restore scroll position after returning from a detail page
     try {
       const armed = sessionStorage.getItem(KEY_ARMED) === '1';
-      if (armed) {
-        const y = parseInt(sessionStorage.getItem(KEY_SCROLL) || '0', 10);
-        sessionStorage.removeItem(KEY_ARMED);
+      if (!armed) return;
 
-        if (Number.isFinite(y)) {
-          setTimeout(() => window.scrollTo(0, y), 50);
-        }
+      const y = parseInt(sessionStorage.getItem(KEY_SCROLL) || '0', 10);
+      sessionStorage.removeItem(KEY_ARMED);
+
+      if (Number.isFinite(y)) {
+        setTimeout(() => window.scrollTo(0, y), 50);
       }
     } catch (_) {
       /* ignore */
     }
   }
 
+  function applyAndRender(allProjects) {
+    const filtered = allProjects.filter(matchesFilters);
+    updateMeta(filtered.length, allProjects.length);
+    render(filtered);
+
+    // Keep UI state in sync
+    saveUIState();
+
+    // Keep the URL in sync (q + tag)
+    writeUrlState({
+      q: searchEl ? searchEl.value : '',
+      tag: tagEl ? tagEl.value : '__all__',
+    });
+
+    restoreScrollIfArmed();
+  }
+
   // =========================================================
-  // Load projects.json
+  // Loading (language-aware) + event binding (only once)
   // =========================================================
-  fetch('projects.json', { cache: 'no-store' })
-    .then((res) => {
+  let allProjects = [];
+  let eventsBound = false;
+
+  function bindUIEventsOnce() {
+    if (eventsBound) return;
+    eventsBound = true;
+
+    if (searchEl) searchEl.addEventListener('input', () => applyAndRender(allProjects));
+    if (tagEl) tagEl.addEventListener('change', () => applyAndRender(allProjects));
+
+    if (resetEl) {
+      resetEl.addEventListener('click', () => {
+        if (searchEl) searchEl.value = '';
+        if (tagEl) tagEl.value = '__all__';
+
+        try {
+          sessionStorage.removeItem(KEY_STATE);
+        } catch (_) {
+          /* ignore */
+        }
+
+        applyAndRender(allProjects);
+      });
+    }
+
+    // Browser back / forward support (q + tag via URL)
+    window.addEventListener('popstate', () => {
+      const st = readUrlState();
+
+      if (searchEl) searchEl.value = st.q;
+
+      if (tagEl) {
+        const hasOption = Array.from(tagEl.options).some((o) => o.value === st.tag);
+        tagEl.value = hasOption ? st.tag : '__all__';
+      }
+
+      applyAndRender(allProjects);
+    });
+  }
+
+  async function loadProjects({ reason = 'init' } = {}) {
+    const prevQ = searchEl ? String(searchEl.value || '') : '';
+    const prevTag = tagEl ? String(tagEl.value || '__all__') : '__all__';
+
+    try {
+      const url = getProjectsDataUrl();
+      const res = await fetch(url, { cache: 'no-store' });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      return res.json();
-    })
-    .then((data) => {
+
+      const data = await res.json();
       const projects = Array.isArray(data) ? data : data.projects;
 
       if (!Array.isArray(projects) || projects.length === 0) {
@@ -367,10 +437,10 @@
       projects.sort((a, b) => parseDate(b.date) - parseDate(a.date));
       allProjects = projects;
 
-      // Build tag dropdown BEFORE restoring UI state
+      // Build tag dropdown BEFORE restoring state
       buildTagOptions(allProjects);
 
-      // 1) Apply URL state (q + tag) first (shareable links)
+      // 1) Apply URL state first (shareable links)
       const urlState = readUrlState();
       if (searchEl) searchEl.value = urlState.q;
 
@@ -380,8 +450,6 @@
       }
 
       // 2) Then restore session state (SPA-like back), but only if armed
-      // This ensures: returning from detail page restores your last UI,
-      // while direct links use the URL state.
       try {
         const armed = sessionStorage.getItem(KEY_ARMED) === '1';
         if (armed) restoreUIState();
@@ -389,67 +457,24 @@
         /* ignore */
       }
 
-      // Initial render (also restores scroll if armed)
-      applyAndRender();
-
-      // UI events
-      if (searchEl) {
-        // Translate placeholder via data-i18n-attr in HTML where possible
-        // but still keep state in sync with user input
-        searchEl.addEventListener('input', applyAndRender);
-      }
-
-      if (tagEl) {
-        tagEl.addEventListener('change', applyAndRender);
-
-        // If language changes, rebuild the tag dropdown label and keep selection
-        window.i18n?.onChange?.(() => {
-          const prev = tagEl.value;
-          buildTagOptions(allProjects);
-
-          // Restore selection (if it still exists)
-          const hasOption = Array.from(tagEl.options).some((o) => o.value === prev);
-          tagEl.value = hasOption ? prev : '__all__';
-
-          // Re-apply UI text (meta + empty states if any)
-          applyAndRender();
-        });
-      }
-
-      if (resetEl) {
-        resetEl.addEventListener('click', () => {
-          if (searchEl) searchEl.value = '';
-          if (tagEl) tagEl.value = '__all__';
-
-          // Clear stored UI state
-          try {
-            sessionStorage.removeItem(KEY_STATE);
-          } catch (_) {
-            /* ignore */
-          }
-
-          applyAndRender();
-        });
-      }
-          // ---------------------------------------------------------
-      // Browser back / forward support (q + tag via URL)
-      // ---------------------------------------------------------
-      window.addEventListener('popstate', () => {
-        const st = readUrlState();
-
-        if (searchEl) searchEl.value = st.q;
+      // On language change: keep current UI (search + tag) if possible.
+      // (Works best if tags are identical across languages)
+      if (reason === 'langChange') {
+        if (searchEl) searchEl.value = prevQ;
 
         if (tagEl) {
-          const hasOption = Array.from(tagEl.options).some(
-            (o) => o.value === st.tag
-          );
-          tagEl.value = hasOption ? st.tag : '__all__';
+          const hasOption = Array.from(tagEl.options).some((o) => o.value === prevTag);
+          tagEl.value = hasOption ? prevTag : '__all__';
         }
+      }
 
-        applyAndRender();
-      });
-    })
-    .catch((err) => {
+      // Render
+      applyAndRender(allProjects);
+
+      // Bind events once
+      bindUIEventsOnce();
+    } catch (err) {
+      allProjects = [];
       updateMeta(0, 0);
 
       const failTitle = esc(tt('projects.loadFailTitle', 'Failed to load projects'));
@@ -469,5 +494,14 @@
           </p>
         </article>
       `;
-    });
+    }
+  }
+
+  // Initial load
+  loadProjects({ reason: 'init' });
+
+  // Reload cards data on language change
+  window.i18n?.onChange?.(() => {
+    loadProjects({ reason: 'langChange' });
+  });
 })();

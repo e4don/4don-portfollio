@@ -1,0 +1,37 @@
+{
+  "meta": {
+    "title": "Über mich",
+    "description": "Erik — Automationsingenieur (Germany). Automation, Web, Raspberry Pi & Tools."
+  },
+  "hero": {
+    "title": "Über mich",
+    "intro": "Hi — ich bin Erik. Ich baue Dinge: Automation, Web, Raspberry Pi, Tools & kleine Experimente, die am Ende einfach funktionieren sollen."
+  },
+  "profile": {
+    "name": "Erik Fordon",
+    "role": "Automationsingenieur",
+    "location": "Germany"
+  },
+  "sections": {
+    "mindset": {
+      "title": "Was mich ausmacht",
+      "text": "Ich mag klare Strukturen, saubere Oberflächen und pragmatische Lösungen. Wenn etwas nervt, wird’s automatisiert. Wenn etwas fehlt, wird’s gebaut."
+    },
+    "work": {
+      "title": "Woran ich arbeite",
+      "list": [
+        "Automations- / Engineering-Themen (Industrie, Prozesse, Standards, saubere Umsetzung)",
+        "Web-Projekte (kleine Tools, Dashboards, Portfolio)",
+        "Raspberry Pi / Home-Setups (Kiosk-Displays, Monitoring, Utilities)"
+      ]
+    },
+    "tech": {
+      "title": "Tech, die ich mag",
+      "text": "Je nach Projekt: Siemens / Industrie-Stack, Web (HTML, CSS, JavaScript), Node.js, APIs, Raspberry Pi — und alles, was robust und wartbar bleibt."
+    }
+  },
+  "cta": {
+    "projects": "Zu den Projekten",
+    "contact": "Kontakt"
+  }
+}

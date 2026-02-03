@@ -1,0 +1,39 @@
+{
+  "meta": {
+    "title": "Imprint",
+    "description": "Imprint (legal notice) for 4don."
+  },
+  "header": {
+    "title": "Imprint",
+    "subtitle": "Legal notice (Germany)"
+  },
+  "note": {
+    "html": "<p><em>Note:</em> This is an English convenience translation. The German version is the legally binding one.</p>"
+  },
+  "sections": [
+    {
+      "title": "Operator",
+      "html": "<p><strong>Erik Fordon</strong><br />Address: Anne-Frank-Str. 3, 65428 Rüsselsheim, Germany</p>"
+    },
+    {
+      "title": "Contact",
+      "html": "<p>Email: <a href=\"mailto:info@4don.com\">info@4don.com</a></p>"
+    },
+    {
+      "title": "Responsible for content",
+      "html": "<p>Erik Fordon<br />Address: Anne-Frank-Str. 3, 65428 Rüsselsheim, Germany</p>"
+    },
+    {
+      "title": "Liability for content",
+      "html": "<p>I create the content of this website with great care. However, I cannot guarantee the accuracy, completeness, or timeliness of the content.</p>"
+    },
+    {
+      "title": "Liability for links",
+      "html": "<p>This website contains links to external third-party websites. I have no influence on their content and therefore cannot accept any liability for such external content.</p>"
+    }
+  ],
+  "links": {
+    "toPrivacy": "→ Privacy policy",
+    "privacyHref": "datenschutz.html"
+  }
+}

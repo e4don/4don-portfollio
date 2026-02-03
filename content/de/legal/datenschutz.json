@@ -1,0 +1,40 @@
+{
+  "meta": {
+    "title": "Datenschutz",
+    "description": "Datenschutz von 4don."
+  },
+  "header": {
+    "title": "Datenschutzerklärung",
+    "subtitle": "Kurze, pragmatische Datenschutzerklärung für ein statisches Portfolio."
+  },
+  "sections": [
+    {
+      "title": "1. Verantwortlicher",
+      "html": "<p>Erik Fordon<br />Adresse: Anne-Frank-Str. 3, 65428 Rüsselsheim, Deutschland<br />E-Mail: <a href=\"mailto:info@4don.com\">info@4don.com</a></p>"
+    },
+    {
+      "title": "2. Zugriffsdaten / Server-Logs",
+      "html": "<p>Beim Besuch dieser Website werden durch den Hosting-Anbieter technisch erforderliche Daten (z. B. IP-Adresse, Zeitpunkt, angeforderte Seite, User-Agent) in Server-Logfiles verarbeitet. Die Verarbeitung erfolgt zur Bereitstellung und Sicherheit der Website.</p>"
+    },
+    {
+      "title": "3. Cookies",
+      "html": "<p>Diese Website setzt keine eigenen Cookies zu Tracking- oder Marketingzwecken ein.</p>"
+    },
+    {
+      "title": "4. Kontaktaufnahme",
+      "html": "<p>Wenn du mich per E-Mail kontaktierst, werden die von dir übermittelten Daten zur Bearbeitung der Anfrage verarbeitet. Eine Weitergabe an Dritte erfolgt nicht.</p>"
+    },
+    {
+      "title": "5. Externe Links",
+      "html": "<p>Diese Website kann Links zu externen Seiten enthalten (z. B. GitHub). Für Inhalte externer Seiten ist stets der jeweilige Anbieter verantwortlich.</p>"
+    },
+    {
+      "title": "6. Deine Rechte",
+      "html": "<p>Du hast im Rahmen der gesetzlichen Vorgaben das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung sowie Widerspruch. Zudem besteht ein Beschwerderecht bei einer Datenschutz-Aufsichtsbehörde.</p>"
+    }
+  ],
+  "links": {
+    "toImprint": "→ Impressum",
+    "imprintHref": "impressum.html"
+  }
+}

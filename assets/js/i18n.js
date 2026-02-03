@@ -107,6 +107,11 @@
     return typeof v === 'string' ? v : fallback || key;
   }
 
+  function formatText(value) {
+    const year = new Date().getFullYear();
+    return String(value).replaceAll('{year}', String(year));
+  }
+
   // ---------------------------------------------------------
   // Apply translations to a DOM subtree
   // - Translates [data-i18n]
@@ -127,8 +132,9 @@
 
       // Optional HTML translation (trusted strings only)
       const allowHtml = el.getAttribute('data-i18n-html') === '1';
-      if (allowHtml) el.innerHTML = val;
-      else el.textContent = val;
+      const formatted = formatText(val);
+      if (allowHtml) el.innerHTML = formatted;
+      else el.textContent = formatted;
     });
 
     // Update ALL language toggle instances (desktop nav + mobile navPanel clone)

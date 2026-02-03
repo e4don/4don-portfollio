@@ -1,0 +1,36 @@
+{
+  "meta": {
+    "title": "Impressum",
+    "description": "Impressum von 4don."
+  },
+  "header": {
+    "title": "Impressum",
+    "subtitle": "Angaben gemäß § 5 TMG"
+  },
+  "sections": [
+    {
+      "title": "Betreiber",
+      "html": "<p><strong>Erik Fordon</strong><br />Adresse: Anne-Frank-Str. 3, 65428 Rüsselsheim, Deutschland</p>"
+    },
+    {
+      "title": "Kontakt",
+      "html": "<p>E-Mail: <a href=\"mailto:info@4don.com\">info@4don.com</a></p>"
+    },
+    {
+      "title": "Verantwortlich für den Inhalt",
+      "html": "<p>Erik Fordon<br />Adresse: Anne-Frank-Str. 3, 65428 Rüsselsheim, Deutschland</p>"
+    },
+    {
+      "title": "Haftung für Inhalte",
+      "html": "<p>Die Inhalte dieser Seiten wurden mit größter Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte kann ich jedoch keine Gewähr übernehmen.</p>"
+    },
+    {
+      "title": "Haftung für Links",
+      "html": "<p>Diese Website enthält Links zu externen Webseiten Dritter. Auf deren Inhalte habe ich keinen Einfluss. Deshalb kann ich für diese fremden Inhalte auch keine Gewähr übernehmen.</p>"
+    }
+  ],
+  "links": {
+    "toPrivacy": "→ Datenschutz",
+    "privacyHref": "datenschutz.html"
+  }
+}

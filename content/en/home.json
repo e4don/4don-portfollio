@@ -1,0 +1,35 @@
+{
+  "meta": {
+    "title": "Home",
+    "description": "Portfolio & projects — automation, tech, and maker stuff."
+  },
+  "intro": {
+    "text": "Portfolio & projects — automation, tech, and things that are fun to build.<br />Take a look: projects, about, contact.",
+    "cta": "Continue"
+  },
+  "featured": {
+    "kicker": "Welcome",
+    "titleHtml": "My projects<br />at a glance",
+    "text": "This is where I build small and larger projects around automation, web, Raspberry Pi, and anything worth optimizing.",
+    "imageAlt": "Project preview",
+    "cta": "View projects"
+  },
+  "cards": [
+    {
+      "kicker": "Quick profile",
+      "title": "About me",
+      "text": "Who I am, what I do, and the topics I’m currently most excited about.",
+      "imageAlt": "About me",
+      "cta": "Open",
+      "href": "about.html"
+    },
+    {
+      "kicker": "Contact",
+      "title": "Message me",
+      "text": "Questions, ideas, or feedback? I’m happy to hear from you.",
+      "imageAlt": "Contact",
+      "cta": "Contact",
+      "href": "contact.html"
+    }
+  ]
+}
