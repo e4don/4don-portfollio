@@ -5203,12 +5203,25 @@ body {
 
 /* =========================================================
    4don — Language Switch (DE/EN pill toggle)
-   Append at the end of main.css
+   Append at the very end of main.css
 
-   Notes:
-   - Massively uses overflow clipping on #nav; we disable it so the switch is not cut off.
-   - Massively icon list is optimized for <a>; we explicitly support <button> here.
+   Goals:
+   - Clean border-only pill
+   - No Massively inset shadows
+   - Unified 4DON purple color
+   - Desktop + Mobile (navPanel) consistent
    ========================================================= */
+
+/* ---------------------------------------------------------
+   Global color token (single source of truth)
+--------------------------------------------------------- */
+:root {
+  --purple-4don: #7c3aed;
+}
+
+/* ---------------------------------------------------------
+   NAV BAR (DESKTOP)
+--------------------------------------------------------- */
 
 /* Prevent #nav from clipping right-side items */
 #nav {
@@ -5228,7 +5241,7 @@ body {
   padding: 0 !important;
 }
 
-/* Ensure buttons inside the icon row are visible and behave normally */
+/* Ensure buttons behave normally inside icon row */
 #nav .icons li button {
   display: inline-flex !important;
   visibility: visible !important;
@@ -5252,62 +5265,70 @@ body {
   margin-left: 0.75rem; /* spacing from social icons */
 }
 
-/* Switch button */
+/* ---------------------------------------------------------
+   SWITCH BUTTON (DESKTOP)
+--------------------------------------------------------- */
+
 #nav .icons .lang-switch__btn {
   position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
 
-  height: 34px;          /* was 30px */
-  min-width: 82px;       /* was 76px */
+  height: 30px;
+  min-width: 76px;
   padding: 0;
 
-  border: 1px solid rgba(122, 63, 242, 0.75);
+  background: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.85);
   border-radius: 999px;
-
-  background: rgba(122, 63, 242, 0.22);
-  color: rgba(255, 255, 255, 0.95);
 
   cursor: pointer;
 
   letter-spacing: 0;
   text-transform: none;
 
-  box-shadow:
-    0 0 0 1px rgba(122, 63, 242, 0.18) inset,
-    0 10px 24px rgba(0, 0, 0, 0.22);
+  /* CRITICAL FIX: remove Massively inset shadow */
+  box-shadow: none !important;
 
   /* Visual alignment tweak inside Massively nav */
-  transform: translateY(-1px);
+  transform: translateY(-2px);
 }
 
-/* Track */
+/* Invisible track (keeps layout only) */
 #nav .icons .lang-switch__track {
   position: absolute;
-  inset: 5px;       /* was 4px */
+  inset: 4px;
   border-radius: 999px;
-  background: rgba(0, 0, 0, 0.18);
+  background: transparent;
 }
 
 /* Thumb */
 #nav .icons .lang-switch__thumb {
   position: absolute;
   top: 50%;
-  left: 3px;     /* fine horizontal alignment - was 5px */
+  left: -1px;
   transform: translateY(-50%);
 
-  width: 32px;      /* was 30px */
-  height: 22px;     /* was 20px */
+  width: 32px;
+  height: 22px;
   border-radius: 999px;
 
-  background: rgba(255, 255, 255, 0.62);      /* was (255, 255, 255, 0.92) */
-  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.18);       /* was 0 8px 18px rgba(0, 0, 0, 0.22) */
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.18);
 
   transition: transform 180ms ease;
 }
 
-/* Labels */
+/* Move thumb to right when EN active */
+#nav .icons .lang-switch__btn.is-en .lang-switch__thumb {
+  transform: translate(34px, -50%);
+}
+
+/* ---------------------------------------------------------
+   LABELS (DESKTOP)
+--------------------------------------------------------- */
+
 #nav .icons .lang-switch__labels {
   position: relative;
   z-index: 2;
@@ -5315,9 +5336,9 @@ body {
   display: grid;
   grid-template-columns: 1fr 1fr;
   width: 100%;
-  padding: 0 10px;     /* was 9px */
+  padding: 0 10px;
 
-  font-size: 12px;     /* was 11px */
+  font-size: 12px;
   font-weight: 600;
   line-height: 1;
 }
@@ -5326,43 +5347,40 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 34px;   /* was 30px */
+  height: 34px;
 
   user-select: none;
-  color: rgba(255, 255, 255, 0.85);
 
+  color: rgba(255, 255, 255, 0.75);
   transition: color 180ms ease, opacity 180ms ease;
 }
 
-/* Active state: EN (thumb moves to the right) */
-#nav .icons .lang-switch__btn.is-en .lang-switch__thumb {
-  transform: translate(34px, -50%);
-}
-
-/* Label emphasis */
+/* Active label (purple) */
 #nav .icons .lang-switch__btn.is-de .lang-switch__label--de,
 #nav .icons .lang-switch__btn.is-en .lang-switch__label--en {
-  color: rgba(255, 255, 255, 0.98);
+  color: var(--purple-4don);
+  text-shadow: 0 0 10px rgba(124, 58, 237, 0.35);
 }
 
+/* Inactive label */
 #nav .icons .lang-switch__btn.is-de .lang-switch__label--en,
 #nav .icons .lang-switch__btn.is-en .lang-switch__label--de {
-  opacity: 0.7;
+  color: rgba(255, 255, 255, 0.55);
 }
 
 /* Hover */
 #nav .icons .lang-switch__btn:hover {
-  background: rgba(122, 63, 242, 0.3);
-  border-color: rgba(122, 63, 242, 0.9);
+  background: rgba(124, 58, 237, 0.25);
+  border-color: var(--purple-4don);
 }
 
 /* Keyboard focus */
 #nav .icons .lang-switch__btn:focus-visible {
-  outline: 2px solid rgba(122, 63, 242, 0.9);
+  outline: 2px solid var(--purple-4don);
   outline-offset: 3px;
 }
 
-/* Reduced motion */
+/* Reduced motion support */
 @media (prefers-reduced-motion: reduce) {
   #nav .icons .lang-switch__thumb,
   #nav .icons .lang-switch__label {
@@ -5370,43 +5388,16 @@ body {
   }
 }
 
-/* =========================================================
-   4don — Language Switch: active label highlighting
-   ========================================================= */
-
-/* Default label style (slightly muted) */
-#nav .icons .lang-switch__label {
-  color: rgba(255, 255, 255, 0.75);
-}
-
-/* Active label = purple */
-#nav .icons .lang-switch__btn.is-de .lang-switch__label--de {
-  color: rgba(122, 63, 242, 1);
-  text-shadow: 0 0 10px rgba(122, 63, 242, 0.35);
-}
-
-#nav .icons .lang-switch__btn.is-en .lang-switch__label--en {
-  color: rgba(122, 63, 242, 1);
-  text-shadow: 0 0 10px rgba(122, 63, 242, 0.35);
-}
-
-/* Inactive label even more muted */
-#nav .icons .lang-switch__btn.is-de .lang-switch__label--en,
-#nav .icons .lang-switch__btn.is-en .lang-switch__label--de {
-  color: rgba(255, 255, 255, 0.55);
-}
-
-/* =========================================================
-   4don — navPanel: force border-only pill for language switch
-   (Massively navPanel overrides button styles)
-   ========================================================= */
+/* ---------------------------------------------------------
+   NAV PANEL (MOBILE)
+--------------------------------------------------------- */
 
 #navPanel .icons li.lang-switch {
   display: flex;
   align-items: center;
 }
 
-/* Force the button box to exist + show border */
+/* Border-only pill in mobile panel */
 #navPanel .icons li.lang-switch .lang-switch__btn {
   display: inline-flex !important;
   align-items: center !important;
@@ -5417,60 +5408,91 @@ body {
   padding: 0 !important;
 
   background: transparent !important;
-  border: 1px solid rgba(122, 63, 242, 0.75) !important;
+  border: 2px solid #eeeeee !important;
   border-radius: 999px !important;
 
+  /* CRITICAL FIX: remove Massively inset shadow */
   box-shadow: none !important;
+
   opacity: 1 !important;
 }
 
-/* Ensure labels are visible and centered */
-#navPanel .icons li.lang-switch .lang-switch__labels {
-  width: 100% !important;
-  display: grid !important;
-  grid-template-columns: 1fr 1fr !important;
-  padding: 0 10px !important;
+/* Hover */
+#navPanel .icons li.lang-switch .lang-switch__btn:hover {
+  border-color: var(--purple-4don) !important;
 }
 
-/* Hide track/thumb in mobile panel (border-only look) */
-#navPanel .icons li.lang-switch .lang-switch__track {
+/* Keyboard focus */
+#navPanel .icons li.lang-switch .lang-switch__btn:focus-visible {
+  outline: 2px solid rgba(124, 58, 237, 0.55) !important;
+  outline-offset: 3px !important;
+  border-color: var(--purple-4don) !important;
+}
+
+/* Hide track + thumb in mobile (text-only pill) */
+#navPanel .icons li.lang-switch .lang-switch__track,
+#navPanel .icons li.lang-switch .lang-switch__thumb {
   display: none !important;
 }
 
-/* Label colors on white panel */
+/* Labels in mobile */
 #navPanel .icons li.lang-switch .lang-switch__label {
   color: rgba(0, 0, 0, 0.55) !important;
   font-weight: 600 !important;
 }
 
-/* Active label highlight */
+/* Active label in mobile */
 #navPanel .icons li.lang-switch .lang-switch__btn.is-de .lang-switch__label--de,
 #navPanel .icons li.lang-switch .lang-switch__btn.is-en .lang-switch__label--en {
-  color: rgba(122, 63, 242, 1) !important;
+  color: var(--purple-4don) !important;
   font-weight: 700 !important;
 }
 
-/* Inactive label muted */
+/* Inactive label mobile */
 #navPanel .icons li.lang-switch .lang-switch__btn.is-de .lang-switch__label--en,
 #navPanel .icons li.lang-switch .lang-switch__btn.is-en .lang-switch__label--de {
   color: rgba(0, 0, 0, 0.35) !important;
 }
 
-/* =========================================================
-   4don — navPanel icons row layout (keep switch right-aligned)
-   ========================================================= */
-
+/* Icons row layout */
 #navPanel ul.icons {
   display: flex !important;
   align-items: center !important;
   gap: 0.75rem !important;
-  flex-wrap: wrap !important; /* allow wrap on very small screens */
+  flex-wrap: wrap !important;
 }
 
-/* Push the language switch to the far right */
+/* Push language switch to the far right */
 #navPanel ul.icons li.lang-switch {
   margin-left: auto !important;
 }
+
+/* =========================================================
+   4don — Language Switch: FIX double border on Desktop
+   Reason:
+   - after click the button keeps focus → browser/theme draws an extra outline/ring
+   - also some browsers still paint focus on :focus (not only :focus-visible)
+   ========================================================= */
+
+/* HARD reset: no extra rings besides our border */
+#nav .icons .lang-switch__btn {
+  outline: none !important;        /* kills default focus ring */
+  box-shadow: none !important;      /* kills any remaining inset ring */
+}
+
+/* Some browsers still apply outline on :focus even if :focus-visible exists */
+#nav .icons .lang-switch__btn:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Our own clean focus style (only keyboard users) */
+#nav .icons .lang-switch__btn:focus-visible {
+  outline: 2px solid var(--purple-4don) !important;
+  outline-offset: 3px !important;
+  box-shadow: none !important;
+}
+
 
 /* =========================================================
    4don — contacts form status messages
