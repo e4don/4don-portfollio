@@ -17,7 +17,14 @@
     "open": "Öffnen",
     "github": "GitHub",
     "reset": "Zurücksetzen",
-    "searchPlaceholder": "Titel, Beschreibung oder Tag…"
+    "searchPlaceholder": "Titel, Beschreibung oder Tag…",
+    "tocTitle": "Inhalt",
+    "noSections": "Keine Abschnitte gefunden.",
+    "noChapters": "Keine Kapitel vorhanden.",
+    "noItems": "Keine Einträge vorhanden.",
+    "noSteps": "Keine Schritte definiert.",
+    "noChecklistItems": "Keine Aufgaben vorhanden.",
+    "unsupportedChapterType": "Nicht unterstützter Kapiteltyp:"
   },
   "footer": {
     "contact": "Kontakt",

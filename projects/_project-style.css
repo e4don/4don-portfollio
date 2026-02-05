@@ -351,3 +351,59 @@ details.project-section:not([open]) > .project-section__summary {
 .project-chapter {
   scroll-margin-top: 6rem;
 }
+
+/* =========================================================
+   v1.9 — Table of Contents (TOC)
+   Append at end of /projects/_project-style.css
+   ========================================================= */
+
+.project-toc {
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 0.75rem;
+  background: rgba(255, 255, 255, 0.02);
+  padding: 1rem 1.25rem;
+  margin: 0 0 1.25rem 0;
+}
+
+.project-toc__title {
+  margin: 0 0 0.6rem 0;
+  font-size: 1rem;
+  opacity: 0.9;
+}
+
+.project-toc__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.project-toc__section {
+  margin: 0.65rem 0;
+}
+
+.project-toc__section > a {
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.project-toc__chapters {
+  list-style: none;
+  padding-left: 1rem;
+  margin: 0.55rem 0 0 0;
+}
+
+.project-toc__chapters li {
+  margin: 0.35rem 0;
+}
+
+.project-toc__chapters a {
+  text-decoration: none;
+  opacity: 0.9;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.project-toc__chapters a:hover,
+.project-toc__section > a:hover {
+  opacity: 1;
+  border-bottom-color: rgba(122, 63, 242, 0.45);
+}

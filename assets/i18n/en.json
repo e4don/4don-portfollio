@@ -17,7 +17,14 @@
     "open": "Open",
     "github": "GitHub",
     "reset": "Reset",
-    "searchPlaceholder": "Search projects..."
+    "searchPlaceholder": "Search projects...",
+    "tocTitle": "Contents",
+    "noSections": "No sections found.",
+    "noChapters": "No chapters available.",
+    "noItems": "No items available.",
+    "noSteps": "No steps defined.",
+    "noChecklistItems": "No tasks available.",
+    "unsupportedChapterType": "Unsupported chapter type:"
   },
   "footer": {
     "contact": "Contact",
