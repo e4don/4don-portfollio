@@ -1,0 +1,44 @@
+{
+  "meta": {
+    "title": "Example Project",
+    "subtitle": "Demonstration des v1.9 Content Models",
+    "date": "2026-02-05",
+    "tags": ["example", "schema"],
+    "status": "active"
+  },
+  "sections": [
+    {
+      "type": "section",
+      "id": "story",
+      "title": "Story",
+      "collapsible": true,
+      "defaultOpen": true,
+      "chapters": [
+        {
+          "type": "text",
+          "id": "background",
+          "title": "Ausgangslage",
+          "body": ["Dieses Projekt dient als Referenz für das neue Content Model."]
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "id": "how-to",
+      "title": "How-To",
+      "collapsible": true,
+      "defaultOpen": false,
+      "chapters": [
+        {
+          "type": "steps",
+          "id": "setup",
+          "title": "Setup",
+          "steps": [
+            { "label": "Step 1", "text": "Projekt anlegen" },
+            { "label": "Step 2", "text": "Schema definieren" }
+          ]
+        }
+      ]
+    }
+  ]
+}
