@@ -1,9 +1,9 @@
 {
   "meta": {
-    "title": "Example Project",
-    "subtitle": "Demonstration des v1.9 Content Models",
+    "title": "4don Portfolio",
+    "subtitle": "A documented journey from idea → structure → scalable project platform",
     "date": "2026-02-05",
-    "tags": ["example", "schema"],
+    "tags": ["4don", "portfolio", "v1.9", "architecture"],
     "status": "active"
   },
   "sections": [
@@ -16,9 +16,21 @@
       "chapters": [
         {
           "type": "text",
-          "id": "background",
-          "title": "Ausgangslage",
-          "body": ["Dieses Projekt dient als Referenz für das neue Content Model."]
+          "id": "motivation",
+          "title": "Motivation",
+          "body": [
+            "The 4don Portfolio was created to not only showcase projects, but to document how they came to life.",
+            "Instead of focusing solely on results, this platform highlights motivation, learning processes and decisions."
+          ]
+        },
+        {
+          "type": "text",
+          "id": "initial-state",
+          "title": "Initial State",
+          "body": [
+            "At the beginning, the portfolio consisted of static pages with manually maintained content.",
+            "As the number of projects grew, it became clear that this structure would not scale."
+          ]
         }
       ]
     },
@@ -31,11 +43,51 @@
       "chapters": [
         {
           "type": "steps",
-          "id": "setup",
-          "title": "Setup",
+          "id": "architecture",
+          "title": "Architecture",
           "steps": [
-            { "label": "Step 1", "text": "Projekt anlegen" },
-            { "label": "Step 2", "text": "Schema definieren" }
+            { "label": "Step 1", "text": "Separate layout and content (HTML vs. JSON)" },
+            { "label": "Step 2", "text": "Generate project overview from a central JSON file" },
+            { "label": "Step 3", "text": "Load project detail pages dynamically" }
+          ]
+        },
+        {
+          "type": "list",
+          "id": "tech-stack",
+          "title": "Technology Stack",
+          "items": [
+            "HTML / CSS / Vanilla JavaScript",
+            "JSON as content layer",
+            "Cloudflare Pages for hosting",
+            "GitHub for version control"
+          ]
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "id": "deep-dive",
+      "title": "Deep Dive & Advanced Details",
+      "collapsible": true,
+      "defaultOpen": false,
+      "chapters": [
+        {
+          "type": "text",
+          "id": "i18n",
+          "title": "Internationalization (i18n)",
+          "body": [
+            "All content is organized in language-specific content folders.",
+            "The active language is resolved via URL, localStorage and browser fallback."
+          ]
+        },
+        {
+          "type": "checklist",
+          "id": "next-steps",
+          "title": "Next Steps",
+          "items": [
+            { "text": "Finalize new project content model", "done": true },
+            { "text": "Migrate existing projects", "done": false },
+            { "text": "UI polish after content rework", "done": false }
           ]
         }
       ]

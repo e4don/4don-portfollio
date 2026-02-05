@@ -182,3 +182,172 @@
   border: 0;
   border-top: 1px solid rgba(255, 255, 255, 0.12);
 }
+
+/* =========================================================
+   v1.9 — Section/Chapter Renderer (collapsible + deep links)
+   Append at end of /projects/_project-style.css
+   ========================================================= */
+
+/* ---------------------------
+   Section container
+   - Works for <section.project-section> and <details.project-section>
+   --------------------------- */
+.project-section {
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 0.75rem;
+  background: rgba(255, 255, 255, 0.02);
+  overflow: hidden;
+  margin: 1rem 0;
+}
+
+/* Inner padding for both section variants */
+.project-section__inner {
+  padding: 1.1rem 1.25rem;
+}
+
+/* Non-collapsible section title */
+.project-section__title {
+  margin: 0;
+  padding: 1.05rem 1.25rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* ---------------------------
+   Collapsible <details>/<summary>
+   --------------------------- */
+.project-section__summary {
+  list-style: none; /* Firefox */
+  cursor: pointer;
+  padding: 1.05rem 1.25rem;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Remove default marker (Chrome/Safari) */
+.project-section__summary::-webkit-details-marker {
+  display: none;
+}
+
+/* Custom chevron marker */
+.project-section__summary::before {
+  content: "›";
+  display: inline-block;
+  transform: rotate(0deg);
+  transition: transform 160ms ease;
+  opacity: 0.85;
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+/* Rotate chevron when open */
+details.project-section[open] > .project-section__summary::before {
+  transform: rotate(90deg);
+}
+
+/* Subtle hover/focus */
+details.project-section > .project-section__summary:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+details.project-section > .project-section__summary:focus-visible {
+  outline: 2px solid rgba(122, 63, 242, 0.55);
+  outline-offset: 2px;
+  border-radius: 0.6rem;
+}
+
+/* When collapsed, remove inner border line "feel" */
+details.project-section:not([open]) > .project-section__summary {
+  border-bottom: 0;
+}
+
+/* ---------------------------
+   Chapters
+   --------------------------- */
+.project-chapter {
+  padding: 1.05rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.project-chapter:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+/* Chapter title */
+.project-chapter__title {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.05rem;
+  opacity: 0.95;
+}
+
+/* Paragraph spacing inside chapters */
+.project-chapter p {
+  margin: 0.6rem 0 0 0;
+}
+.project-chapter p:first-of-type {
+  margin-top: 0;
+}
+
+/* ---------------------------
+   Steps / checklist (v1.9 types)
+   --------------------------- */
+.project-steps {
+  margin: 0.6rem 0 0 1.1rem;
+}
+.project-steps li {
+  padding: 0.35rem 0;
+}
+
+/* We render checklist as <ul class="project-checklist"> */
+.project-checklist {
+  list-style: none;
+  padding-left: 0;
+  margin: 0.6rem 0 0 0;
+}
+
+.project-checklist li {
+  display: flex;
+  gap: 0.65rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.project-checklist li:last-child {
+  border-bottom: 0;
+}
+
+.project-checklist li::before {
+  content: "○";
+  width: 1.25rem;
+  flex: 0 0 1.25rem;
+  opacity: 0.9;
+}
+
+.project-checklist li.is-done {
+  opacity: 0.85;
+  text-decoration: line-through;
+}
+
+.project-checklist li.is-done::before {
+  content: "✓";
+}
+
+/* ---------------------------
+   Deep-link target highlight
+   (When you open a hash link, the chapter should "pop")
+   --------------------------- */
+.project-chapter:target {
+  border-bottom-color: rgba(122, 63, 242, 0.35);
+  background: rgba(122, 63, 242, 0.08);
+  border-radius: 0.6rem;
+  padding-left: 0.9rem;
+  padding-right: 0.9rem;
+}
+
+/* Optional: nicer anchor offset when sticky headers exist (safe anyway) */
+.project-chapter {
+  scroll-margin-top: 6rem;
+}

@@ -1,6 +1,16 @@
 {
   "projects": [
     {
+      "title": "4don Portfolio (Example)",
+      "date": "2026-02",
+      "description": "Test page for the new v1.9 section/chapter content model (collapsible + deep links).",
+      "image": "assets/images/projects/placeholder-4x3.png",
+      "url": "projects/_example.html",
+      "github": "",
+      "visibility": "public",
+      "tags": ["v1.9", "Schema", "Example", "Content Model"]
+    },
+    {
       "title": "RMV Morning Display",
       "date": "2026-01",
       "description": "An info display for departures, a leave-by timer, and a map (Raspberry Pi kiosk).",

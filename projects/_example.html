@@ -1,0 +1,237 @@
+<!doctype html>
+<!--
+  Massively by HTML5 UP
+  html5up.net | @ajlkn
+  Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html data-project-slug="_example">
+  <head>
+    <title>4DON.com — Portfolio</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+
+    <!-- Apple / Mobile -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+
+    <!-- Manifest / PWA -->
+    <link rel="manifest" href="../site.webmanifest" />
+    <meta name="theme-color" content="#7a3ff2" />
+
+    <!-- SEO Basic -->
+    <meta name="author" content="4don" />
+    <meta name="robots" content="index, follow" />
+    <meta
+      name="description"
+      content="4don Portfolio — eine minimalistische, purple-ambient Projektplattform mit dynamischer Projektübersicht (JSON → UI), klarer Navigation und sauberem Go-Live Setup."
+    />
+
+    <!-- OG / Social -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="4don — 4don Portfolio" />
+    <meta
+      property="og:description"
+      content="Minimalistisch. Purple Ambient. Projekte dynamisch aus JSON. Search/Filter/Badges. Clean Go-Live Setup."
+    />
+    <meta property="og:url" content="https://www.4don.com/projects/4don-portfolio.html" />
+    <meta property="og:image" content="https://www.4don.com/assets/images/og/og-portfolio.jpg" />
+
+    <!-- Twitter / Social -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="4DON Portfolio" />
+    <meta
+      name="twitter:description"
+      content="Multi-Page Website mit Projekten, About, Kontakt und Legal."
+    />
+    <meta name="twitter:image" content="https://www.4don.com/assets/images/og/og-1200x630.jpg" />
+
+    <!-- Favicons -->
+    <link rel="icon" href="../assets/favicons/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicons/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/favicons/favicon-16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="../assets/favicons/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="../assets/favicons/icon-192.png" />
+    <link rel="icon" type="image/png" sizes="512x512" href="../assets/favicons/icon-512.png" />
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="../assets/css/main.css" />
+    <link rel="stylesheet" href="_project-style.css" />
+    <noscript><link rel="stylesheet" href="../assets/css/noscript.css" /></noscript>
+  </head>
+
+  <body class="is-preload">
+    <div id="wrapper">
+      <!-- Header -->
+      <header id="header">
+        <a href="../index.html" class="logo">4don</a>
+      </header>
+
+      <!-- Nav -->
+      <nav id="nav">
+        <ul class="links">
+          <li><a href="../index.html" data-i18n="nav.home">Home</a></li>
+          <li class="active"><a href="../projects.html" data-i18n="nav.projects">Projects</a></li>
+          <li><a href="../about.html" data-i18n="nav.about">About</a></li>
+          <li><a href="../contact.html" data-i18n="nav.contact">Contact</a></li>
+          <li><a href="../legal/impressum.html" data-i18n="nav.imprint">Imprint</a></li>
+          <li><a href="../legal/datenschutz.html" data-i18n="nav.privacy">Privacy</a></li>
+        </ul>
+
+        <!-- Social Icons (NAV) -->
+        <ul class="icons">
+          <!-- Optional: GitHub -->
+          <li>
+            <a
+              href="https://github.com/e4don"
+              class="icon brands fa-github"
+              target="_blank"
+              rel="noopener"
+              ><span class="label">GitHub</span></a
+            >
+          </li>
+          <!-- Optional: LinkedIn -->
+          <li>
+            <a
+              href="https://www.linkedin.com/in/erik-fordon/"
+              class="icon brands fa-linkedin"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span class="label">LinkedIn</span>
+            </a>
+          </li>
+          <!-- Language Toggle DE/EN -->
+          <li class="lang-switch">
+            <button type="button" class="lang-switch__btn" data-lang-toggle aria-label="Language">
+              <span class="lang-switch__track" aria-hidden="true">
+                <span class="lang-switch__thumb"></span>
+              </span>
+
+              <span class="lang-switch__labels" aria-hidden="true">
+                <span class="lang-switch__label lang-switch__label--de">DE</span>
+                <span class="lang-switch__label lang-switch__label--en">EN</span>
+              </span>
+            </button>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Main -->
+      <div id="main">
+        <section class="post">
+          <!-- Back Button -->
+          <div class="project-topbar">
+            <button
+              type="button"
+              class="button small icon solid fa-arrow-left"
+              id="project-back-btn"
+              onclick="history.back()"
+            >
+              Back
+            </button>
+          </div>
+
+          <header class="major">
+            <span class="date" id="project-kicker">Project</span>
+            <h1 id="project-title">4don Portfolio</h1>
+            <p class="muted" id="project-subtitle">
+              Minimalistisch. Purple Ambient. Wartbar. Projekte dynamisch aus JSON — plus sauberes Go-Live Setup.
+            </p>
+          </header>
+
+          <!-- HERO -->
+          <div class="project-hero">
+            <!-- Cover -->
+            <div class="project-cover">
+              <img
+                src="../assets/images/projects/4don-portfolio.png"
+                alt="4don Portfolio Preview"
+                onerror="
+                  this.onerror = null;
+                  this.src = '../assets/images/projects/fallback.png';
+                "
+              />
+            </div>
+
+            <!-- Meta -->
+            <aside class="project-meta">
+              <div class="meta-row">
+                <div class="meta-k" id="project-meta-status-k">Status</div>
+                <div class="meta-v" id="project-meta-status-v">V1.5 (Release-ready)</div>
+              </div>
+              <div class="meta-row">
+                <div class="meta-k" id="project-meta-hosting-k">Hosting</div>
+                <div class="meta-v" id="project-meta-hosting-v">Cloudflare Pages</div>
+              </div>
+              <div class="meta-row">
+                <div class="meta-k" id="project-meta-stack-k">Stack</div>
+                <div class="meta-v" id="project-meta-stack-v">HTML / CSS / JS</div>
+              </div>
+              <div class="meta-row">
+                <div class="meta-k" id="project-meta-content-k">Content</div>
+                <div class="meta-v" id="project-meta-content-v">JSON → UI</div>
+              </div>
+
+              <div class="badges" aria-label="Tags">
+                <span class="badge">HTML</span>
+                <span class="badge">CSS</span>
+                <span class="badge">JavaScript</span>
+                <span class="badge">Cloudflare Pages</span>
+                <span class="badge">GitHub</span>
+              </div>
+
+              <ul class="actions" style="margin-top: 1.25rem">
+                <li><a class="button primary" href="../index.html" id="project-btn-live">Live ansehen</a></li>
+                <li>
+                  <a
+                    class="button"
+                    href="https://github.com/e4don/4don-portfolio"
+                    target="_blank"
+                    rel="noopener"
+                    id="project-btn-github"
+                    >GitHub</a
+                  >
+                </li>
+              </ul>
+
+              <p class="mini-note" id="project-mini-note">
+                Hinweis: Einige Projekte/Repos sind bewusst privat. Links werden sichtbar, sobald
+                sie public sind.
+              </p>
+            </aside>
+          </div>
+
+          <!-- Content -->
+          <div id="project-body"></div>
+
+
+          <ul class="actions" style="margin-top: 2rem">
+            <li><a href="../projects.html" class="button" id="project-btn-backlist">Back to Projects</a></li>
+            <li><a href="../contact.html" class="button" id="project-btn-contact">Contact</a></li>
+          </ul>
+        </section>
+      </div>
+
+      <!-- Copyright (Bottom bar) -->
+      <div id="copyright">
+        <ul>
+          <li data-i18n="copyright.rights">© 4don — All rights reserved.</li>
+          <li><a href="../legal/impressum.html" data-i18n="copyright.imprint">Impressum</a></li>
+          <li><a href="../legal/datenschutz.html" data-i18n="copyright.privacy">Datenschutz</a></li>
+          <li class="credit"><a href="https://html5up.net" data-i18n="copyright.design">Design: HTML5 UP</a></li>
+        </ul>
+      </div>
+
+      <!-- Scripts -->
+      <script src="../assets/js/jquery.min.js"></script>
+      <script src="../assets/js/jquery.scrollex.min.js"></script>
+      <script src="../assets/js/jquery.scrolly.min.js"></script>
+      <script src="../assets/js/browser.min.js"></script>
+      <script src="../assets/js/breakpoints.min.js"></script>
+      <script src="../assets/js/util.js"></script>
+      <script src="../assets/js/main.js"></script>
+      <script src="../assets/js/i18n.js"></script>
+      <script>window.i18nInit?.({ basePath: "../assets/i18n" });</script>
+      <script src="../assets/js/content-project-detail.js"></script>
+    </div>
+  </body>
+</html>
