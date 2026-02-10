@@ -8,23 +8,51 @@
     "privacy": "Privacy"
   },
   "projects": {
-    "allTags": "All tags",
-    "meta": "{shown} of {total} projects",
-    "emptyTitle": "No projects found",
-    "emptyHint": "Reset filters or check projects.json.",
-    "loadFailTitle": "Failed to load projects",
-    "loadFailTip": "Tip: Open the site via a local server (e.g. VS Code \"Live Server\").",
-    "open": "Open",
-    "github": "GitHub",
-    "reset": "Reset",
-    "searchPlaceholder": "Search projects...",
-    "tocTitle": "Contents",
-    "noSections": "No sections found.",
-    "noChapters": "No chapters available.",
-    "noItems": "No items available.",
-    "noSteps": "No steps defined.",
-    "noChecklistItems": "No tasks available.",
-    "unsupportedChapterType": "Unsupported chapter type:"
+    "list": {
+      "allTags": "All tags",
+      "metaCount": "{shown} of {total} projects",
+      "emptyTitle": "No projects found",
+      "emptyHint": "Reset filters or check projects.json.",
+      "loadFailTitle": "Projects could not be loaded",
+      "loadFailTip": "Tip: Open the site via a local server (e.g. VS Code \"Live Server\").",
+      "open": "Open",
+      "github": "GitHub",
+      "reset": "Reset",
+      "searchPlaceholder": "Title, description or tag…"
+    },
+    "detail": {
+      "tocTitle": "Contents",
+      "kicker": "Project",
+      "back": "Back",
+      "backToProjects": "Back to Projects",
+      "contact": "Contact",
+      "miniNote": "Note: Some projects/repositories are intentionally private. Links will appear once they are public.",
+      "live": "View Live",
+      "github": "GitHub",
+
+      "missingSections": "Invalid v1.9 project file: missing sections[].",
+      "loadFailed": "Failed to load project content.",
+
+      "status": {
+        "active": "Active",
+        "wip": "Work in progress",
+        "archived": "Archived"
+      },
+
+      "noSections": "No sections found.",
+      "noChapters": "No chapters available.",
+      "noItems": "No items available.",
+      "noSteps": "No steps defined.",
+      "noChecklistItems": "No tasks available.",
+      "unsupportedChapterType": "Unsupported chapter type:",
+
+      "metaLabels": {
+        "status": "Status",
+        "hosting": "Hosting",
+        "stack": "Stack",
+        "content": "Content"
+      }
+    }
   },
   "footer": {
     "contact": "Contact",

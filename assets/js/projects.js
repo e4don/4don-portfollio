@@ -1,12 +1,12 @@
-/* 4don - Projects Loader (v1.8)
+/* 4don - Projects Loader (v1.9 keys)
    Loads language-specific project card data and renders project cards
    using the HTML5 UP Massively layout.
 
-   Data sources (recommended):
+   Data sources:
    - DE cards:  content/de/projects.cards.json
    - EN cards:  content/en/projects.cards.json
 
-   This script is intentionally responsible ONLY for:
+   This script is responsible ONLY for:
    - Loading the cards data (language-aware)
    - Rendering cards
    - Search + Tag filtering
@@ -14,21 +14,8 @@
    - SPA-like back navigation restore (search/tag + scroll)
    - i18n-ready UI text via window.i18n.t()
 
-   Features:
-   - Sorting (newest → oldest) via date (YYYY-MM or YYYY-MM-DD)
-   - Search (title / description / tags)
-   - Tag filter (dropdown)
-   - Badge-based tag display
-   - Optional GitHub button (if github URL exists)
-   - Image fallback via onerror (404-safe)
-   - Project detail pages open in same tab
-   - SPA-like back navigation:
-     -> Saves search/tag + scroll before navigating to detail pages
-     -> Restores search/tag + scroll after returning
-   - Language-aware loading:
-     -> Reloads cards data when language changes (DE/EN)
-     -> Keeps current search + tag selection whenever possible
-     -> Keeps URL state (q + tag) in sync
+   v1.9 i18n change:
+   - Listing UI strings moved from projects.* to projects.list.*
 */
 
 (function () {
@@ -186,7 +173,7 @@
         rememberProjectsScrollAndState();
       }
     },
-    true // capture phase (fires early, even for nested elements)
+    true
   );
 
   // =========================================================
@@ -201,15 +188,14 @@
 
     const tags = Array.from(set).sort((a, b) => a.localeCompare(b, 'en', { sensitivity: 'base' }));
 
-    // Localized label for the "__all__" option
-    const allLabel = esc(tt('projects.allTags', 'All tags'));
+    // v1.9 i18n key: projects.list.allTags
+    const allLabel = esc(tt('projects.list.allTags', 'All tags'));
 
     tagEl.innerHTML =
       `<option value="__all__">${allLabel}</option>` +
       tags
         .map((t) => {
           const label = esc(t);
-          // value is lowercase to match the filter logic
           const value = esc(t.toLowerCase());
           return `<option value="${value}">${label}</option>`;
         })
@@ -222,7 +208,9 @@
       metaEl.textContent = '';
       return;
     }
-    const tpl = tt('projects.meta', '{shown} of {total} projects');
+
+    // v1.9 i18n key: projects.list.metaCount
+    const tpl = tt('projects.list.metaCount', '{shown} of {total} projects');
     metaEl.textContent = format(tpl, { shown, total });
   }
 
@@ -245,8 +233,9 @@
 
   function render(projects) {
     if (!Array.isArray(projects) || projects.length === 0) {
-      const emptyTitle = esc(tt('projects.emptyTitle', 'No projects found'));
-      const emptyHint = esc(tt('projects.emptyHint', 'Reset filters or check projects.json.'));
+      // v1.9 i18n keys: projects.list.emptyTitle / emptyHint
+      const emptyTitle = esc(tt('projects.list.emptyTitle', 'No projects found'));
+      const emptyHint = esc(tt('projects.list.emptyHint', 'Reset filters or check projects.json.'));
 
       grid.innerHTML = `
         <article>
@@ -256,8 +245,9 @@
       return;
     }
 
-    const openLabel = esc(tt('projects.open', 'Open'));
-    const githubLabel = esc(tt('projects.github', 'GitHub'));
+    // v1.9 i18n keys: projects.list.open / github
+    const openLabel = esc(tt('projects.list.open', 'Open'));
+    const githubLabel = esc(tt('projects.list.github', 'GitHub'));
 
     grid.innerHTML = projects
       .map((p) => {
@@ -292,12 +282,10 @@
         const imgTag = `<img src="${img}" alt="${title}"
           onerror="this.onerror=null;this.src='${esc(FALLBACK_IMG)}';" />`;
 
-        // Image wrapper: clickable when url exists (same tab)
         const imageHtml = url
           ? `<a href="${url}" class="image fit" data-project-link="1">${imgTag}</a>`
           : `<span class="image fit">${imgTag}</span>`;
 
-        // Badges
         const badges =
           tags.length > 0
             ? `<div class="project-badges">
@@ -325,12 +313,10 @@
       })
       .join('');
 
-    // Re-apply translations for any data-i18n elements rendered dynamically (optional)
     window.i18n?.apply?.(grid);
   }
 
   function restoreScrollIfArmed() {
-    // Restore scroll position after returning from a detail page
     try {
       const armed = sessionStorage.getItem(KEY_ARMED) === '1';
       if (!armed) return;
@@ -391,7 +377,6 @@
       });
     }
 
-    // Browser back / forward support (q + tag via URL)
     window.addEventListener('popstate', () => {
       const st = readUrlState();
 
@@ -422,8 +407,10 @@
         allProjects = [];
         updateMeta(0, 0);
 
-        const emptyTitle = esc(tt('projects.emptyTitle', 'No projects found'));
-        const emptyHint = esc(tt('projects.emptyHint', 'Reset filters or check projects.json.'));
+        const emptyTitle = esc(tt('projects.list.emptyTitle', 'No projects found'));
+        const emptyHint = esc(
+          tt('projects.list.emptyHint', 'Reset filters or check projects.json.')
+        );
 
         grid.innerHTML = `
           <article>
@@ -458,7 +445,6 @@
       }
 
       // On language change: keep current UI (search + tag) if possible.
-      // (Works best if tags are identical across languages)
       if (reason === 'langChange') {
         if (searchEl) searchEl.value = prevQ;
 
@@ -468,19 +454,17 @@
         }
       }
 
-      // Render
       applyAndRender(allProjects);
-
-      // Bind events once
       bindUIEventsOnce();
     } catch (err) {
       allProjects = [];
       updateMeta(0, 0);
 
-      const failTitle = esc(tt('projects.loadFailTitle', 'Failed to load projects'));
+      // v1.9 i18n keys: projects.list.loadFailTitle / loadFailTip
+      const failTitle = esc(tt('projects.list.loadFailTitle', 'Failed to load projects'));
       const failTip = esc(
         tt(
-          'projects.loadFailTip',
+          'projects.list.loadFailTip',
           'Tip: Open the site via a local server (e.g. VS Code "Live Server").'
         )
       );

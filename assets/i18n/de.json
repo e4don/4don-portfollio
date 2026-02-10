@@ -8,23 +8,51 @@
     "privacy": "Datenschutz"
   },
   "projects": {
-    "allTags": "Alle Tags",
-    "meta": "{shown} von {total} Projekten",
-    "emptyTitle": "Keine Projekte gefunden",
-    "emptyHint": "Bitte Filter zurücksetzen oder projects.json prüfen.",
-    "loadFailTitle": "Projekte konnten nicht geladen werden",
-    "loadFailTip": "Tipp: Öffne die Seite über einen lokalen Server (z.B. VS Code \"Live Server\").",
-    "open": "Öffnen",
-    "github": "GitHub",
-    "reset": "Zurücksetzen",
-    "searchPlaceholder": "Titel, Beschreibung oder Tag…",
-    "tocTitle": "Inhalt",
-    "noSections": "Keine Abschnitte gefunden.",
-    "noChapters": "Keine Kapitel vorhanden.",
-    "noItems": "Keine Einträge vorhanden.",
-    "noSteps": "Keine Schritte definiert.",
-    "noChecklistItems": "Keine Aufgaben vorhanden.",
-    "unsupportedChapterType": "Nicht unterstützter Kapiteltyp:"
+    "list": {
+      "allTags": "Alle Tags",
+      "metaCount": "{shown} von {total} Projekten",
+      "emptyTitle": "Keine Projekte gefunden",
+      "emptyHint": "Bitte Filter zurücksetzen oder projects.json prüfen.",
+      "loadFailTitle": "Projekte konnten nicht geladen werden",
+      "loadFailTip": "Tipp: Öffne die Seite über einen lokalen Server (z.B. VS Code \"Live Server\").",
+      "open": "Öffnen",
+      "github": "GitHub",
+      "reset": "Zurücksetzen",
+      "searchPlaceholder": "Titel, Beschreibung oder Tag…"
+    },
+    "detail": {
+      "tocTitle": "Inhalt",
+      "kicker": "Projekt",
+      "back": "Zurück",
+      "backToProjects": "Zurück zu Projekte",
+      "contact": "Kontakt",
+      "miniNote": "Hinweis: Einige Projekte/Repos sind bewusst privat. Links werden sichtbar, sobald sie public sind.",
+      "live": "Live ansehen",
+      "github": "GitHub",
+
+      "missingSections": "Ungültige v1.9 Projektdatei: sections[] fehlt.",
+      "loadFailed": "Projektinhalt konnte nicht geladen werden.",
+
+      "status": {
+        "active": "Aktiv",
+        "wip": "In Arbeit",
+        "archived": "Archiviert"
+      },
+
+      "noSections": "Keine Abschnitte gefunden.",
+      "noChapters": "Keine Kapitel vorhanden.",
+      "noItems": "Keine Einträge vorhanden.",
+      "noSteps": "Keine Schritte definiert.",
+      "noChecklistItems": "Keine Aufgaben vorhanden.",
+      "unsupportedChapterType": "Nicht unterstützter Kapiteltyp:",
+
+      "metaLabels": {
+        "status": "Status",
+        "hosting": "Hosting",
+        "stack": "Stack",
+        "content": "Content"
+      }
+    }
   },
   "footer": {
     "contact": "Kontakt",

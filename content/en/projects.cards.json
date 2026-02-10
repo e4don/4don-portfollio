@@ -1,44 +1,21 @@
-{
-  "projects": [
-    {
-      "title": "4don Portfolio (Example)",
-      "date": "2026-02",
-      "description": "Test page for the new v1.9 section/chapter content model (collapsible + deep links).",
-      "image": "assets/images/projects/placeholder-4x3.png",
-      "url": "projects/_example.html",
-      "github": "",
-      "visibility": "public",
-      "tags": ["v1.9", "Schema", "Example", "Content Model"]
-    },
-    {
-      "title": "RMV Morning Display",
-      "date": "2026-01",
-      "description": "An info display for departures, a leave-by timer, and a map (Raspberry Pi kiosk).",
-      "image": "assets/images/projects/rmv-morning-display.png",
-      "url": "projects/rmv-morning-display.html",
-      "github": "",
-      "visibility": "private",
-      "tags": ["Raspberry Pi", "Node.js", "Kiosk", "OpenStreetMap", "API"]
-    },
-    {
-      "title": "Pi-hole Setup",
-      "date": "2025-12",
-      "description": "Pi-hole setup, logging/backup strategies, and robust DNS configuration (FritzBox, static IPs, etc.).",
-      "image": "assets/images/projects/pi-hole.png",
-      "url": "projects/pi-hole-setup.html",
-      "github": "",
-      "visibility": "private",
-      "tags": ["Raspberry Pi", "Networking", "DNS"]
-    },
-    {
-      "title": "4don Portfolio",
-      "date": "2026-02",
-      "description": "My website with a multi-page setup, projects, about, and legal pages.",
-      "image": "assets/images/projects/4don-portfolio.png",
-      "url": "projects/4don-portfolio.html",
-      "github": "https://github.com/e4don/4don-portfolio",
-      "visibility": "public",
-      "tags": ["HTML", "CSS", "Cloudflare Pages", "GitHub"]
-    }
-  ]
-}
+[
+  {
+    "slug": "4don-portfolio",
+    "title": "4don Portfolio",
+    "date": "2026-02",
+    "description": "Meine minimalistische Projektplattform: i18n (DE/EN), Search & Tag-Filter, dynamische Projektseiten (JSON → UI) und ein sauberer Go-Live Workflow über Cloudflare Pages.",
+    "image": "assets/images/projects/4don-portfolio.png",
+    "url": "projects/project.html?slug=4don-portfolio",
+    "github": "https://github.com/e4don/4don-portfolio",
+    "visibility": "public",
+    "tags": [
+      "Portfolio",
+      "i18n",
+      "JSON → UI",
+      "Vanilla JS",
+      "Cloudflare Pages",
+      "GitHub",
+      "SPA Back-Navigation"
+    ]
+  }
+]
