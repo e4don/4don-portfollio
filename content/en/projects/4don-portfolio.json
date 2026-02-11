@@ -14,7 +14,8 @@
       "SPA Back-Navigation"
     ],
     "github": "https://github.com/e4don/4don-portfolio",
-    "visibility": "public"
+    "visibility": "public",
+    "pinned": true
   },
   "meta": {
     "title": "4don Portfolio",

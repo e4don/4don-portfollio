@@ -9,16 +9,24 @@
     <title>4DON.com - Projekte</title>
     <link rel="canonical" href="https://www.4don.com/projects.html" />
 
+    <!-- Open Graph -->
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="4don" />
     <meta property="og:title" content="4don — Projekte" />
-    <meta property="og:description" content="Projekte von 4don — automatisch aus projects.json geladen." />
+    <meta
+      property="og:description"
+      content="Projekte von 4don — automatisch aus projects.cards.json generiert."
+    />
     <meta property="og:url" content="https://www.4don.com/projects.html" />
     <meta property="og:image" content="https://www.4don.com/assets/images/og/og-1200x630.jpg" />
 
+    <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="4don — Projekte" />
-    <meta name="twitter:description" content="Projekte von 4don — automatisch aus projects.json geladen." />
+    <meta
+      name="twitter:description"
+      content="Projekte von 4don — automatisch aus projects.cards.json generiert."
+    />
     <meta name="twitter:image" content="https://www.4don.com/assets/images/og/og-1200x630.jpg" />
 
     <meta charset="utf-8" />
@@ -34,6 +42,7 @@
     <!-- SEO Basic -->
     <meta name="author" content="4don" />
     <meta name="robots" content="index, follow" />
+    <meta name="description" content="Projekte von 4don." />
 
     <!-- Favicons -->
     <link rel="icon" href="assets/favicons/favicon.ico" sizes="any" />
@@ -43,8 +52,7 @@
     <link rel="icon" type="image/png" sizes="192x192" href="assets/favicons/icon-192.png" />
     <link rel="icon" type="image/png" sizes="512x512" href="assets/favicons/icon-512.png" />
 
-    <meta name="description" content="Projekte von 4don." />
-
+    <!-- Styles -->
     <link rel="stylesheet" href="assets/css/main.css" />
     <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
   </head>
@@ -68,8 +76,9 @@
           <li><a href="legal/datenschutz.html" data-i18n="nav.privacy">Privacy</a></li>
         </ul>
 
+        <!-- Social Icons + Language Toggle -->
         <ul class="icons">
-          <!-- Optional: GitHub -->
+          <!-- GitHub -->
           <li>
             <a
               href="https://github.com/e4don"
@@ -80,7 +89,8 @@
               <span class="label">GitHub</span>
             </a>
           </li>
-          <!-- Optional: LinkedIn -->
+
+          <!-- LinkedIn -->
           <li>
             <a
               href="https://www.linkedin.com/in/erik-fordon/"
@@ -91,7 +101,8 @@
               <span class="label">LinkedIn</span>
             </a>
           </li>
-          <!-- Language Toggle DE/EN -->
+
+          <!-- Language Toggle (DE/EN) -->
           <li class="lang-switch">
             <button type="button" class="lang-switch__btn" data-lang-toggle aria-label="Language">
               <span class="lang-switch__track" aria-hidden="true">
@@ -110,11 +121,14 @@
       <!-- Main -->
       <div id="main">
         <section class="post">
+          <!-- Page header content is optionally populated by content-projects.js -->
           <header class="major">
             <h1 id="projects-page-title">Projekte</h1>
+
             <p>
               <span id="projects-page-intro">
-                Die Karten unten werden automatisch aus <code>projects.json</code> geladen.
+                <!-- NOTE: projects.cards.json (v1.9) -->
+                Die Karten unten werden automatisch aus <code>projects.cards.json</code> generiert.
               </span>
               <br />
               <span id="projects-page-note" style="opacity: 0.85">
@@ -123,129 +137,122 @@
             </p>
           </header>
 
-<!-- Projects Controls -->
-<div class="projects-controls">
-  <div class="projects-controls__row">
-    <div class="projects-controls__field">
-      <label
-        for="projectSearch"
-        class="projects-controls__label"
-        data-i18n="projects.searchLabel"
-      >
-        Search
-      </label>
+          <!-- Projects Controls (Search / Tag / Reset) -->
+          <div class="projects-controls">
+            <div class="projects-controls__row">
+              <!-- Search -->
+              <div class="projects-controls__field">
+                <label
+                  for="projectSearch"
+                  class="projects-controls__label"
+                  data-i18n="projects.list.searchLabel"
+                >
+                  Search
+                </label>
 
-      <input
-        type="text"
-        id="projectSearch"
-        data-i18n="projects.searchPlaceholder"
-        data-i18n-attr="placeholder"
-        placeholder="Search projects…"
-        autocomplete="off"
-      />
+                <input
+                  type="text"
+                  id="projectSearch"
+                  data-i18n="projects.list.searchPlaceholder"
+                  data-i18n-attr="placeholder"
+                  placeholder="Search projects…"
+                  autocomplete="off"
+                />
+              </div>
 
-    </div>
+              <!-- Tag Filter -->
+              <div class="projects-controls__field">
+                <label for="tagFilter" class="projects-controls__label" data-i18n="projects.list.tagLabel">
+                  Tag
+                </label>
 
-    <div class="projects-controls__field">
-      <label
-        for="tagFilter"
-        class="projects-controls__label"
-        data-i18n="projects.tagLabel"
-      >
-        Tag
-      </label>
+                <select id="tagFilter">
+                  <!-- Initial option is replaced by projects.js (i18n-aware) -->
+                  <option value="__all__">All tags</option>
+                </select>
+              </div>
 
-      <select id="tagFilter">
-        <!-- initial option is replaced by projects.js (i18n-aware) -->
-        <option value="__all__">All tags</option>
-      </select>
+              <!-- Reset -->
+              <div class="projects-controls__field projects-controls__field--btn">
+                <button class="button" id="resetFilters" type="button" data-i18n="projects.list.reset">
+                  Reset
+                </button>
+              </div>
+            </div>
 
-    </div>
+            <!-- Meta count like "3 of 10 projects" (set by projects.js) -->
+            <p class="projects-controls__meta" id="projectsMeta" aria-live="polite"></p>
+          </div>
 
-    <div class="projects-controls__field projects-controls__field--btn">
-      <button
-        class="button"
-        id="resetFilters"
-        type="button"
-        data-i18n="projects.reset"
-      >
-       Reset
-      </button>
-
-    </div>
-  </div>
-
-  <p class="projects-controls__meta" id="projectsMeta" aria-live="polite"></p>
-</div>
-
-
-          <!-- Hier rendert JS die Projekt-Cards rein -->
+          <!-- JS will render the project cards here -->
           <section class="posts" id="projectsGrid">
-            <!-- Fallback, falls JS aus ist -->
+            <!-- Fallback if JS is disabled -->
             <article>
               <header>
-                <h2>JavaScript ist deaktiviert</h2>
+                <h2 data-i18n="projects.list.jsDisabledTitle">
+                  JavaScript ist deaktiviert
+                </h2>
               </header>
-              <p>
-                Bitte aktiviere JavaScript oder öffne die Seite über einen lokalen Server (z.B. VS
-                Code Live Server).
+              <p data-i18n="projects.list.jsDisabledHint">
+                Bitte aktiviere JavaScript oder öffne die Seite über einen lokalen Server (z.B. VS Code Live Server).
               </p>
             </article>
           </section>
         </section>
       </div>
 
-      <!-- Footer (Content) -->
-<footer id="footer" class="footer-4don">
-  <section class="split contact">
-    <section>
-      <h3 data-i18n="footer.contact">Kontakt</h3>
-      <p>
-        <a href="mailto:info@4don.com">info@4don.com</a><br />
-        <a href="https://github.com/e4don" target="_blank" rel="noopener">github.com/e4don</a>
-      </p>
-    </section>
+      <!-- Footer -->
+      <footer id="footer" class="footer-4don">
+        <section class="split contact">
+          <section>
+            <h3 data-i18n="footer.contact">Kontakt</h3>
+            <p>
+              <a href="mailto:info@4don.com">info@4don.com</a><br />
+              <a href="https://github.com/e4don" target="_blank" rel="noopener">github.com/e4don</a>
+            </p>
+          </section>
 
-    <section>
-      <h3 data-i18n="footer.links">Links</h3>
-      <ul class="icons alt">
-        <li>
-          <a
-            href="https://github.com/e4don"
-            class="icon brands alt fa-github"
-            target="_blank"
-            rel="noopener"
-          >
-            <span class="label">GitHub</span>
-          </a>
-        </li>
-        <!-- Optional: LinkedIn-->
-        <li>
-          <a
-            href="https://www.linkedin.com/in/erik-fordon"
-            class="icon brands alt fa-linkedin"
-            target="_blank"
-            rel="noopener"
-          >
-            <span class="label">LinkedIn</span>
-          </a>
-        </li>
-      </ul>
-    </section>
-  </section>
-</footer>
+          <section>
+            <h3 data-i18n="footer.links">Links</h3>
+            <ul class="icons alt">
+              <li>
+                <a
+                  href="https://github.com/e4don"
+                  class="icon brands alt fa-github"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  <span class="label">GitHub</span>
+                </a>
+              </li>
 
-      <!-- Copyright (Bottom bar) -->
-<div id="copyright">
-  <ul>
-    <li data-i18n="copyright.rights">© 4don — All rights reserved.</li>
-    <li><a href="legal/impressum.html" data-i18n="copyright.imprint">Impressum</a></li>
-    <li><a href="legal/datenschutz.html" data-i18n="copyright.privacy">Datenschutz</a></li>
-    <li class="credit">
-      <a href="https://html5up.net" data-i18n="copyright.design">Design: HTML5 UP</a>
-    </li>
-  </ul>
-</div>
+              <li>
+                <a
+                  href="https://www.linkedin.com/in/erik-fordon"
+                  class="icon brands alt fa-linkedin"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  <span class="label">LinkedIn</span>
+                </a>
+              </li>
+            </ul>
+          </section>
+        </section>
+      </footer>
+
+      <!-- Copyright -->
+      <div id="copyright">
+        <ul>
+          <li data-i18n="copyright.rights">© 4don — All rights reserved.</li>
+          <li><a href="legal/impressum.html" data-i18n="copyright.imprint">Impressum</a></li>
+          <li><a href="legal/datenschutz.html" data-i18n="copyright.privacy">Datenschutz</a></li>
+          <li class="credit">
+            <a href="https://html5up.net" data-i18n="copyright.design">Design: HTML5 UP</a>
+          </li>
+        </ul>
+      </div>
+    </div>
 
     <!-- Scripts -->
     <script src="assets/js/jquery.min.js"></script>
@@ -255,63 +262,18 @@
     <script src="assets/js/breakpoints.min.js"></script>
     <script src="assets/js/util.js"></script>
     <script src="assets/js/main.js"></script>
-    <!-- i18n FIRST -->
-    <script src="assets/js/i18n.js"></script>
-    <script>window.i18nInit?.({ basePath: "assets/i18n" });</script>
 
-    <!-- then content header loader (optional) -->
+    <!-- i18n (must be loaded before content + listing scripts) -->
+    <script src="assets/js/i18n.js"></script>
+    <script>
+      // Initialize language system (URL -> localStorage -> browser fallback)
+      window.i18nInit?.({ basePath: "assets/i18n" });
+    </script>
+
+    <!-- Optional: Projects page header content (title/intro/note) from content JSON -->
     <script src="assets/js/content-projects.js"></script>
 
-    <!-- projects loader LAST -->
+    <!-- Projects listing renderer (cards, search/filter, URL sync, back restore) -->
     <script src="assets/js/projects.js"></script>
-    <script>
-  // =========================================================
-  // 4don: Restore scroll position when returning from a detail page
-  // Works even if projects are rendered dynamically via projects.js
-  // =========================================================
-
-  (function () {
-    const KEY_Y = "projects.scrollY";
-    const KEY_ARMED = "projects.restoreArmed";
-
-    // 1) Save scroll position before leaving projects.html
-    //    - capture clicks on links that go to /projects/*.html
-    document.addEventListener(
-      "click",
-      function (e) {
-        const a = e.target.closest("a");
-        if (!a) return;
-
-        const href = a.getAttribute("href") || "";
-        // Matches: "projects/xyz.html" or "./projects/xyz.html" or "../projects/xyz.html"
-        // On projects.html your links are likely "projects/<slug>.html" or similar.
-        const isProjectDetail = /(^|\/)projects\/.+\.html(\?|#|$)/.test(href);
-
-        if (isProjectDetail) {
-          sessionStorage.setItem(KEY_Y, String(window.scrollY || 0));
-          sessionStorage.setItem(KEY_ARMED, "1");
-        }
-      },
-      true // capture phase -> catches it early
-    );
-
-    // 2) Restore scroll after everything has rendered
-    //    - wait for load, then a tiny delay so DOM height is final
-    window.addEventListener("load", function () {
-      const armed = sessionStorage.getItem(KEY_ARMED) === "1";
-      const y = parseInt(sessionStorage.getItem(KEY_Y) || "0", 10);
-
-      if (!armed || !Number.isFinite(y)) return;
-
-      // disarm so it only happens once
-      sessionStorage.removeItem(KEY_ARMED);
-
-      // If your projects list is rendered async, give it a moment
-      setTimeout(function () {
-        window.scrollTo(0, y);
-      }, 50);
-    });
-  })();
-</script>
   </body>
 </html>

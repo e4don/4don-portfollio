@@ -5,7 +5,7 @@
   },
   "header": {
     "title": "Projects",
-    "introHtml": "The cards below are loaded automatically from <code>projects.json</code>.",
+    "introHtml": "The cards below are generated automatically from <code>projects.cards.json</code>.",
     "note": "Note: Some projects are currently private — links/repos will be added once they are public."
   }
 }

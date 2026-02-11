@@ -5,7 +5,7 @@
   },
   "header": {
     "title": "Projekte",
-    "introHtml": "Die Karten unten werden automatisch aus <code>projects.json</code> geladen.",
+    "introHtml": "Die Karten unten werden automatisch aus <code>projects.cards.json</code> generiert.",
     "note": "Hinweis: Einige Projekte sind aktuell privat – Links/Repos folgen, sobald sie public sind."
   }
 }

@@ -8,6 +8,7 @@
     "url": "projects/project.html?slug=4don-portfolio",
     "github": "https://github.com/e4don/4don-portfolio",
     "visibility": "public",
+    "pinned": true,
     "tags": [
       "Portfolio",
       "i18n",

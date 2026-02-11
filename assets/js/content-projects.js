@@ -1,7 +1,7 @@
 // assets/js/content-projects.js
 (function () {
   async function loadContent(lang) {
-    const url = `content/${lang}/projects.json`;
+    const url = `content/${lang}/projects.page.json`;
     const res = await fetch(url, { cache: 'no-store' });
     if (!res.ok) throw new Error(`Failed to load ${url} (${res.status})`);
     return res.json();
