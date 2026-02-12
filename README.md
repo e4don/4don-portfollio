@@ -3,37 +3,139 @@
 Personal portfolio site to present my projects, experience, and contact information.
 Live: https://www.4don.com
 
+------------------------------------------------------------------------
+
+# Version History
+
+------------------------------------------------------------------------
+
+## v1.9.1 — TOC Refinement & Scroll Behavior Stabilization
+
+**Status:** UX refinement
+**Focus:** Improve desktop TOC behavior without affecting original Massively navigation
+
+### 📑 Desktop TOC Improvements
+
+- Implemented proper sticky sidebar behavior
+- TOC now:
+  - stays reachable while scrolling
+  - scrolls internally if content exceeds viewport height
+  - keeps correct offset below top navigation
+- Fixed incorrect anchor jump behavior
+- Added smooth scroll with header-aware offset
+- Stabilized deep-link handling inside <details> sections
+
+### 📱 Mobile TOC Stability
+
+- Fully aligned with Massively’s native panel system
+- Uses #tocPanel with proper slide-in behavior
+- Prevented unwanted dimming of page background
+- Ensured auto-close when clicking internal anchors
+- Preserved original #navPanel behavior
+
+### 🧠 Layout Fixes & Conflict Resolution
+
+- Removed TOC-related CSS from main.css
+- Scoped all TOC styling to:
+  - /projects/_project-style.css
+- Resolved position: fixed conflicts
+- Fixed #wrapper { overflow: hidden; } sticky interaction
+- Ensured no interference with original Massively navigation behavior
+
+### 🎨 TOC Typography Refinement
+
+- Reduced overall font size
+- Clear hierarchy:
+  - Section titles (stronger)
+  - Chapter items (smaller, lighter)
+- Improved spacing + readability
+- Active-state highlight stabilized across sidebar + panel
+
+### Why v1.9.1 Matters
+
+- v1.9 delivered the architectural foundation.
+- v1.9.1 ensures the experience matches that architecture.
+  - Cleaner behavior
+  - No layout side-effects
+  - No template regressions
+  - Better long-form readability
+
 ---
 
-## Version History
+## v1.9 --- Structured Project Content Model & Listing Generator
 
-### v1.9 — Project Content Model & Authoring Workflow (planned)
-**Status:** Planned
-**Focus:** Make project pages easier to maintain + translation-friendly writing workflow
+**Status:** Architecture complete (content migration in progress)\
+**Focus:** Transform project pages from HTML-driven to data-driven
+structured content
 
-#### Goal
-Project pages should be maintainable like “writing documents”, not like “editing escaped JSON strings”.
-The new structure should reduce copy/paste friction and make it fast to add new projects.
+### What changed
 
-#### Planned Scope
-- Redesign the **project detail content format**
-  - Move away from large `bodyHtml` strings
-  - Introduce structured sections (e.g. `goal`, `features`, `timeline`, `roadmap`, `checklist`)
-  - Allow “write first, format later” content blocks
-- Improve authoring experience
-  - Avoid manual JSON escaping
-  - Define a repeatable workflow for writing + translation (DE/EN)
-- Translate project pages using the new concept
-  - Convert existing project pages (Portfolio, RMV Display, Pi-hole) into the new structured model
-- UI polish items (kept intentionally out of v1.8)
-  - Language switch button design refinement (desktop + mobile alignment)
-  - Contact page: improve form UX (success feedback polish / animation iteration)
+### 🧱 Structured Project Content Model
 
-#### Notes / Ideas for the new model
-- Use section arrays like:
-  - `{ "type": "h2", "text": "Goal" }`, `{ "type": "p", "text": "..." }`
-  - or a stricter schema with named fields
-- Optionally switch long-form text to Markdown files later (if it stays framework-free)
+-   Introduced a **single-source-of-truth architecture**
+    -   `content/{lang}/projects/<slug>.json`
+-   Each project now contains:
+    -   `card` (listing data)
+    -   `meta` (detail page header + SEO)
+    -   `sections` (structured content)
+-   Removed large `bodyHtml` strings
+-   Introduced section-based writing model:
+    -   `section`
+    -   `text`
+    -   `list`
+    -   `steps`
+    -   `checklist`
+-   Supports collapsible sections and deep-linkable IDs
+
+### ⚙ Listing Generator
+
+-   Implemented Node-based generator:
+
+        tools/generate-project-cards.mjs
+
+-   Automatically builds:
+
+    -   `content/de/projects.cards.json`
+    -   `content/en/projects.cards.json`
+
+-   Supports:
+
+    -   `visibility: public | private`
+    -   `pinned: true`
+    -   automatic URL generation
+    -   date-based sorting
+    -   validation warnings
+
+### 🌍 Clean i18n Separation
+
+-   Unified structure:
+    -   `projects.list.*`
+    -   `projects.detail.*`
+-   Added proper fallback for JS-disabled state
+-   Removed legacy key inconsistencies
+
+### 🧹 Cleanup
+
+-   Removed legacy `projects.json` references
+
+-   Removed inline scroll-restore script (handled by `projects.js`)
+
+-   Normalized projects.html structure and formatting
+
+-   Added full documentation:
+
+        docs/project-content-model.md
+
+### Why v1.9 matters
+
+v1.9 completes the architectural shift from:
+
+HTML-driven project pages\
+→\
+Data-driven, structured, translation-friendly content.
+
+Projects are now: - Maintainable - Extensible - Internationalizable -
+Versionable - Cleanly separated from layout
 
 ---
 

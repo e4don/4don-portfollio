@@ -3,7 +3,7 @@
     "slug": "4don-portfolio",
     "title": "4don Portfolio",
     "date": "2026-02",
-    "description": "Meine minimalistische Projektplattform: i18n (DE/EN), Search & Tag-Filter, dynamische Projektseiten (JSON → UI) und ein sauberer Go-Live Workflow über Cloudflare Pages.",
+    "description": "Meine minimalistische Projektplattform: Single Source of Truth (JSON → UI), i18n (DE/EN), Search & Tag-Filter, dynamische Projektseiten und ein sauberer Go-Live Workflow über Cloudflare Pages.",
     "image": "assets/images/projects/4don-portfolio.png",
     "url": "projects/project.html?slug=4don-portfolio",
     "github": "https://github.com/e4don/4don-portfolio",
@@ -16,7 +16,7 @@
       "Vanilla JS",
       "Cloudflare Pages",
       "GitHub",
-      "SPA Back-Navigation"
+      "Content Model v1.9"
     ]
   }
 ]

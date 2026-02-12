@@ -2,7 +2,7 @@
   "card": {
     "title": "4don Portfolio",
     "date": "2026-02",
-    "description": "Meine minimalistische Projektplattform: i18n (DE/EN), Search & Tag-Filter, dynamische Projektseiten (JSON → UI) und ein sauberer Go-Live Workflow über Cloudflare Pages.",
+    "description": "Meine minimalistische Projektplattform: Single Source of Truth (JSON → UI), i18n (DE/EN), Search & Tag-Filter, dynamische Projektseiten und ein sauberer Go-Live Workflow über Cloudflare Pages.",
     "image": "assets/images/projects/4don-portfolio.png",
     "tags": [
       "Portfolio",
@@ -11,7 +11,7 @@
       "Vanilla JS",
       "Cloudflare Pages",
       "GitHub",
-      "SPA Back-Navigation"
+      "Content Model v1.9"
     ],
     "github": "https://github.com/e4don/4don-portfolio",
     "visibility": "public",
@@ -19,8 +19,8 @@
   },
   "meta": {
     "title": "4don Portfolio",
-    "subtitle": "Eine Projektplattform, die Entwicklung sichtbar macht",
-    "description": "4don Portfolio — minimalistische Projektplattform mit dynamischer Projektübersicht (JSON → UI), i18n, Search/Filter, SPA-like Back-Navigation und sauberem Go-Live Setup via Cloudflare Pages.",
+    "subtitle": "Eine dokumentierte Reise von Idee → Struktur → skalierbare Projektplattform",
+    "description": "Minimalistische Projektplattform mit Single-Source-Content (JSON → UI), sauberem i18n, Generator für Listings, dynamischen Detailseiten und einem reproduzierbaren Go-Live Workflow über Cloudflare Pages.",
     "date": "2026-02-05",
     "tags": ["portfolio", "4don", "architecture", "v1.9"],
     "status": "active",
@@ -37,72 +37,230 @@
     }
   },
   "sections": [
-    {
-      "type": "section",
-      "id": "story",
-      "title": "Story",
-      "collapsible": true,
-      "defaultOpen": true,
-      "chapters": [
-        {
-          "type": "text",
-          "id": "motivation",
-          "title": "Motivation",
-          "body": [
-            "Das 4don Portfolio entstand aus dem Wunsch heraus, eigene Projekte nicht nur zu präsentieren, sondern deren Entstehung nachvollziehbar zu dokumentieren.",
-            "Der Fokus liegt bewusst auf Motivation, Lernprozess, Entscheidungen und Iterationen – nicht nur auf dem Endergebnis."
-          ]
-        },
-        {
-          "type": "text",
-          "id": "problem",
-          "title": "Problemstellung",
-          "body": [
-            "Klassische Portfolios zeigen Ergebnisse, skalieren aber schlecht, sobald viele Projekte entstehen.",
-            "Texte, Übersetzungen und Struktur werden schnell unübersichtlich und schwer wartbar."
-          ]
-        }
-      ]
-    },
-    {
-      "type": "section",
-      "id": "how-to",
-      "title": "How-To",
-      "collapsible": true,
-      "defaultOpen": false,
-      "chapters": [
-        {
-          "type": "steps",
-          "id": "architecture",
-          "title": "Grundarchitektur",
-          "steps": [
-            { "label": "Step 1", "text": "Trennung von Layout (HTML/CSS) und Content (JSON)" },
-            { "label": "Step 2", "text": "Zentrale Projektübersicht über JSON" },
-            {
-              "label": "Step 3",
-              "text": "Dynamische Projekt-Detailseiten über einen gemeinsamen Renderer"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "type": "section",
-      "id": "deep-dive",
-      "title": "Deep Dive & Profi-Details",
-      "collapsible": true,
-      "defaultOpen": false,
-      "chapters": [
-        {
-          "type": "text",
-          "id": "i18n",
-          "title": "Internationalisierung",
-          "body": [
-            "Alle Inhalte sind sprachabhängig organisiert und werden dynamisch geladen.",
-            "Globale UI-Texte laufen über i18n, Projektinhalte ausschließlich über Content-Dateien."
-          ]
-        }
-      ]
-    }
-  ]
+  {
+    "type": "section",
+    "id": "overview",
+    "title": "Überblick",
+    "navTitle": "0. Überblick",
+    "collapsible": true,
+    "defaultOpen": true,
+    "chapters": [
+      {
+        "type": "list",
+        "id": "highlights",
+        "navTitle": "0.1 Highlights",
+        "title": "Highlights",
+        "items": [
+          "Single Source of Truth: content/{lang}/projects/<slug>.json",
+          "Generator: tools/generate-project-cards.mjs → projects.cards.json",
+          "Dynamische Detailseite: projects/project.html?slug=<slug>",
+          "Sauberes i18n: UI-Texte getrennt von Projekt-Content",
+          "Search + Tag-Filter + Sortierung + pinned/visibility",
+          "Cloudflare Pages Deployment über GitHub (dev → PR → main)"
+        ]
+      },
+      {
+        "type": "text",
+        "id": "goal",
+        "navTitle": "0.2 Ziel",
+        "title": "Ziel",
+        "body": [
+          "4don.com ist kein Schaufenster, sondern ein wachsendes Projektarchiv: Motivation, Entscheidungen, Stolpersteine, Lösungen.",
+          "Technisch soll die Plattform skalieren, ohne Copy/Paste-Chaos — Inhalte sind klar modelliert und lassen sich in DE/EN sauber pflegen."
+        ]
+      },
+      {
+        "type": "checklist",
+        "id": "scope",
+        "navTitle": "0.3 Scope",
+        "title": "Scope (v1.9 Content Phase)",
+        "items": [
+          { "text": "Story (Kapitel 1–8) finalisieren", "done": false },
+          { "text": "How-To Kapitel ergänzen (Phase 2)", "done": false },
+          { "text": "Deep Dive / Profi-Details ergänzen (Phase 3)", "done": false },
+          { "text": "Generator laufen lassen & Listing/Detail testen", "done": false }
+        ]
+      }
+    ]
+  },
+
+  {
+    "type": "section",
+    "id": "story",
+    "title": "Geschichte",
+    "navTitle": "1. Geschichte",
+    "collapsible": true,
+    "defaultOpen": true,
+    "chapters": [
+      {
+        "type": "text",
+        "id": "why",
+        "navTitle": "1.1 Warum",
+        "title": "Warum ich 4don.com gebaut habe",
+        "body": [
+          "Ich habe schon immer gerne an privaten Technik- und Softwareprojekten gearbeitet. Nicht, um etwas „vorzuzeigen“, sondern aus Neugier: Dinge verstehen, ausprobieren, zum Laufen bringen — der Weg ist das Ziel.",
+          "Mein erstes größeres Projekt in diese Richtung entstand 2011/2012 mit meinem ersten Raspberry Pi Model B. Damals habe ich darauf einen selbst gehosteten Apache-Server betrieben und mir eine einfache WordPress-Website gebaut. Schon zu dieser Zeit lief das Ganze unter der Domain 4don.com, registriert bei United Domains.",
+          "Das Setup war rückblickend alles andere als komfortabel: kein Managed Hosting, keine Automatisierung, kein Git — viel Trial & Error. Aber genau dadurch habe ich mir vieles mühsam selbst erarbeitet.",
+          "Mit der Zeit fehlte mir jedoch schlicht die Zeit, das Projekt weiterzuführen. Der Raspberry Pi wurde irgendwann für ein Kodi-Setup umfunktioniert — und die Website verschwand.",
+          "Der Wendepunkt kam durch neue Motivation und neue Projekte: Durch KI-gestützte Unterstützung habe ich wieder richtig Lust bekommen, eigene Projekte anzugehen — und sie auch sauber umzusetzen. In diesem Zuge sind unter anderem entstanden: RMV Morning Display auf einem Raspberry Pi Zero 2 W sowie Pi-hole (ironischerweise wieder auf meinem allerersten Raspberry Pi, der früher den Apache-Server betrieben hat).",
+          "Ich habe gemerkt: Ich lerne schneller, ich verstehe Zusammenhänge besser, ich bleibe dran statt frustriert aufzugeben. Und genau dabei hast du mich intensiv unterstützt — nicht mit fertigen Lösungen, sondern beim Verstehen, Analysieren und Aufräumen meiner Ideen.",
+          "Das Ziel von 4don.com heute ist klar: keine lose Spielwiese, keine einzelne Datei hier und da — sondern eine strukturierte, moderne Website. Nicht nur Projekte zeigen, sondern Erfahrungen teilen, Stolpersteine offen benennen, Lösungswege nachvollziehbar erklären und mich gleichzeitig als Person vorstellen, die gerne lernt, ausprobiert und Dinge zu Ende bringt.",
+          "4don.com ist damit kein perfektes Endprodukt, sondern ein wachsendes Projektarchiv. Viele Tutorials zeigen nur das Ergebnis — was oft fehlt, ist der Weg dorthin inklusive Fehlern, Umwegen und Aha-Momenten. Genau das möchte ich hier anders machen."
+        ]
+      },
+
+      {
+        "type": "text",
+        "id": "vscode",
+        "navTitle": "1.2 VS Code",
+        "title": "Von Notepad++ zu VS Code",
+        "body": [
+          "Bevor ich mit 4don.com angefangen habe, habe ich meine privaten Projekte fast ausschließlich mit Notepad++ umgesetzt. Mein Arbeitsmodell war sehr datei- und ordnerbezogen: Datei öffnen, etwas ändern, speichern, fertig.",
+          "Das hat für einzelne HTML- oder PHP-Dateien lange gut funktioniert. Sobald ein Projekt aber größer wurde — mit mehreren Ordnern, CSS-Dateien, JavaScript und Assets — wurde es schnell unübersichtlich.",
+          "Rückblickend war mein größtes Problem nicht das Tool selbst, sondern das fehlende Projektdenken: kein Gesamtüberblick über die Struktur, keine direkte Verbindung zwischen Dateien, keine Historie, keine klare Trennung zwischen „ich probiere etwas“ und „das ist stabil“.",
+          "Der Wechsel zu Visual Studio Code war für mich kein sofortiges Aha-Erlebnis. Plötzlich gab es Explorer, Tabs, Statusleisten, Warnungen, Vorschläge, ein integriertes Terminal und Git-Hinweise überall. Und vor allem: VS Code wollte nicht, dass ich eine Datei öffne — sondern einen kompletten Projektordner.",
+          "Der entscheidende Gedanke war: Ich arbeite nicht mehr an einzelnen Dateien — ich arbeite an einem Projektzustand. Sobald ich den kompletten 4don-Ordner geöffnet hatte, ergab die Struktur plötzlich Sinn: Pfade wurden verständlich, Änderungen waren im Kontext sichtbar, Abhängigkeiten wurden greifbar.",
+          "Ich habe bewusst nicht versucht, VS Code „perfekt“ einzurichten. Stattdessen nur das ergänzt, was mir konkret geholfen hat: Live Server, Prettier, HTML/CSS IntelliSense und erste Git-Unterstützung.",
+          "Die größte Hürde war die Konsole und das abstrakte Denken von Git. Der Durchbruch kam, als ich verstanden habe, dass die PowerShell direkt im Projektkontext läuft und ich mich nicht mehr „verlaufen“ kann. Ich habe aufgehört, Dateien zu ändern — ich habe angefangen, Zustände zu verändern.",
+          "Mit der Anbindung an GitHub wurde mir klar, was ich geändert habe, wann ich es geändert habe und warum. Fehler waren nicht mehr schlimm, weil nichts „verloren“ war und ich immer einen vorherigen Stand hatte."
+        ]
+      },
+
+      {
+        "type": "text",
+        "id": "domain",
+        "navTitle": "1.3 Domain",
+        "title": "Von der Domain zur Website (United Domains, Cloudflare & Altlasten)",
+        "body": [
+          "Nachdem klar war, dass ich 4don.com wiederbeleben möchte, stand zuerst die Frage im Raum: Wie bringe ich Domain, Hosting und Website sauber zusammen — ohne wieder bei Null anzufangen?",
+          "Die Domain 4don.com existierte bereits seit Jahren und war weiterhin bei United Domains registriert. Die Domain war vorhanden, aber: sie war nicht aktiv genutzt, DNS-Einträge hatten sich über die Jahre angesammelt, und es gab keine klare Dokumentation mehr, wofür was gedacht war — ein klassisches „das lief mal“-Szenario.",
+          "Ich habe mich relativ schnell für Cloudflare entschieden, weil ich HTTPS ohne Zusatzaufwand wollte, sauberes Caching suchte, GitHub Pages/Deployments anbinden wollte und DNS, Security sowie Performance zentral verwalten wollte. Cloudflare sollte nicht nur CDN sein, sondern die zentrale Schaltstelle.",
+          "Der erste Schritt war der Nameserver-Umzug: Domain bleibt bei United Domains, DNS-Verwaltung wandert komplett zu Cloudflare. Technisch simpel, mental ein kleiner Schritt: „Jetzt liegt die Kontrolle nicht mehr beim Domainanbieter, sondern bei mir.“",
+          "Die erste echte Hürde waren alte DNS-Einträge und vergessene Verknüpfungen. In Cloudflare tauchten Einträge auf, die nicht mehr zur neuen Website passten — unter anderem ein bestehender cloudflared-Tunnel (früher für Home Assistant). Technisch korrekt, aber für 4don.com im Weg: Subdomains waren belegt, Requests liefen nicht dorthin, wo ich sie erwartete, und Fehlverhalten wirkte „zufällig“.",
+          "Eine wichtige Erkenntnis an dieser Stelle: Cloudflare vergisst nichts. Alles, was einmal konfiguriert wurde, bleibt aktiv, beeinflusst Routing und greift ineinander. Erst nachdem klar war, dass der cloudflared-Link nichts mehr mit der Website zu tun hatte und der Remote-Zugriff anderweitig gelöst ist, konnte ich die Verknüpfung sauber entfernen. Danach war das Domain-Verhalten endlich reproduzierbar.",
+          "Bevor überhaupt eine Website live ging, war mir wichtig: keine Quick-Fixes, keine halbgaren Weiterleitungen. Die Vorbereitung bestand aus klaren Records, sauberem www→apex, und einer eindeutigen Zuordnung: Diese Domain zeigt nur auf dieses Projekt.",
+          "Rückblickend hat dieser Abschnitt viel Zeit gekostet — nicht wegen der Technik, sondern wegen der Denkweise: „Was gehört noch zu dieser Domain?“, „Was ist historisch gewachsen?“, „Was brauche ich wirklich — und was kann weg?“"
+        ]
+      },
+
+      {
+        "type": "text",
+        "id": "github",
+        "navTitle": "1.4 GitHub",
+        "title": "GitHub als Grundlage (Repo, Branches, Workflow)",
+        "body": [
+          "Nachdem Domain und Cloudflare als Basis standen, brauchte ich als Nächstes eine saubere, nachvollziehbare Grundlage für Änderungen — mit Historie, Kontrolle und einem klaren Workflow. Ich wollte nicht mehr „einfach Dateien hochladen“ oder live herumprobieren.",
+          "GitHub war für mich am Anfang weniger „ein Tool“ als ein neues Denken: früher „Ich habe einen Ordner mit Dateien“, heute „Ich habe Versionen dieses Ordners“. Plötzlich ging es nicht nur um was ich ändere, sondern auch um wann, warum und wie ich im Zweifel zurückkomme.",
+          "Ich habe 4don.com als eigenes Repository aufgebaut, um alle Dateien zentral zu haben, Entwicklung nachvollziehbar zu machen und später automatisiert deployen zu können. Allein das Repo hat Struktur erzwungen: klarere Ordner, weniger lose Dateien, mehr „hier gehört das hin“.",
+          "Sehr schnell kam die Erkenntnis: Wenn ich direkt auf main arbeite, ist jeder Fehler potentiell sofort live. Das fühlte sich zuerst bequem an, ist aber ein Risiko — besonders wenn man Git und Deployments noch lernt.",
+          "Branches wurden mein Sicherheitsnetz: dev = Arbeitsbereich, Änderungen testen, umbauen; main = stabiler Stand. Das ist kein Enterprise-Prozess, sondern Selbstschutz. Dadurch konnte ich mutiger refactoren, Fehler als Lernschritt sehen und Änderungen kontrolliert Schritt für Schritt machen.",
+          "Ein weiterer Lerneffekt: kleine, verständliche Commits sind extrem wertvoll. Lieber 5 kleine Schritte als 1 riesiger „alles neu“-Commit — weil ich später schneller Fehler finde und besser verstehe, warum ich etwas geändert habe."
+        ]
+      },
+
+      {
+        "type": "text",
+        "id": "pages",
+        "navTitle": "1.5 Pages",
+        "title": "Cloudflare Pages: Lokal lief alles, online plötzlich nicht",
+        "body": [
+          "Nachdem GitHub als Grundlage stand, war der nächste Schritt klar: Die Website soll automatisch aus GitHub heraus online gehen. Keine manuellen Uploads mehr, kein „Welche Datei liegt gerade wo?“ — sondern Repository → Deployment → fertige Seite. Dafür habe ich Cloudflare Pages gewählt.",
+          "Lokal lief alles problemlos: Struktur logisch, Styles und Assets korrekt geladen, Änderungen sofort sichtbar. Es gab keinen offensichtlichen Grund, warum das online anders sein sollte.",
+          "Nach dem ersten Deployment kam die Irritation: Die Seite lud, aber nicht korrekt. Styles fehlten teilweise, Bilder tauchten nicht auf, Navigation verhielt sich anders — und es war nicht konsistent. Manches funktionierte, manches nicht. Reload half manchmal, manchmal nicht.",
+          "Mein erster Reflex war der klassische Denkfehler: „Der Code ist schuld.“ Pfade prüfen, CSS checken, HTML mehrfach durchgehen. Lokal war ja alles korrekt.",
+          "Was mir zu diesem Zeitpunkt noch nicht klar war: lokal gibt es keinen Cache, keine Weiterleitungen, keine DNS-Ebene und keine CDN-Logik. Cloudflare Pages bringt all das automatisch mit — Stärke und Stolperfalle zugleich.",
+          "Besonders irritierend waren Cache-Effekte: Änderungen waren deployed, aber im Browser nicht sichtbar oder nur teilweise. Hard Reloads, Browserwechsel, Zweifel am Push — dabei war die Seite längst aktualisiert, nur nicht so, wie ich es erwartete.",
+          "Der mentale Shift war entscheidend: Wenn lokal alles sauber läuft, liegt das Problem oft nicht im Code, sondern im Weg dorthin — Deployment, Pfadauflösung, Redirects, Caching, Domain-Zuordnung.",
+          "Cloudflare Pages war nicht die Ursache, sondern ein Verstärker: Es macht genau das, wofür es gedacht ist — schnell ausliefern und aggressiv cachen. Ich habe angefangen, systemisch zu denken: nicht nur „Warum lädt diese Datei nicht?“, sondern „Über welchen Weg kommt sie überhaupt hier an?“"
+        ]
+      },
+
+      {
+        "type": "text",
+        "id": "template",
+        "navTitle": "1.6 Template",
+        "title": "Die erste echte Seite: Von eigener Umsetzung zur HTML5-UP-Vorlage",
+        "body": [
+          "Nachdem Cloudflare Pages lief (wenn auch nicht immer so, wie ich es erwartete), stand ich vor der Frage: Wie soll die Website aussehen — und wie viel will ich selbst bauen?",
+          "Die erste funktionierende Version in diesem Setup ist vollständig zusammen mit dir entstanden: Struktur, HTML, CSS, erste Logik, erste Entscheidungen. Ich habe beschrieben, was ich mir vorstelle, und wir haben den Code Schritt für Schritt gemeinsam entwickelt. Das war wertvoll, weil ich jeden Teil verstanden habe und nichts „magisch“ passiert ist.",
+          "Mit der Zeit wurden aber die Grenzen sichtbar: Design kostet Zeit, Konsistenz kostet noch mehr, responsive Layouts sind kein Nebenbei-Thema, Kleinigkeiten summieren sich. Ich hätte weiterbauen können, aber es wäre gestalterisch inkonsistent geworden und hätte den Fokus verschoben.",
+          "Der Perspektivwechsel war: Ich will Projekte zeigen — nicht Webdesign neu erfinden. Ich wollte eine saubere, moderne Basis, stimmiges Design und trotzdem volle Kontrolle über den Code. Nicht als CMS, nicht als Baukasten, sondern als solides Fundament.",
+          "Die Entscheidung für eine HTML5-UP-Vorlage war bewusst und ohne schlechtes Gewissen: sauberes HTML, klares CSS, nachvollziehbare Struktur, kein Framework-Overkill — eine Vorlage, die man verstehen und anpassen kann.",
+          "Vorlage heißt nicht: Kontrolle abgeben. Sie war Startpunkt, Orientierung und Design-Rahmen. Struktur, Inhalte, Logik, Projekte und Refactoring blieben komplett in meiner Hand. Und genau hier hat sich der vorherige Lernweg (VS Code, Git, Projektdenken, Cloudflare-Verständnis) bezahlt gemacht."
+        ]
+      },
+
+      {
+        "type": "text",
+        "id": "platform",
+        "navTitle": "1.7 Plattform",
+        "title": "Vom Prototyp zur Projektplattform",
+        "body": [
+          "Mit der Vorlage als Basis hat sich mein Blick auf 4don.com erneut verändert. Bis dahin war vieles noch Prototyp: Technik ausprobieren, Setup verstehen, Dinge zum Laufen bringen. Jetzt ging es um die eigentliche Frage: Was soll diese Website langfristig sein?",
+          "Mir wurde klar: 4don.com soll keine klassische Landingpage sein und auch kein Blog im klassischen Sinn. Sondern eine Sammlung echter Projekte mit Kontext, Motivation und Lernweg — technisch nachvollziehbar, persönlich aber nicht privat. Eine Projektplattform.",
+          "Damit das funktioniert, brauchte es Struktur — nicht nur im Code, sondern im Kopf. Projekte sollten eigenständige Einheiten werden, mit eigener Detailseite, aber eingebettet in eine gemeinsame Logik. Die Website bekam wiederkehrende Muster und eine klare Richtung.",
+          "Mit den ersten Projekten trat das Design in den Hintergrund — nicht weil es egal wurde, sondern weil es getragen hat. Der Fokus lag auf verständlichen Beschreibungen, sauberem Aufbau und nachvollziehbaren Entscheidungen.",
+          "Durch echte Nutzung fielen Inkonsistenzen stärker auf: Wiederholungen, Copy/Paste, kleine Designentscheidungen, die plötzlich groß wirken. Das waren keine Fehler, sondern Hinweise darauf, dass das Projekt wächst.",
+          "Es gab keinen einzelnen Aha-Moment, eher ein Gefühl: Die Seite war nicht mehr fragil, Änderungen fühlten sich kontrolliert an, neue Ideen hatten Platz. 4don.com war technisch stabil, inhaltlich offen und bereit weiter zu wachsen."
+        ]
+      },
+
+      {
+        "type": "text",
+        "id": "learnings",
+        "navTitle": "1.8 Learnings",
+        "title": "Was ich gelernt habe (und warum 4don.com nie „fertig“ ist)",
+        "body": [
+          "Am Ende dieser Reise steht kein fertiges Produkt — und genau das ist der Punkt. 4don.com ist nicht entstanden, um „fertig“ zu sein, sondern um zu wachsen: technisch, inhaltlich und persönlich.",
+          "Eine der wichtigsten Erkenntnisse: Technik ist selten das eigentliche Problem. Viele Probleme entstehen durch Annahmen — DNS, Caching, lokale vs. produktive Umgebung, Tooling, Struktur. Oft hat der Code genau das gemacht, was er sollte — ich hatte nur etwas anderes erwartet. Das hat meine Herangehensweise verändert: weniger hektisches Debugging, mehr systemisches Denken, mehr „erst verstehen, dann ändern“.",
+          "Werkzeuge verändern Denkweisen: Der Umstieg auf VS Code, Git und projektbasiertes Arbeiten hat nicht nur meinen Workflow verändert, sondern mein Mindset. Ich arbeite nicht mehr an Dateien, sondern an Zuständen, Versionen und nachvollziehbaren Schritten.",
+          "KI war für mich ein Lernverstärker, keine Abkürzung: Sparringspartner, Erklärer, Strukturhilfe. Ich habe nicht weniger gelernt — sondern anders gelernt: schneller, fokussierter, mit weniger Frust.",
+          "Warum ich öffentlich dokumentiere: Viele Projekte sind früher irgendwann verschwunden — Festplattenwechsel, Zeitmangel, kein klarer Rahmen. Mit 4don.com wollte ich das bewusst anders machen. Nicht, um perfekt zu wirken, sondern um den Lernweg festzuhalten, Entscheidungen erklärbar zu machen und Stolpersteine sichtbar zu lassen.",
+          "Ausblick: Die Story steht — jetzt folgt Phase 2: detaillierte Schritt-für-Schritt-Anleitungen genau dort, wo ich gestolpert bin. Damit aus der Geschichte echte Hilfe und reproduzierbare Lösungen werden.",
+          "4don.com ist kein Schaufenster. Es ist ein Arbeitsbuch. Und genau so soll es bleiben."
+        ]
+      }
+    ]
+  },
+
+  {
+    "type": "section",
+    "id": "howto",
+    "title": "How-To",
+    "navTitle": "2. How-To",
+    "collapsible": true,
+    "defaultOpen": false,
+    "chapters": [
+      {
+        "type": "text",
+        "id": "placeholder",
+        "navTitle": "2.1 Coming next",
+        "title": "Coming next",
+        "body": [
+          "Dieses Kapitel befüllen wir als Nächstes: Schritt-für-Schritt-Anleitungen zu Setup, Workflow, Content-Model und Deployment."
+        ]
+      }
+    ]
+  },
+
+  {
+    "type": "section",
+    "id": "deepdive",
+    "title": "Deep Dive",
+    "navTitle": "3. Deep Dive",
+    "collapsible": true,
+    "defaultOpen": false,
+    "chapters": [
+      {
+        "type": "text",
+        "id": "placeholder",
+        "navTitle": "3.1 Coming later",
+        "title": "Coming later",
+        "body": [
+          "Hier kommen Profi-Details rein: Best Practices, Stolpersteine, Cloudflare Pages Besonderheiten, Cache/Redirects, i18n-Design und technische Entscheidungen im Detail."
+        ]
+      }
+    ]
+  }
+]
 }

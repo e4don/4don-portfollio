@@ -14,6 +14,14 @@
 
    Content:
    - ../content/<lang>/projects/<slug>.json
+
+   TOC (Feinschliff):
+   - Desktop: sticky TOC left (sidebar)
+   - Mobile: Massively-style panel (same system as navPanel):
+       uses jQuery.fn.panel from HTML5 UP template
+       visibleClass: body.is-tocPanel-visible
+       toggle button: #tocPanelToggle (bottom-right)
+       panel: #tocPanel (right side, with X close)
    ========================================================= */
 
 (function () {
@@ -130,54 +138,60 @@
   }
 
   // -----------------------------
-  // 6) TOC
+  // 6) TOC builder
   // -----------------------------
-  function buildTocHtml(sections) {
+  function buildTocHtml(sections, options = {}) {
+    const includeChapters = options.includeChapters !== false;
+
     const items = sections
       .filter((s) => s && s.type === 'section')
       .map((sec) => {
         const sectionId = sec.id ? String(sec.id).trim() : '';
-        const sectionTitle = esc(sec.title || '');
+        // Use navTitle for TOC if available, fallback to title
+        const sectionTitle = esc(sec.navTitle || sec.title || '');
         const chapters = Array.isArray(sec.chapters) ? sec.chapters : [];
 
-        const chapterLinks = chapters
-          .filter((ch) => ch && ch.id)
-          .map((ch) => {
-            const chapterId = String(ch.id).trim();
-            const fullId = sectionId ? `${sectionId}-${chapterId}` : chapterId;
-            const chapterTitle = esc(ch.title || fullId);
-            return `<li><a href="#${esc(fullId)}">${chapterTitle}</a></li>`;
-          })
-          .join('');
+        // Only include chapter links if enabled (desktop)
+        const chapterLinks = includeChapters
+          ? chapters
+              .filter((ch) => ch && ch.id)
+              .map((ch) => {
+                const chapterId = String(ch.id).trim();
+                const fullId = sectionId ? `${sectionId}-${chapterId}` : chapterId;
+                // Use navTitle for TOC if available, fallback to title
+                const chapterTitle = esc(ch.navTitle || ch.title || fullId);
+                return `<li><a href="#${esc(fullId)}">${chapterTitle}</a></li>`;
+              })
+              .join('')
+          : '';
 
         return `
-          <li class="project-toc__section">
-            ${
-              sectionId
-                ? `<a href="#${esc(sectionId)}">${sectionTitle}</a>`
-                : `<span>${sectionTitle}</span>`
-            }
-            ${chapterLinks ? `<ul class="project-toc__chapters">${chapterLinks}</ul>` : ''}
-          </li>
-        `;
+        <li class="project-toc__section">
+          ${
+            sectionId
+              ? `<a href="#${esc(sectionId)}">${sectionTitle}</a>`
+              : `<span>${sectionTitle}</span>`
+          }
+          ${chapterLinks ? `<ul class="project-toc__chapters">${chapterLinks}</ul>` : ''}
+        </li>
+      `;
       })
       .join('');
 
     if (!items) return '';
 
-    // v1.9 i18n key: projects.detail.tocTitle
     const tocTitle = esc(t('projects.detail.tocTitle', 'Contents'));
 
     return `
-      <nav class="project-toc" aria-label="Table of contents">
-        <h2 class="project-toc__title">${tocTitle}</h2>
-        <ul class="project-toc__list">${items}</ul>
-      </nav>
-    `;
+    <nav class="project-toc" id="projectTocNav" aria-label="Table of contents">
+      <h2 class="project-toc__title">${tocTitle}</h2>
+      <ul class="project-toc__list">${items}</ul>
+    </nav>
+  `;
   }
 
   // -----------------------------
-  // 7) Renderer (sections -> section -> chapters)
+  // 7) Renderer (sections -> chapters)
   // -----------------------------
   function renderV19Sections(sections) {
     const root = document.getElementById('project-body');
@@ -206,6 +220,7 @@
           </div>
         `;
 
+        // Collapsible section -> <details>
         if (collapsible) {
           return `
             <details class="project-section" ${defaultOpen ? 'open' : ''} ${
@@ -217,6 +232,7 @@
           `;
         }
 
+        // Non-collapsible section -> <section>
         return `
           <section class="project-section" ${
             sectionId ? `id="${esc(sectionId)}" data-section-id="${esc(sectionId)}"` : ''
@@ -228,12 +244,43 @@
       })
       .join('');
 
-    const tocHtml = buildTocHtml(sections);
-    root.innerHTML = (tocHtml ? tocHtml : '') + bodyHtml;
+    // Desktop: with chapter links
+    const tocDesktop = buildTocHtml(sections, { includeChapters: true });
 
+    // Mobile panel: ONLY sections (no chapter links)
+    const tocMobile = buildTocHtml(sections, { includeChapters: true });
+
+    // Render layout:
+    // - Desktop: sticky sidebar with TOC
+    // - Content: right side
+    root.innerHTML = `
+      <div class="project-layout">
+        <aside class="project-toc-wrap">
+          ${tocDesktop || ''}
+        </aside>
+
+        <div class="project-content">
+          ${bodyHtml}
+        </div>
+      </div>
+    `;
+
+    // Deep-link behavior (open details + scroll)
     openAndScrollToHash();
+
+    // Active highlight in TOC
+    setupTocActiveTracking();
+
+    // Mobile: Massively panel integration (same style as menu)
+    setupTocPanel(tocMobile);
+
+    // Smooth scroll for all TOC links (desktop + mobile)
+    setupTocLinkScrolling();
   }
 
+  // -----------------------------
+  // 7.1) Render chapter by type
+  // -----------------------------
   function renderChapter(ch, sectionId) {
     if (!ch || !ch.type) return '';
 
@@ -293,25 +340,196 @@
     `;
   }
 
-  // Deep-link handling:
-  // - If hash points into a <details>, open it
-  // - Then scroll smoothly to the target
+// -----------------------------
+// 7.2) Mobile TOC: Massively panel integration
+// -----------------------------
+function setupTocPanel(tocHtml) {
+  if (!tocHtml) return;
+
+  // Remove older mounts (important on language switch re-render)
+  document.getElementById('tocPanelToggle')?.remove();
+  document.getElementById('tocPanel')?.remove();
+
+  const label = esc(t('projects.detail.tocTitle', 'Contents'));
+  const closeLabel = esc(t('projects.detail.close', 'Close'));
+
+  // 1) Create toggle (append to BODY like Massively)
+  const toggle = document.createElement('a');
+  toggle.href = '#tocPanel';
+  toggle.id = 'tocPanelToggle';
+  toggle.className = 'alt';
+  toggle.textContent = label;
+  document.body.appendChild(toggle);
+
+  // 2) Create panel (append to BODY)
+  const panel = document.createElement('div');
+  panel.id = 'tocPanel';
+  panel.innerHTML = `
+    ${tocHtml}
+    <a href="#tocPanel" class="close" aria-label="${closeLabel}"></a>
+  `;
+  document.body.appendChild(panel);
+
+  // 3) Manual open/close (guaranteed to work with your CSS)
+  const OPEN_CLASS = 'is-tocPanel-visible';
+
+  function openPanel(e) {
+    e?.preventDefault?.();
+    // If menu panel is open, close it (avoid overlap)
+    document.body.classList.remove('is-navPanel-visible');
+    document.body.classList.add(OPEN_CLASS);
+  }
+
+  function closePanel(e) {
+    e?.preventDefault?.();
+    document.body.classList.remove(OPEN_CLASS);
+  }
+
+  toggle.addEventListener('click', openPanel);
+  panel.querySelector('.close')?.addEventListener('click', closePanel);
+
+  // Close on any TOC link click (nice UX)
+  panel.querySelectorAll('a[href^="#"]').forEach((a) => {
+    a.addEventListener('click', () => document.body.classList.remove(OPEN_CLASS));
+  });
+
+  // Close on ESC
+  window.addEventListener('keydown', (ev) => {
+    if (ev.key === 'Escape') document.body.classList.remove(OPEN_CLASS);
+  });
+
+  // 4) If Massively panel plugin exists, enhance (optional)
+  if (window.jQuery?.fn?.panel) {
+    window.jQuery('#tocPanel').panel({
+      delay: 500,
+      hideOnClick: true,
+      hideOnSwipe: true,
+      resetScroll: true,
+      resetForms: true,
+      side: 'right',
+      target: window.jQuery('body'),
+      visibleClass: OPEN_CLASS
+    });
+  }
+}
+
+  // -----------------------------
+  // 7.3) Active section highlight (works for sidebar + mobile panel)
+  // -----------------------------
+  function setupTocActiveTracking() {
+    const sectionTargets = Array.from(
+      document.querySelectorAll('.project-section[id], details.project-section[id]')
+    );
+    if (!sectionTargets.length) return;
+
+    const obs = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+
+        if (!visible) return;
+
+        const id = visible.target.id;
+
+        // Clear active state in ALL TOCs (sidebar + panel)
+        document
+          .querySelectorAll('.project-toc a.is-active')
+          .forEach((a) => a.classList.remove('is-active'));
+
+        // Mark active for matching anchors (sidebar + panel)
+        document
+          .querySelectorAll(`.project-toc a[href="#${CSS.escape(id)}"]`)
+          .forEach((a) => a.classList.add('is-active'));
+      },
+      { rootMargin: '-20% 0px -65% 0px', threshold: [0.15, 0.25, 0.5] }
+    );
+
+    sectionTargets.forEach((s) => obs.observe(s));
+
+    // initial hash
+    const hash = (window.location.hash || '').replace('#', '').trim();
+    if (hash) {
+      document
+        .querySelectorAll(`.project-toc a[href="#${CSS.escape(hash)}"]`)
+        .forEach((a) => a.classList.add('is-active'));
+    }
+  }
+
+  // -----------------------------
+  // 7.4 + 7.5) Deep-link handling + smooth scroll with offset
+  // - Opens <details> before scrolling
+  // - Prevents wrong anchor jumps
+  // - Works for reload, hashchange and TOC clicks
+  // -----------------------------
+
+  function getScrollOffset() {
+    const fallback = 24;
+
+    const header = document.querySelector('#header');
+    if (header) {
+      const style = getComputedStyle(header);
+      if (style.position === 'fixed' || style.position === 'sticky') {
+        return Math.ceil(header.getBoundingClientRect().height) + 16;
+      }
+    }
+
+    return fallback;
+  }
+
+  function scrollToId(id) {
+    const el = document.getElementById(id);
+    if (!el) return;
+
+    // Open parent <details> BEFORE measuring
+    const details = el.closest('details');
+    if (details) details.open = true;
+
+    // Wait one frame so layout recalculates
+    requestAnimationFrame(() => {
+      const offset = getScrollOffset();
+      const y = window.scrollY + el.getBoundingClientRect().top - offset;
+
+      window.scrollTo({
+        top: Math.max(0, y),
+        behavior: 'smooth',
+      });
+    });
+  }
+
+  // Handle hash (reload or manual hash change)
   function openAndScrollToHash() {
     const hash = (window.location.hash || '').replace('#', '').trim();
     if (!hash) return;
 
-    const el = document.getElementById(hash);
-    if (!el) return;
-
-    const details = el.closest('details');
-    if (details) details.open = true;
-
-    setTimeout(() => {
-      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }, 50);
+    scrollToId(hash);
   }
 
-  window.addEventListener('hashchange', () => openAndScrollToHash());
+  // Re-run when hash changes (back/forward etc.)
+  window.addEventListener('hashchange', openAndScrollToHash);
+
+  // Intercept TOC links (sidebar + mobile panel)
+  function setupTocLinkScrolling() {
+    document.querySelectorAll('.project-toc a[href^="#"]').forEach((a) => {
+      a.addEventListener('click', (e) => {
+        const href = a.getAttribute('href') || '';
+        const id = href.replace('#', '').trim();
+        if (!id) return;
+
+        // Stop native jump (this causes wrong positioning)
+        e.preventDefault();
+
+        // Update URL hash manually
+        history.pushState(null, '', `#${id}`);
+
+        // Close mobile TOC panel if open
+        document.body.classList.remove('is-tocPanel-visible');
+
+        // Controlled scroll
+        scrollToId(id);
+      });
+    });
+  }
 
   // -----------------------------
   // 8) Render top UI (v1.9 clean)

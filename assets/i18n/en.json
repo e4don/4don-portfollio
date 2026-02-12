@@ -26,6 +26,7 @@
     },
     "detail": {
       "tocTitle": "Contents",
+      "close": "Close",
       "kicker": "Project",
       "back": "Back",
       "backToProjects": "Back to Projects",
