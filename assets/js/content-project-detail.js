@@ -340,119 +340,182 @@
     `;
   }
 
-// -----------------------------
-// 7.2) Mobile TOC: Massively panel integration
-// -----------------------------
-function setupTocPanel(tocHtml) {
-  if (!tocHtml) return;
+  // -----------------------------
+  // 7.2) Mobile TOC: Massively panel integration
+  // -----------------------------
+  function setupTocPanel(tocHtml) {
+    if (!tocHtml) return;
 
-  // Remove older mounts (important on language switch re-render)
-  document.getElementById('tocPanelToggle')?.remove();
-  document.getElementById('tocPanel')?.remove();
+    // Remove older mounts (important on language switch re-render)
+    document.getElementById('tocPanelToggle')?.remove();
+    document.getElementById('tocPanel')?.remove();
 
-  const label = esc(t('projects.detail.tocTitle', 'Contents'));
-  const closeLabel = esc(t('projects.detail.close', 'Close'));
+    const label = esc(t('projects.detail.tocTitle', 'Contents'));
+    // Accessibility label for the icon-only close button (no i18n key needed)
+    const closeLabel = 'Close';
 
-  // 1) Create toggle (append to BODY like Massively)
-  const toggle = document.createElement('a');
-  toggle.href = '#tocPanel';
-  toggle.id = 'tocPanelToggle';
-  toggle.className = 'alt';
-  toggle.textContent = label;
-  document.body.appendChild(toggle);
+    // 1) Create toggle (append to BODY like Massively)
+    const toggle = document.createElement('a');
+    toggle.href = '#tocPanel';
+    toggle.id = 'tocPanelToggle';
+    toggle.className = 'alt';
+    toggle.textContent = label;
+    document.body.appendChild(toggle);
 
-  // 2) Create panel (append to BODY)
-  const panel = document.createElement('div');
-  panel.id = 'tocPanel';
-  panel.innerHTML = `
+    // 2) Create panel (append to BODY)
+    const panel = document.createElement('div');
+    panel.id = 'tocPanel';
+    panel.innerHTML = `
     ${tocHtml}
     <a href="#tocPanel" class="close" aria-label="${closeLabel}"></a>
   `;
-  document.body.appendChild(panel);
+    document.body.appendChild(panel);
 
-  // 3) Manual open/close (guaranteed to work with your CSS)
-  const OPEN_CLASS = 'is-tocPanel-visible';
+    // 3) Manual open/close (guaranteed to work with your CSS)
+    const OPEN_CLASS = 'is-tocPanel-visible';
 
-  function openPanel(e) {
-    e?.preventDefault?.();
-    // If menu panel is open, close it (avoid overlap)
-    document.body.classList.remove('is-navPanel-visible');
-    document.body.classList.add(OPEN_CLASS);
-  }
+    function openPanel(e) {
+      e?.preventDefault?.();
+      // If menu panel is open, close it (avoid overlap)
+      document.body.classList.remove('is-navPanel-visible');
+      document.body.classList.add(OPEN_CLASS);
+    }
 
-  function closePanel(e) {
-    e?.preventDefault?.();
-    document.body.classList.remove(OPEN_CLASS);
-  }
+    function closePanel(e) {
+      e?.preventDefault?.();
+      document.body.classList.remove(OPEN_CLASS);
+    }
 
-  toggle.addEventListener('click', openPanel);
-  panel.querySelector('.close')?.addEventListener('click', closePanel);
+    toggle.addEventListener('click', openPanel);
+    panel.querySelector('.close')?.addEventListener('click', closePanel);
 
-  // Close on any TOC link click (nice UX)
-  panel.querySelectorAll('a[href^="#"]').forEach((a) => {
-    a.addEventListener('click', () => document.body.classList.remove(OPEN_CLASS));
-  });
-
-  // Close on ESC
-  window.addEventListener('keydown', (ev) => {
-    if (ev.key === 'Escape') document.body.classList.remove(OPEN_CLASS);
-  });
-
-  // 4) If Massively panel plugin exists, enhance (optional)
-  if (window.jQuery?.fn?.panel) {
-    window.jQuery('#tocPanel').panel({
-      delay: 500,
-      hideOnClick: true,
-      hideOnSwipe: true,
-      resetScroll: true,
-      resetForms: true,
-      side: 'right',
-      target: window.jQuery('body'),
-      visibleClass: OPEN_CLASS
+    // Close on any TOC link click (nice UX)
+    panel.querySelectorAll('a[href^="#"]').forEach((a) => {
+      a.addEventListener('click', () => document.body.classList.remove(OPEN_CLASS));
     });
+
+    // Close on ESC
+    window.addEventListener('keydown', (ev) => {
+      if (ev.key === 'Escape') document.body.classList.remove(OPEN_CLASS);
+    });
+
+    // 4) If Massively panel plugin exists, enhance (optional)
+    if (window.jQuery?.fn?.panel) {
+      window.jQuery('#tocPanel').panel({
+        delay: 500,
+        hideOnClick: true,
+        hideOnSwipe: true,
+        resetScroll: true,
+        resetForms: true,
+        side: 'right',
+        target: window.jQuery('body'),
+        visibleClass: OPEN_CLASS,
+      });
+    }
   }
-}
 
   // -----------------------------
-  // 7.3) Active section highlight (works for sidebar + mobile panel)
+  // 7.3) Active section/chapter highlight (works for sidebar + mobile panel)
   // -----------------------------
   function setupTocActiveTracking() {
-    const sectionTargets = Array.from(
-      document.querySelectorAll('.project-section[id], details.project-section[id]')
+    // Track both sections AND chapters
+    const allTargets = Array.from(
+      document.querySelectorAll(
+        '.project-section[id], details.project-section[id], .project-chapter[id]'
+      )
     );
-    if (!sectionTargets.length) return;
+    if (!allTargets.length) return;
 
+    // Get nav height for offset calculation
+    function getNavHeight() {
+      const nav = document.querySelector('#nav');
+      return nav ? nav.getBoundingClientRect().height : 0;
+    }
+
+    // Update active state based on current scroll position
+    function updateActiveState() {
+      const scrollPos = window.scrollY;
+      const navHeight = getNavHeight();
+      const offset = navHeight + 100; // Extra offset for better trigger point
+
+      // Find which element is currently "active" (closest to top of viewport after nav)
+      let activeId = null;
+      let closestDistance = Infinity;
+
+      allTargets.forEach((target) => {
+        const rect = target.getBoundingClientRect();
+        const elementTop = rect.top + scrollPos;
+        const distance = Math.abs(elementTop - (scrollPos + offset));
+
+        // Element is in view range and closer than previous
+        if (rect.top < window.innerHeight * 0.6 && distance < closestDistance) {
+          closestDistance = distance;
+          activeId = target.id;
+        }
+      });
+
+      // If we're near the top of the page, activate first element
+      if (scrollPos < 200 && allTargets.length > 0) {
+        activeId = allTargets[0].id;
+      }
+
+      // Clear all active states
+      document
+        .querySelectorAll('.project-toc a.is-active')
+        .forEach((a) => a.classList.remove('is-active'));
+
+      // Set new active state
+      if (activeId) {
+        document
+          .querySelectorAll(`.project-toc a[href="#${CSS.escape(activeId)}"]`)
+          .forEach((a) => a.classList.add('is-active'));
+      }
+    }
+
+    // Use both scroll and IntersectionObserver for best results
+    let scrollTimeout;
+    window.addEventListener(
+      'scroll',
+      () => {
+        // Throttle scroll events for performance
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(updateActiveState, 50);
+      },
+      { passive: true }
+    );
+
+    // Also use IntersectionObserver as backup
     const obs = new IntersectionObserver(
       (entries) => {
-        const visible = entries
-          .filter((e) => e.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-
-        if (!visible) return;
-
-        const id = visible.target.id;
-
-        // Clear active state in ALL TOCs (sidebar + panel)
-        document
-          .querySelectorAll('.project-toc a.is-active')
-          .forEach((a) => a.classList.remove('is-active'));
-
-        // Mark active for matching anchors (sidebar + panel)
-        document
-          .querySelectorAll(`.project-toc a[href="#${CSS.escape(id)}"]`)
-          .forEach((a) => a.classList.add('is-active'));
+        // Trigger update when any element enters/exits viewport
+        if (entries.some((e) => e.isIntersecting)) {
+          updateActiveState();
+        }
       },
-      { rootMargin: '-20% 0px -65% 0px', threshold: [0.15, 0.25, 0.5] }
+      {
+        rootMargin: '-10% 0px -50% 0px',
+        threshold: [0, 0.1, 0.5, 1.0],
+      }
     );
 
-    sectionTargets.forEach((s) => obs.observe(s));
+    allTargets.forEach((target) => obs.observe(target));
 
-    // initial hash
+    // Initial state
+    updateActiveState();
+
+    // Update on hash change
+    window.addEventListener('hashchange', () => {
+      setTimeout(updateActiveState, 100);
+    });
+
+    // Update on initial hash
     const hash = (window.location.hash || '').replace('#', '').trim();
     if (hash) {
-      document
-        .querySelectorAll(`.project-toc a[href="#${CSS.escape(hash)}"]`)
-        .forEach((a) => a.classList.add('is-active'));
+      setTimeout(() => {
+        document
+          .querySelectorAll(`.project-toc a[href="#${CSS.escape(hash)}"]`)
+          .forEach((a) => a.classList.add('is-active'));
+      }, 100);
     }
   }
 
@@ -464,17 +527,18 @@ function setupTocPanel(tocHtml) {
   // -----------------------------
 
   function getScrollOffset() {
-    const fallback = 24;
-
-    const header = document.querySelector('#header');
-    if (header) {
-      const style = getComputedStyle(header);
-      if (style.position === 'fixed' || style.position === 'sticky') {
-        return Math.ceil(header.getBoundingClientRect().height) + 16;
+    // Calculate offset based on sticky nav height
+    const nav = document.querySelector('#nav');
+    if (nav) {
+      const style = getComputedStyle(nav);
+      if (style.position === 'sticky' || style.position === 'fixed') {
+        // Get actual nav height + extra padding for better visual spacing
+        return Math.ceil(nav.getBoundingClientRect().height) + 24;
       }
     }
 
-    return fallback;
+    // Fallback: no sticky nav
+    return 32;
   }
 
   function scrollToId(id) {

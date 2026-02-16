@@ -4948,7 +4948,7 @@ body.is-preload #intro:not(.hidden) + #header + #nav {
    4don Branding Tweaks
    ========================== */
 
-/* Intro: Logo direkt vor "4DON" */
+/* Intro: Place logo next to the "4DON" headline */
 #intro h1.intro-brand {
   display: inline-flex;
   align-items: center;
@@ -4956,7 +4956,7 @@ body.is-preload #intro:not(.hidden) + #header + #nav {
   gap: 18px;
 }
 
-/* Logo im Intro (groß, aber clean) */
+/* Intro logo: clean, premium, subtle shadow */
 #intro .intro-logo {
   height: 80px;
   width: auto;
@@ -4965,72 +4965,116 @@ body.is-preload #intro:not(.hidden) + #header + #nav {
   filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.25));
 }
 
-/* Optional: Text minimal schöner */
+/* Optional: slightly nicer letter spacing for the intro brand text */
 #intro h1.intro-brand span {
-  letter-spacing: 0.12em; /* passt gut zu 4DON */
+  letter-spacing: 0.12em;
 }
 
-/* WICHTIG: verhindert ungewollte Skalierung im Header */
+/* Prevent unwanted scaling inside the Massively header logo container */
 #header .logo img {
   max-height: 28px;
   width: auto;
 }
-/* ==========================
-   Feinschliff: Sticky + Glass Nav
-   ========================== */
 
-/* Nav bleibt beim Scrollen sichtbar */
-#nav {
+/* =========================================================
+   Sticky + Glass Navigation (Scoped & Stable)
+   ---------------------------------------------------------
+   Why:
+   - Sticky should be an intentional feature, not a side-effect.
+   - Massively uses wrapper clipping + parallax background transforms.
+     Sticky + visible overflow can change how the document height is computed.
+   - We scope everything to body.has-sticky-nav so you can enable it per page.
+   ========================================================= */
+
+/* Enable sticky only when the page opts in via body class */
+body.has-sticky-nav #nav {
   position: sticky;
   top: 0;
-  z-index: 1000;
+  z-index: 1000; /* keeps nav above content */
 }
 
-/* dezenter Glass Look */
-#nav {
+/* Subtle glass effect (only when sticky is enabled) */
+body.has-sticky-nav #nav {
   background: rgba(30, 30, 30, 0.35);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-/* die helle "active" Kachel bleibt clean */
-#nav ul.links li.active a {
+/* Keep active nav tile clean on the darker glass background */
+body.has-sticky-nav #nav ul.links li.active a {
   background: rgba(255, 255, 255, 0.92);
 }
 
-/* leichte Trennlinie, wirkt hochwertig */
-#nav {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+/* =========================================================
+   Sticky Nav Support — Correct Overflow Handling (Massively-safe)
+   ---------------------------------------------------------
+   Problem:
+   - Massively sets: #wrapper { overflow: hidden; } which can break sticky.
+   - If we switch wrapper overflow to visible, the parallax background (.bg)
+     moved by transform can become the "deepest element" -> scrollHeight grows.
+   Solution:
+   1) Allow sticky by unclipping wrapper ONLY when sticky is enabled.
+   2) Prevent horizontal overflow (common 1–2px issue) safely.
+   3) Lock the background layer to viewport and neutralize transforms so it
+      never extends document height.
+   ========================================================= */
+
+/* 1) Unclip wrapper only for sticky pages */
+body.has-sticky-nav #wrapper {
+  overflow: visible;
 }
-/* Intro Text etwas moderner */
+
+/* 2) Prevent horizontal overflow safely (without creating a scroll container) */
+body.has-sticky-nav {
+  overflow-x: hidden;
+}
+
+/* 3) CRITICAL: Prevent .bg from extending document height when wrapper is visible */
+body.has-sticky-nav #wrapper > .bg {
+  position: fixed;            /* take it out of document flow */
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;                    /* equivalent to inset: 0 */
+  height: auto;
+  transform: none !important; /* stop JS translateY from increasing scrollHeight */
+  pointer-events: none;
+}
+
+/* =========================================================
+   Intro Typography Refinement
+   ========================================================= */
+
+/* Slightly improve readability and soften opacity */
 #intro p {
   opacity: 0.92;
   line-height: 1.7;
 }
 
-/* zweite Zeile ein Tick "leichter" */
+/* Make the second paragraph a touch lighter */
 #intro p + p {
   opacity: 0.82;
 }
 
-/* sanfter Übergang beim Laden */
+/* =========================================================
+   Subtle Page Fade-In (Opacity only)
+   ---------------------------------------------------------
+   Note:
+   - Do NOT use transform here (can interfere with sticky/fixed elements).
+   ========================================================= */
+
 body {
   animation: pageFade 0.15s ease-out;
 }
 
 @keyframes pageFade {
-  from {
-    opacity: 0;
-    transform: translateY(4px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
 
 /* ==========================
-   4don Footer Feinschliff
+   4don Footer Polish
    ========================== */
 
 .footer-4don h3 {
@@ -5055,7 +5099,7 @@ body {
 }
 
 /* ==========================
-   4don Projects Controls + Badges
+   4don Projects Controls (Filter/Search UI)
    ========================== */
 
 .projects-controls {
@@ -5098,39 +5142,36 @@ body {
 }
 
 /* ==========================
-   4don Project Badges (clean + consistent)
+   4don Project Badges (Listing + Detail)
    ========================== */
 
-/* mehr Abstand zwischen Beschreibung/Badges und Datum/Rest */
+/* Add a little more breathing room under the date */
 .posts article .date,
 .post header .date {
   display: inline-block;
-  margin-bottom: 0.5rem; /* größerer Abstand unter dem Datum */
+  margin-bottom: 0.5rem;
 }
 
 .project-badges {
   display: flex;
   flex-wrap: wrap;
   gap: 0.6rem;
-  margin-top: 1rem; /* Abstand nach Beschreibung */
-  margin-bottom: 2.25rem; /* Abstand nach Badges */
+  margin-top: 1rem;
+  margin-bottom: 2.25rem;
 }
 
 .project-badge {
   display: inline-flex;
   align-items: center;
   padding: 0.32rem 0.75rem;
-  border: 1px solid rgba(0, 0, 0, 0.18); /* default dark outline for light background */
+  border: 1px solid rgba(0, 0, 0, 0.18);
   border-radius: 999px;
   font-size: 0.82rem;
   line-height: 1;
   letter-spacing: 0.04em;
   text-transform: none;
-
   background: rgba(124, 58, 237, 0.08);
   color: #1e252d;
-
-  /* verhindert dass Theme-Regeln (links/strong/etc.) reinfunken */
   box-shadow: none !important;
   text-decoration: none !important;
 }
@@ -5141,20 +5182,17 @@ body {
 }
 
 /* ==========================================================
-   4DON: ABOUT mini header (Avatar + Name + Headline + Location)
+   4DON: About Mini Header (Avatar + Info Card)
    ========================================================== */
 
 .about-mini {
   display: flex;
   align-items: center;
   gap: 1.75rem;
-
   margin: 2.5rem 0 2.25rem 0;
   padding: 1.5rem 1.5rem;
-
   border: 1px solid rgba(122, 63, 242, 0.14);
   border-radius: 18px;
-
   background: rgba(255, 255, 255, 0.92);
   backdrop-filter: blur(10px);
 }
@@ -5163,7 +5201,6 @@ body {
   width: 200px;
   height: 200px;
   object-fit: cover;
-
   border-radius: 999px;
   border: 2px solid rgba(122, 63, 242, 0.22);
   box-shadow: 0 14px 40px rgba(0, 0, 0, 0.12);
@@ -5192,7 +5229,6 @@ body {
   font-size: 0.95rem;
 }
 
-/* Mobile */
 @media screen and (max-width: 736px) {
   .about-mini {
     flex-direction: column;
@@ -5203,18 +5239,15 @@ body {
 
 /* =========================================================
    4don — Language Switch (DE/EN pill toggle)
-   Append at the very end of main.css
-
+   ---------------------------------------------------------
    Goals:
-   - Clean border-only pill
+   - Minimal border-only pill
    - No Massively inset shadows
-   - Unified 4DON purple color
+   - Unified purple token
    - Desktop + Mobile (navPanel) consistent
    ========================================================= */
 
-/* ---------------------------------------------------------
-   Global color token (single source of truth)
---------------------------------------------------------- */
+/* Single source of truth for the accent color */
 :root {
   --purple-4don: #7c3aed;
 }
@@ -5223,12 +5256,12 @@ body {
    NAV BAR (DESKTOP)
 --------------------------------------------------------- */
 
-/* Prevent #nav from clipping right-side items */
+/* Ensure nav won't clip right-side items (e.g. language switch) */
 #nav {
   overflow: visible !important;
 }
 
-/* Make the icon list a predictable flex row */
+/* Make icon row predictable */
 #nav ul.icons {
   display: flex !important;
   align-items: center;
@@ -5236,66 +5269,69 @@ body {
   margin: 0;
 }
 
-/* Remove inline padding so gap controls spacing */
+/* Let the gap control spacing */
 #nav ul.icons li {
   padding: 0 !important;
 }
 
-/* Ensure buttons behave normally inside icon row */
+/* Ensure buttons render correctly inside Massively's icon list */
 #nav .icons li button {
   display: inline-flex !important;
   visibility: visible !important;
   opacity: 1 !important;
-
   width: auto !important;
   max-width: none !important;
   margin: 0 !important;
-
   font-size: inherit !important;
   line-height: 1 !important;
-
   -webkit-appearance: none;
   appearance: none;
 }
 
-/* Switch wrapper */
+/* Switch wrapper spacing */
 #nav .icons .lang-switch {
   display: flex;
   align-items: center;
-  margin-left: 0.75rem; /* spacing from social icons */
+  margin-left: 0.75rem;
 }
 
-/* ---------------------------------------------------------
-   SWITCH BUTTON (DESKTOP)
---------------------------------------------------------- */
-
+/* Pill button */
 #nav .icons .lang-switch__btn {
   position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-
   height: 30px;
   min-width: 76px;
   padding: 0;
-
   background: transparent;
   border: 2px solid rgba(255, 255, 255, 0.85);
   border-radius: 999px;
-
   cursor: pointer;
-
   letter-spacing: 0;
   text-transform: none;
-
-  /* CRITICAL FIX: remove Massively inset shadow */
-  box-shadow: none !important;
-
-  /* Visual alignment tweak inside Massively nav */
-  transform: translateY(-2px);
+  box-shadow: none !important; /* remove Massively inset shadow */
+  transform: translateY(-2px); /* visual alignment in nav bar */
+  outline: none !important;
 }
 
-/* Invisible track (keeps layout only) */
+/* CRITICAL: Remove ALL focus styles that create double border */
+#nav .icons .lang-switch__btn:focus,
+#nav .icons .lang-switch__btn:active {
+  outline: none !important;
+  box-shadow: none !important;
+  border: 2px solid rgba(255, 255, 255, 0.85) !important; /* Keep original border */
+}
+
+/* Keyboard-only focus style (only for accessibility) */
+#nav .icons .lang-switch__btn:focus-visible {
+  outline: 2px solid var(--purple-4don) !important;
+  outline-offset: 3px !important;
+  box-shadow: none !important;
+  border: 2px solid rgba(255, 255, 255, 0.85) !important; /* Keep original border */
+}
+
+/* Track (layout only) */
 #nav .icons .lang-switch__track {
   position: absolute;
   inset: 4px;
@@ -5307,37 +5343,29 @@ body {
 #nav .icons .lang-switch__thumb {
   position: absolute;
   top: 50%;
-  left: -1px;
+  left: -3px; /* Geändert von -1px für bessere Ausrichtung */
   transform: translateY(-50%);
-
-  width: 32px;
-  height: 22px;
+  width: 34px; /* Geändert von 32px für bessere Abdeckung */
+  height: 24px; /* Geändert von 22px für bessere Abdeckung */
   border-radius: 999px;
-
   background: rgba(255, 255, 255, 0.92);
   box-shadow: 0 6px 14px rgba(0, 0, 0, 0.18);
-
   transition: transform 180ms ease;
 }
 
-/* Move thumb to right when EN active */
+/* Move thumb when EN is active */
 #nav .icons .lang-switch__btn.is-en .lang-switch__thumb {
-  transform: translate(34px, -50%);
+  transform: translate(36px, -50%); /* Geändert von 34px für bessere Zentrierung */
 }
 
-/* ---------------------------------------------------------
-   LABELS (DESKTOP)
---------------------------------------------------------- */
-
+/* Labels */
 #nav .icons .lang-switch__labels {
   position: relative;
   z-index: 2;
-
   display: grid;
   grid-template-columns: 1fr 1fr;
   width: 100%;
-  padding: 0 10px;
-
+  padding: 0 8px; /* Reduziert von 10px für bessere Zentrierung */
   font-size: 12px;
   font-weight: 600;
   line-height: 1;
@@ -5347,10 +5375,8 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 34px;
-
+  height: 30px; /* Geändert von 34px auf 30px für perfekte Zentrierung */
   user-select: none;
-
   color: rgba(255, 255, 255, 0.75);
   transition: color 180ms ease, opacity 180ms ease;
 }
@@ -5374,13 +5400,7 @@ body {
   border-color: var(--purple-4don);
 }
 
-/* Keyboard focus */
-#nav .icons .lang-switch__btn:focus-visible {
-  outline: 2px solid var(--purple-4don);
-  outline-offset: 3px;
-}
-
-/* Reduced motion support */
+/* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
   #nav .icons .lang-switch__thumb,
   #nav .icons .lang-switch__label {
@@ -5397,64 +5417,64 @@ body {
   align-items: center;
 }
 
-/* Border-only pill in mobile panel */
 #navPanel .icons li.lang-switch .lang-switch__btn {
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
-
   height: 30px !important;
   min-width: 72px !important;
   padding: 0 !important;
-
   background: transparent !important;
   border: 2px solid #eeeeee !important;
   border-radius: 999px !important;
-
-  /* CRITICAL FIX: remove Massively inset shadow */
   box-shadow: none !important;
-
   opacity: 1 !important;
+  outline: none !important;
 }
 
-/* Hover */
+/* Remove double border on focus/active */
+#navPanel .icons li.lang-switch .lang-switch__btn:focus,
+#navPanel .icons li.lang-switch .lang-switch__btn:active {
+  outline: none !important;
+  box-shadow: none !important;
+  border: 2px solid #eeeeee !important;
+}
+
 #navPanel .icons li.lang-switch .lang-switch__btn:hover {
   border-color: var(--purple-4don) !important;
 }
 
-/* Keyboard focus */
 #navPanel .icons li.lang-switch .lang-switch__btn:focus-visible {
   outline: 2px solid rgba(124, 58, 237, 0.55) !important;
   outline-offset: 3px !important;
-  border-color: var(--purple-4don) !important;
+  border: 2px solid var(--purple-4don) !important;
+  box-shadow: none !important;
 }
 
-/* Hide track + thumb in mobile (text-only pill) */
+/* Mobile: hide track/thumb (text-only pill) */
 #navPanel .icons li.lang-switch .lang-switch__track,
 #navPanel .icons li.lang-switch .lang-switch__thumb {
   display: none !important;
 }
 
-/* Labels in mobile */
 #navPanel .icons li.lang-switch .lang-switch__label {
   color: rgba(0, 0, 0, 0.55) !important;
   font-weight: 600 !important;
+  height: 30px !important; /* Hinzugefügt für Zentrierung */
 }
 
-/* Active label in mobile */
 #navPanel .icons li.lang-switch .lang-switch__btn.is-de .lang-switch__label--de,
 #navPanel .icons li.lang-switch .lang-switch__btn.is-en .lang-switch__label--en {
   color: var(--purple-4don) !important;
   font-weight: 700 !important;
 }
 
-/* Inactive label mobile */
 #navPanel .icons li.lang-switch .lang-switch__btn.is-de .lang-switch__label--en,
 #navPanel .icons li.lang-switch .lang-switch__btn.is-en .lang-switch__label--de {
   color: rgba(0, 0, 0, 0.35) !important;
 }
 
-/* Icons row layout */
+/* Icons row layout in the panel */
 #navPanel ul.icons {
   display: flex !important;
   align-items: center !important;
@@ -5468,37 +5488,9 @@ body {
 }
 
 /* =========================================================
-   4don — Language Switch: FIX double border on Desktop
-   Reason:
-   - after click the button keeps focus → browser/theme draws an extra outline/ring
-   - also some browsers still paint focus on :focus (not only :focus-visible)
+   4don — Contact Form Status Messages
    ========================================================= */
 
-/* HARD reset: no extra rings besides our border */
-#nav .icons .lang-switch__btn {
-  outline: none !important;        /* kills default focus ring */
-  box-shadow: none !important;      /* kills any remaining inset ring */
-}
-
-/* Some browsers still apply outline on :focus even if :focus-visible exists */
-#nav .icons .lang-switch__btn:focus {
-  outline: none !important;
-  box-shadow: none !important;
-}
-
-/* Our own clean focus style (only keyboard users) */
-#nav .icons .lang-switch__btn:focus-visible {
-  outline: 2px solid var(--purple-4don) !important;
-  outline-offset: 3px !important;
-  box-shadow: none !important;
-}
-
-
-/* =========================================================
-   4don — contacts form status messages
-   ========================================================= */
-
-/* Contact form status (success/error) */
 .form-status {
   padding: 0.85rem 1rem;
   border-radius: 0.5rem;
@@ -5522,4 +5514,3 @@ body {
   border: 1px solid rgba(255, 80, 80, 0.35);
   background: rgba(255, 80, 80, 0.08);
 }
-
