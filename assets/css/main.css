@@ -4948,6 +4948,12 @@ body.is-preload #intro:not(.hidden) + #header + #nav {
    4don Branding Tweaks
    ========================== */
 
+/* Single source of truth for the accent color */
+:root {
+  --purple-4don: #7c3aed;
+  --purple-4don-rgb: 124, 58, 237;  /* NEU: Für rgba() */
+}
+
 /* Intro: Place logo next to the "4DON" headline */
 #intro h1.intro-brand {
   display: inline-flex;
@@ -5250,6 +5256,12 @@ body {
 /* Single source of truth for the accent color */
 :root {
   --purple-4don: #7c3aed;
+
+    /* NEU: Layout-Konstanten */
+  --nav-height: 4.5rem;           /* Tatsächliche Nav-Höhe */
+  --scroll-offset: 6rem;          /* Scroll-Offset für Anchors */
+  --toc-top-offset: 6.5rem;       /* TOC Sticky Position */
+  --toc-max-height-offset: 7.5rem; /* TOC max-height Berechnung */
 }
 
 /* ---------------------------------------------------------

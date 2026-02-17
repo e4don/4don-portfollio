@@ -94,7 +94,7 @@
   font-size: 0.75rem;
   letter-spacing: 0.02em;
   border: 1px solid rgba(255, 255, 255, 0.16);
-  background: rgba(122, 63, 242, 0.12);
+  background: rgba(var(--purple-4don-rgb), 0.12);
 }
 
 /* Meta rows */
@@ -141,12 +141,12 @@
 /* Nice anchor offset (safe even if sticky nav is disabled) */
 .project-chapter,
 .project-section {
-  scroll-margin-top: 6rem;
+  scroll-margin-top: var(--scroll-offset);
 }
 
 /* Ensure all headings with IDs also get scroll-margin */
 [id] {
-  scroll-margin-top: 6rem;
+  scroll-margin-top: var(--scroll-offset);
 }
 
 /* =========================================================
@@ -172,7 +172,7 @@
 /* Sticky wrapper: stays in view while the page scrolls */
 .project-toc-wrap {
   position: sticky;
-  top: 6.5rem;      /* leaves room for sticky nav if enabled */
+  top: var(--toc-top-offset);      /* leaves room for sticky nav if enabled */
   align-self: start;
   z-index: 5;       /* above content, below nav */
 }
@@ -186,7 +186,7 @@
   box-shadow: none;
   margin: 0;
   padding: 0.9rem 1rem;
-  max-height: calc(100vh - 7.5rem);
+  max-height: calc(100vh - var(--toc-max-height-offset));
   overflow: auto;
   -webkit-overflow-scrolling: touch;
 }
@@ -251,13 +251,13 @@
 .project-toc__section > a:hover,
 .project-toc__chapters a:hover {
   opacity: 1;
-  border-bottom-color: rgba(122, 63, 242, 0.55);
+  border-bottom-color: rgba(var(--purple-4don-rgb), 0.55);
 }
 
 /* Active link highlight (sidebar + mobile panel clone) */
 .project-toc a.is-active {
-  background: rgba(122, 63, 242, 0.18);
-  border-bottom-color: rgba(122, 63, 242, 0.85) !important;
+  background: rgba(var(--purple-4don-rgb), 0.18);
+  border-bottom-color: rgba(var(--purple-4don-rgb), 0.85) !important;
   font-weight: 800;
   opacity: 1;
   transition: all 0.2s ease-out;
